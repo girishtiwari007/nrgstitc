@@ -153,13 +153,17 @@ mark{background:#fff176;border-radius:2px;padding:0 1px}
     <span class="hbadge">RBA 86/2020 (GST Circ 46/2020)</span>
     <span class="hbadge">CBIC Circular 228/2024</span>
     <span class="hbadge">Finance Act 2025 — Sec 124 (retro 01.07.2017)</span>
+    <span class="hbadge new">🆕 RBA 27/2025 — GST 2.0 Rates w.e.f. 22.09.2025</span>
+    <span class="hbadge new">🆕 RBA 13/2026 — Demand 11 Staff Welfare ITC Rules</span>
   </div>
 </div>
 
-<div class="top-alert" style="background:#7a3500;color:#fff;padding:8px 20px;font-size:12px;display:flex;align-items:center;gap:8px">
-  ⚠️ <strong style="color:#ffe066">GST 2.0 w.e.f. 22.09.2025 (RBA 27/2025):</strong>
+<div class="top-alert" style="background:#7a3500;color:#fff;padding:8px 20px;font-size:12px;display:flex;flex-direction:column;gap:4px">
+  <div>🆕 <strong style="color:#ffe066">RBA 13/2026 (GST Circular 3/2026) — Demand 11 (SMH-09) Staff Welfare:</strong>
+  Default flag is now <strong style="color:#ffe066">T3 (No ITC)</strong> for ALL Demand 11 expenditure. T4/C2 allowed ONLY with mandatory IPAS "ITC Justification" — Statutory Obligation Test or Operational Nexus Test. Bill blocked without justification. See <strong>Demand 11 Rules</strong> tab.</div>
+  <div>⚠️ <strong style="color:#ffe066">GST 2.0 w.e.f. 22.09.2025 (RBA 27/2025):</strong>
   Works contract earth WC to Govt: 12%→18% &nbsp;|&nbsp; GTA 12%→18% &nbsp;|&nbsp; Air business: 12%→18% &nbsp;|&nbsp;
-  Rent-a-cab: 12%→18% &nbsp;|&nbsp; Individual life/health insurance: EXEMPT &nbsp;|&nbsp; Multimodal: 12%→5% no ITC
+  Rent-a-cab: 12%→18% &nbsp;|&nbsp; Individual life/health insurance: EXEMPT &nbsp;|&nbsp; Multimodal: 12%→5% no ITC</div>
 </div>
 <div class="legend">
   <span style="font-size:10px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.4px">ITC Flags:</span>
@@ -180,7 +184,8 @@ mark{background:#fff176;border-radius:2px;padding:0 1px}
   <button class="tab" onclick="switchTab('const',this)">🏗️ Construction &amp; 9954</button>
   <button class="tab" onclick="switchTab('deposit',this)">💼 Deposit &amp; Capital/Revenue</button>
   <button class="tab" onclick="switchTab('decision',this)">🔍 Decision Guide</button>
-  <button class="tab" onclick="switchTab('gst2',this)">🆕 GST 2.0 Rate Changes</button>
+  <button class="tab" onclick="switchTab('demand11',this)">🆕 Demand 11 Rules</button>
+  <button class="tab" onclick="switchTab('gst2',this)">GST 2.0 Rate Changes</button>
   <button class="tab" onclick="switchTab('circulars',this)">📜 Circulars &amp; Sources</button>
 </nav>
 
@@ -449,6 +454,94 @@ mark{background:#fff176;border-radius:2px;padding:0 1px}
 </div>
 
 
+
+<!-- DEMAND 11 STAFF WELFARE RULES TAB -->
+<div id="tab-demand11" class="pane">
+  <div class="alert-red">
+    <strong>🆕 RBA 13/2026 (GST Circular 3/2026) — Demand 11 (SMH-09) Staff Welfare &amp; Amenities</strong><br>
+    Issued by Railway Board, Director/Accounts (Megha Agrawal), June 2026. Reviews ITC eligibility for all transactions booked under erstwhile <strong>Demand 11 (SMH-09) Abstract-J — Staff Welfare and Amenities</strong>.
+    Based on Zonal Railway feedback and RB GST consultants' opinion: <strong>ITC is GENERALLY UNAVAILABLE</strong> for Demand 11 transactions. IPAS software has been updated to enforce mandatory justification before any T4/C2 flag can be used on Demand 11 bills.
+  </div>
+
+  <div class="igrid">
+    <div class="icard" style="border-left:4px solid var(--T3bd)">
+      <h3>🚫 Default Treatment — T3 (No ITC)</h3>
+      <p style="font-size:12px;line-height:1.6">All expenditure booked under <strong>Demand 11 (SMH-09) Abstract-J</strong> — staff welfare, recreation, amenities, canteen subsidy, sports facilities, cultural activities, welfare centres — is <strong>by default classified as T3</strong>. This is the conservative starting position adopted by Railway Board's GST consultants based on Section 17(5) of the CGST Act.</p>
+      <p style="font-size:11px;color:var(--muted);margin-top:8px">Legal basis: Section 17(5) operates as a non-obstante override — it disallows ITC on specified categories irrespective of business nexus. Most staff welfare expenditure falls within blocked categories (employee benefit, personal consumption, club/recreation facilities).</p>
+    </div>
+    <div class="icard" style="border-left:4px solid var(--T4bd)">
+      <h3>✅ Exception A — Statutory Obligation Test</h3>
+      <p style="font-size:12px;line-height:1.6">ITC may be allowed (flag <strong>T4 or C2</strong>) if the expenditure is <strong>mandatory under any law</strong>.</p>
+      <p style="font-size:12px;margin-top:6px"><strong>Example:</strong> Canteen facilities where mandated by the Factories Act, 1948 (applicable to certain categories of railway establishments employing above a threshold number of workers).</p>
+      <p style="font-size:11px;color:var(--muted);margin-top:8px">Must be justified in IPAS by selecting: <em>"Statutory obligation — expenditure mandated under applicable law"</em></p>
+    </div>
+    <div class="icard" style="border-left:4px solid var(--C2bd)">
+      <h3>✅ Exception B — Operational Nexus Test</h3>
+      <p style="font-size:12px;line-height:1.6">ITC may be allowed (flag <strong>T4 or C2</strong>) if there is a <strong>direct and proximate connection with core railway operations</strong>, AND that ITC is not specifically barred under Section 17(5).</p>
+      <p style="font-size:12px;margin-top:6px"><strong>Example:</strong> Technical training for train operations (where the training service itself is not a blocked category under 17(5)).</p>
+      <p style="font-size:11px;color:var(--muted);margin-top:8px">Must be justified in IPAS by selecting: <em>"Not covered under blocked credits under Section 17(5)"</em></p>
+    </div>
+  </div>
+
+  <h3 style="margin-bottom:11px;color:var(--navy);font-size:14px">📋 IPAS System Enforcement — Step-by-Step Workflow</h3>
+  <div class="dt-wrap">
+    <div class="dt-step"><div class="dt-num">1</div><div class="dt-body">
+      <h4>User enters allocation with Demand-11 and selects ITC Flag T4 or C2</h4>
+      <p>System automatically detects Demand-11 + T4/C2 combination and displays an <strong>"ITC Justification"</strong> button adjacent to the ITC Flag field on the bill-passing screen.</p>
+    </div></div>
+    <div class="dt-step"><div class="dt-num">2</div><div class="dt-body">
+      <h4>User clicks "ITC Justification" button</h4>
+      <p>A popup window titled <strong>"ITC Applicability for Demand-11"</strong> opens, requiring selection of exactly ONE option:</p>
+      <ul>
+        <li>○ Not covered under blocked credits under Section 17(5)</li>
+        <li>○ Statutory obligation — expenditure mandated under applicable law</li>
+        <li>● Other (Specify) — requires mandatory Justification Description text + Remarks</li>
+      </ul>
+    </div></div>
+    <div class="dt-step"><div class="dt-num">3</div><div class="dt-body">
+      <h4>System validates entry before allowing bill to proceed</h4>
+      <p>Justification details must be entered and <strong>saved</strong> via the popup before the system allows further processing of the bill.</p>
+    </div></div>
+    <div class="dt-step"><div class="dt-num">4</div><div class="dt-body">
+      <h4>Bill submission BLOCKED without justification</h4>
+      <p>If the user attempts to pass a bill with Demand-11 and ITC Flag T4/C2 <strong>without</strong> providing justification, the system displays a validation error and <strong>prevents bill submission entirely</strong>.</p>
+      <div class="outcomes"><span class="badge badge-T3">⛔ Bill rejected until justification saved</span></div>
+    </div></div>
+    <div class="dt-step"><div class="dt-num">5</div><div class="dt-body">
+      <h4>Bill submission allowed only after justification saved</h4>
+      <p>Once the justification popup is completed and saved, the bill-passing process can continue normally. The justification record is retained for future GST tax audit reference.</p>
+    </div></div>
+  </div>
+
+  <h3 style="margin:18px 0 11px;color:var(--navy);font-size:14px">⚖️ Decision Matrix for Bill-Passing Dealers</h3>
+  <div class="tbl-wrap"><table class="info-table">
+    <thead><tr><th>Scenario</th><th>Flag</th><th>IPAS Justification Required?</th><th>Justification Option to Select</th></tr></thead>
+    <tbody>
+      <tr><td>Staff welfare expenditure — no statutory mandate, no operational nexus (most cases)</td><td><span class="badge badge-T3">T3</span></td><td>No — T3 is default, no popup triggered</td><td>N/A</td></tr>
+      <tr><td>Canteen facility mandated by Factories Act for eligible establishment</td><td><span class="badge badge-T4">T4</span> or <span class="badge badge-C2">C2</span></td><td><strong>Yes — mandatory</strong></td><td>"Statutory obligation — expenditure mandated under applicable law"</td></tr>
+      <tr><td>Technical training directly for train operations (not a blocked category)</td><td><span class="badge badge-C2">C2</span> or <span class="badge badge-T4">T4</span></td><td><strong>Yes — mandatory</strong></td><td>"Not covered under blocked credits under Section 17(5)"</td></tr>
+      <tr><td>Any other genuine business case not covered above</td><td><span class="badge badge-T4">T4</span> or <span class="badge badge-C2">C2</span></td><td><strong>Yes — mandatory</strong></td><td>"Other (Specify)" + detailed Justification Description + Remarks</td></tr>
+      <tr><td>Recreation clubs, sports facilities, cultural/social events for staff</td><td><span class="badge badge-T3">T3</span></td><td>No</td><td>Personal/welfare benefit — blocked u/s 17(5)(b). Always T3.</td></tr>
+      <tr><td>Welfare centres, crèches, staff amenities (general)</td><td><span class="badge badge-T3">T3</span></td><td>No</td><td>Non-business/personal benefit nature. Always T3 unless exception applies.</td></tr>
+    </tbody>
+  </table></div>
+
+  <div class="alert" style="margin-top:16px">
+    <strong>📌 Action Required for Production Units:</strong> Production Units must review ITC availment on similar Demand 11-type transactions in consultation with their GST consultants and issue <strong>local instructions</strong>, since the allocation-based IPAS system change described above was implemented specifically for Zonal Railways and is <strong>not automatically available to Production Units</strong>. Mandatory staff training on this circular is required at all units.
+  </div>
+
+  <div style="margin-top:16px;background:var(--card);border:1px solid var(--border);border-radius:9px;padding:15px 18px">
+    <h3 style="color:var(--navy);margin-bottom:10px;font-size:13px">🎯 Why This Matters — Compliance Benefits</h3>
+    <ul style="padding-left:18px;font-size:12px;line-height:1.8">
+      <li>Ensures <strong>consistency</strong> across all GSTINs of Indian Railways for Demand 11 ITC treatment</li>
+      <li>Prevents <strong>erroneous ITC claims</strong> that could attract interest @18% p.a. under CGST Sec 50</li>
+      <li>Creates an <strong>audit trail</strong> — every T4/C2 claim under Demand 11 has a recorded, system-saved justification available for future GST tax audits</li>
+      <li>Balances <strong>conservative compliance</strong> (default T3) with <strong>flexibility</strong> for genuine statutory/operational exceptions</li>
+      <li>Minimizes <strong>litigation exposure</strong> by requiring documented reasoning rather than ad-hoc flagging decisions</li>
+    </ul>
+  </div>
+</div>
+
 <!-- GST 2.0 RATE CHANGES TAB -->
 <div id="tab-gst2" class="pane">
   <div class="alert-red">
@@ -687,9 +780,14 @@ const DATA = [
   {sr:"E58",desc:"Procurement of Goods by Units — For Own Consumption",sub:"Goods for own use by Railways (not for resale)",hsn:"As per Tariff Codes",cat:"Goods (Stock)",flag:"T3",gstbasis:"RBA 19/2024 Sl.3 & Sl.7 — goods for own use T3",eu:"All",fund:"R",ipas:"T3",gst:"As applicable per tariff",notif:"w.e.f. 01.07.2017",note:"Not eligible. Goods procured for own consumption (repair/maintenance) → T3 per RBA 19/2024.",ref:"RBA 19/2024 Sl.3 & Sl.7",rc:false},
   // ── EXCEL Sr. 59 ──
   {sr:"E59",desc:"Procurement of Goods by Units — For Reselling to Other Parties",sub:"Goods procured for resale",hsn:"As per Tariff Codes",cat:"Goods (Stock)",flag:"T4",gstbasis:"Sec 16 — goods for taxable outward supply (resale)",eu:"All",fund:"R",ipas:"T4",gst:"As applicable per tariff",notif:"w.e.f. 01.07.2017",note:"Full eligible. Goods procured for resale = taxable outward supply. T4.",ref:"CGST Sec 16",rc:false},
+  // ── RBA 13/2026 (GST Circular 3/2026) — Demand 11 Staff Welfare ──
+  {sr:"D11a",desc:"Demand 11 (SMH-09) — Staff Welfare & Amenities (Default)",sub:"Canteen, recreation, welfare facilities — no statutory/operational nexus",hsn:"Varies",cat:"Staff Welfare",flag:"T3",gstbasis:"Sec 17(5) — default treatment per RBA 13/2026",eu:"All",fund:"R",ipas:"T3 (default)",gst:"Varies",notif:"RBA 13/2026 / GST Circular 3/2026",note:"DEFAULT FLAG for ALL Demand 11 expenditure = T3 (No ITC). This is the conservative starting position for every SMH-09 bill unless an exception test is met and justified.",ref:"RBA 13/2026 (GST Circular 3/2026) dt June 2026",rc:true},
+  {sr:"D11b",desc:"Demand 11 — Statutory Obligation Exception (e.g. canteen mandated by Factories Act)",sub:"Expenditure mandatory under any law",hsn:"Varies",cat:"Staff Welfare",flag:"T4",gstbasis:"Statutory Obligation Test — RBA 13/2026 Exception A",eu:"All",fund:"R",ipas:"T4/C2 — requires mandatory IPAS justification",gst:"Varies",notif:"RBA 13/2026 / GST Circular 3/2026",note:"ITC allowed ONLY if expenditure is mandatory under law (e.g. canteen under Factories Act). IPAS requires mandatory 'ITC Justification' popup selecting 'Statutory obligation — expenditure mandated under applicable law' before bill can be passed.",ref:"RBA 13/2026 — Approach Paper Para 3(A)",rc:true},
+  {sr:"D11c",desc:"Demand 11 — Operational Nexus Exception (e.g. technical training for train operations)",sub:"Direct nexus with core railway operations, not barred u/s 17(5)",hsn:"Varies",cat:"Staff Welfare",flag:"C2",gstbasis:"Operational Nexus Test — RBA 13/2026 Exception B",eu:"Mixed",fund:"R",ipas:"T4/C2 — requires mandatory IPAS justification",gst:"Varies",notif:"RBA 13/2026 / GST Circular 3/2026",note:"ITC allowed ONLY where direct/proximate connection to core railway operations exists and is not specifically barred u/s 17(5). Example: technical training for train operations. IPAS requires mandatory justification selecting 'Not covered under blocked credits under Section 17(5)' before bill passing.",ref:"RBA 13/2026 — Approach Paper Para 3(B)",rc:true},
 ];
 
 const CIRCULARS = [
+  {id:"RBA 13/2026 (GST Circular 3/2026) — June 2026 🆕",title:"Demand 11 (SMH-09) Staff Welfare — ITC Eligibility Framework",isNew:true,body:"Reviews ITC eligibility for transactions under erstwhile Demand 11 (SMH-09) Abstract-J — Staff Welfare and Amenities. Based on Zonal Railway feedback and RB GST consultants' opinion: ITC is GENERALLY UNAVAILABLE for Demand 11 transactions. DEFAULT TREATMENT: All Demand 11 expenditure → T3 (No ITC). EXCEPTION-BASED ALLOWANCE (C2/T4) only if: (A) Statutory Obligation Test — expenditure mandatory under law (e.g. canteen under Factories Act), or (B) Operational Nexus Test — direct/proximate connection with core railway operations not barred u/s 17(5) (e.g. technical training for train operations). SYSTEM ENFORCEMENT: IPAS now displays an 'ITC Justification' button whenever Demand-11 + T4/C2 flag is selected. Bill submission is BLOCKED until justification is entered and saved via popup, selecting one of: 'Not covered under blocked credits under Section 17(5)', 'Statutory obligation — expenditure mandated under applicable law', or 'Others (Specify)' with mandatory description and remarks. Production Units must issue local instructions in consultation with GST consultants since this allocation-based system change is railway-specific and not available to them by default. Mandatory staff training required.",url:"#"},
   {id:"CGST Act 2017 — Sec 17(5)",title:"Blocked Credits — Primary Law",body:"Lists all categories of ineligible ITC: (a)/(b) motor vehicles, food, catering, beauty, health insurance, LTC, club membership; (c) works contract for construction of immovable property [except plant and machinery]; (d) goods/services for construction of immovable property on own account [except plant and machinery]. Finance Act 2025 Sec 124: retrospective amendment from 01.07.2017 — 'plant or machinery' → 'plant and machinery', nullifying Safari Retreats SC ruling for buildings used as plants."},
   {id:"CGST Rule 42 & 43",title:"ITC Apportionment for Common Inputs (C2 Flag)",body:"Rule 42: Monthly provisional reversal formula D1=(E/F)×C2 where E=exempt+non-business turnover, F=total turnover. Annual true-up in September GSTR-3B return. Rule 43: ITC on capital goods used for common/exempt purposes — 1/60th per month reversal over 5 years. C2 flag must be followed by these monthly reversals."},
   {id:"RBA 27/2018 (GST Circular 11/2018) — 26.03.2018",title:"Master ITC Flagging Checklist for Indian Railways",body:"First comprehensive ITC flag checklist: T1 (non-business), T2 (exempt operations), T3 (restricted/blocked), T4 (full credit — taxable), C2 (partial credit). Annexure-A provides 11 categories. Flagging to be done in IPAS at demand generation stage, reviewable at bill passing. Checklist is illustrative and not exhaustive. Responsibility of Railways to correctly complete flagging per GST Rules."},
