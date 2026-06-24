@@ -21,13 +21,36 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--te
 a{color:var(--navy3)}
 
 /* HEADER */
-.hdr{background:linear-gradient(135deg,var(--navy),var(--navy2) 60%,var(--navy3));color:#fff;padding:14px 20px 12px}
-.hdr h1{font-size:17px;font-weight:700}
-.hdr p{font-size:11px;opacity:.82;margin-top:2px}
-.hbadges{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
-.hbadge{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);border-radius:12px;font-size:10px;padding:2px 9px}
+.hdr{background:linear-gradient(135deg,var(--navy),var(--navy2) 60%,var(--navy3));color:#fff;padding:20px 20px 16px;text-align:center}
+.hdr h1{font-size:21px;font-weight:700;letter-spacing:.3px;display:flex;align-items:center;justify-content:center;gap:10px}
+.hdr p{font-size:12px;opacity:.85;margin-top:6px;font-weight:500}
+.hbadges{display:flex;gap:7px;flex-wrap:wrap;margin-top:13px;justify-content:center}
+.hbadge{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);border-radius:12px;font-size:10px;font-family:inherit;padding:4px 11px;color:#fff;text-decoration:none;display:inline-block;transition:all .15s;cursor:pointer;outline:none}
+.hbadge:hover{background:rgba(255,255,255,.3);border-color:rgba(255,255,255,.5);transform:translateY(-1px)}
+.hbadge:active{transform:translateY(0)}
+
+/* CIRCULAR REFERENCE MODAL */
+.circ-modal-overlay{display:none;position:fixed;inset:0;background:rgba(15,25,45,.55);backdrop-filter:blur(2px);z-index:1000;align-items:center;justify-content:center;padding:20px}
+.circ-modal-overlay.show{display:flex}
+.circ-modal{background:var(--card);border-radius:14px;max-width:680px;width:100%;max-height:85vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.3);animation:circModalIn .2s ease}
+@keyframes circModalIn{from{opacity:0;transform:translateY(10px) scale(.98)}to{opacity:1;transform:translateY(0) scale(1)}}
+.circ-modal-hdr{background:linear-gradient(135deg,var(--navy),var(--navy2) 60%,var(--navy3));color:#fff;padding:18px 24px;border-radius:14px 14px 0 0;display:flex;justify-content:space-between;align-items:flex-start;gap:12px;position:sticky;top:0}
+.circ-modal-hdr-text{flex:1}
+.circ-modal-tag{display:inline-block;background:rgba(255,255,255,.18);font-family:var(--mono);font-size:11px;font-weight:700;padding:4px 10px;border-radius:6px;margin-bottom:8px}
+.circ-modal-tag.new{background:#ffe066;color:#7a3500}
+.circ-modal-hdr h2{font-size:16px;font-weight:700;line-height:1.4}
+.circ-modal-close{background:rgba(255,255,255,.15);border:none;color:#fff;width:30px;height:30px;border-radius:50%;font-size:18px;cursor:pointer;flex-shrink:0;transition:background .15s;line-height:1}
+.circ-modal-close:hover{background:rgba(255,255,255,.3)}
+.circ-modal-body{padding:22px 24px 26px;font-size:13.5px;line-height:1.7;color:var(--text)}
+.circ-modal-body ul{padding-left:20px;margin-top:8px}
+.circ-modal-body li{margin-bottom:6px}
 
 /* LEGEND */
+.top-alert{background:linear-gradient(135deg,#7a3500,#9c4500);padding:16px 24px;display:flex;flex-direction:column;gap:10px;box-shadow:inset 0 -3px 8px rgba(0,0,0,.15)}
+.ta-row{display:flex;align-items:flex-start;gap:12px;color:#fff;font-size:13px;line-height:1.6}
+.ta-icon{font-size:18px;flex-shrink:0;margin-top:1px}
+.ta-text{flex:1}
+.ta-text strong{color:#ffe066;font-weight:700}
 .legend{background:var(--card);border-bottom:1px solid var(--border);padding:8px 20px;display:flex;gap:10px;flex-wrap:wrap;align-items:center}
 .badge{display:inline-block;padding:3px 9px;border-radius:4px;font-size:11px;font-weight:700;border:1px solid transparent;white-space:nowrap}
 .badge-T1{background:var(--T1bg);color:var(--T1fg);border-color:var(--T1bd)}
@@ -38,10 +61,10 @@ a{color:var(--navy3)}
 .badge-EX{background:#f3f4f6;color:#374151;border-color:#9ca3af}
 
 /* TABS */
-.tabs{background:var(--card);border-bottom:2px solid var(--border);display:flex;overflow-x:auto;padding:0 20px}
-.tab{background:none;border:none;border-bottom:3px solid transparent;padding:10px 16px;font-size:12px;font-weight:600;color:var(--muted);cursor:pointer;white-space:nowrap;transition:all .15s}
+.tabs{background:var(--card);border-bottom:1px solid var(--border);display:flex;gap:5px;overflow-x:auto;padding:10px 20px 0;box-shadow:0 1px 4px rgba(15,45,94,.05)}
+.tab{background:none;border:none;border-radius:10px 10px 0 0;padding:11px 18px;font-size:12.5px;font-weight:600;color:var(--muted);cursor:pointer;white-space:nowrap;transition:all .2s ease;position:relative;top:1px}
 .tab:hover{color:var(--navy2);background:var(--bg)}
-.tab.active{color:var(--navy2);border-bottom-color:var(--navy2)}
+.tab.active{color:#fff;background:linear-gradient(135deg,var(--navy),var(--navy3));box-shadow:0 -3px 12px rgba(15,45,94,.2);font-weight:700;transform:translateY(-1px)}
 
 /* MAIN */
 .main{max-width:1500px;margin:0 auto;padding:16px 20px}
@@ -142,28 +165,48 @@ mark{background:#fff176;border-radius:2px;padding:0 1px}
 </style>
 </head>
 <body>
+
+<div class="circ-modal-overlay" id="circModalOverlay" onclick="if(event.target===this)closeCircModal()">
+  <div class="circ-modal">
+    <div class="circ-modal-hdr">
+      <div class="circ-modal-hdr-text">
+        <span class="circ-modal-tag" id="circModalTag"></span>
+        <h2 id="circModalTitle"></h2>
+      </div>
+      <button class="circ-modal-close" onclick="closeCircModal()">×</button>
+    </div>
+    <div class="circ-modal-body" id="circModalBody"></div>
+  </div>
+</div>
+
 <div class="hdr">
   <h1>🚆 Railway GST ITC Flagging Reference Tool</h1>
   <p>O/O Sr. DFM · Northern Railway · Moradabad Division &nbsp;|&nbsp; Bill-Passing Stage Reference · IPAS Compliance</p>
   <div class="hbadges">
-    <span class="hbadge">CGST Act 2017 — Sec 16, 17(5)</span>
-    <span class="hbadge">CGST Rule 42 &amp; 43</span>
-    <span class="hbadge">RBA 27/2018 (GST Circ 11/2018)</span>
-    <span class="hbadge">RBA 19/2024 (GST Circ 04/2024)</span>
-    <span class="hbadge">RBA 86/2020 (GST Circ 46/2020)</span>
-    <span class="hbadge">CBIC Circular 228/2024</span>
-    <span class="hbadge">Finance Act 2025 — Sec 124 (retro 01.07.2017)</span>
-    <span class="hbadge new">🆕 RBA 27/2025 — GST 2.0 Rates w.e.f. 22.09.2025</span>
-    <span class="hbadge new">🆕 RBA 13/2026 — Demand 11 Staff Welfare ITC Rules</span>
+    <button class="hbadge" onclick="openCircModal('cgst-act-2017-sec-17-5')">CGST Act 2017 — Sec 16, 17(5)</button>
+    <button class="hbadge" onclick="openCircModal('cgst-rule-42-43')">CGST Rule 42 &amp; 43</button>
+    <button class="hbadge" onclick="openCircModal('rba-27-2018-gst-circular-11-2018-26-03-2018')">RBA 27/2018 (GST Circ 11/2018)</button>
+    <button class="hbadge" onclick="openCircModal('rba-19-2024-gst-circular-04-2024-13-06-2024')">RBA 19/2024 (GST Circ 04/2024)</button>
+    <button class="hbadge" onclick="openCircModal('rba-86-2020-gst-circular-46-2020-04-11-2020')">RBA 86/2020 (GST Circ 46/2020)</button>
+    <button class="hbadge" onclick="openCircModal('cbic-circular-228-22-2024-gst-15-07-2024')">CBIC Circular 228/2024</button>
+    <button class="hbadge" onclick="openCircModal('finance-act-2025-sec-124-retro-01-07-2017')">Finance Act 2025 — Sec 124 (retro 01.07.2017)</button>
+    <button class="hbadge new" onclick="openCircModal('rba-27-2025-gst-2-0')">🆕 RBA 27/2025 — GST 2.0 Rates w.e.f. 22.09.2025</button>
+    <button class="hbadge new" onclick="openCircModal('rba-13-2026-gst-circular-3-2026-june-2026')">🆕 RBA 13/2026 — Demand 11 Staff Welfare ITC Rules</button>
   </div>
 </div>
 
-<div class="top-alert" style="background:#7a3500;color:#fff;padding:8px 20px;font-size:12px;display:flex;flex-direction:column;gap:4px">
-  <div>🆕 <strong style="color:#ffe066">RBA 13/2026 (GST Circular 3/2026) — Demand 11 (SMH-09) Staff Welfare:</strong>
-  Default flag is now <strong style="color:#ffe066">T3 (No ITC)</strong> for ALL Demand 11 expenditure. T4/C2 allowed ONLY with mandatory IPAS "ITC Justification" — Statutory Obligation Test or Operational Nexus Test. Bill blocked without justification. See <strong>Demand 11 Rules</strong> tab.</div>
-  <div>⚠️ <strong style="color:#ffe066">GST 2.0 w.e.f. 22.09.2025 (RBA 27/2025):</strong>
-  Works contract earth WC to Govt: 12%→18% &nbsp;|&nbsp; GTA 12%→18% &nbsp;|&nbsp; Air business: 12%→18% &nbsp;|&nbsp;
-  Rent-a-cab: 12%→18% &nbsp;|&nbsp; Individual life/health insurance: EXEMPT &nbsp;|&nbsp; Multimodal: 12%→5% no ITC</div>
+<div class="top-alert">
+  <div class="ta-row">
+    <span class="ta-icon">🆕</span>
+    <span class="ta-text"><strong>RBA 13/2026 (GST Circular 3/2026) — Demand 11 (SMH-09) Staff Welfare:</strong>
+    Default flag is now <strong>T3 (No ITC)</strong> for ALL Demand 11 expenditure. T4/C2 allowed ONLY with mandatory IPAS "ITC Justification" — Statutory Obligation Test or Operational Nexus Test. Bill blocked without justification. See <strong>Demand 11 Rules</strong> tab.</span>
+  </div>
+  <div class="ta-row">
+    <span class="ta-icon">⚠️</span>
+    <span class="ta-text"><strong>GST 2.0 w.e.f. 22.09.2025 (RBA 27/2025):</strong>
+    Works contract earth WC to Govt: 12%→18% &nbsp;|&nbsp; GTA 12%→18% &nbsp;|&nbsp; Air business: 12%→18% &nbsp;|&nbsp;
+    Rent-a-cab: 12%→18% &nbsp;|&nbsp; Individual life/health insurance: EXEMPT &nbsp;|&nbsp; Multimodal: 12%→5% no ITC</span>
+  </div>
 </div>
 <div class="legend">
   <span style="font-size:10px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.4px">ITC Flags:</span>
@@ -193,7 +236,6 @@ mark{background:#fff176;border-radius:2px;padding:0 1px}
 
 <!-- ══ TAB 1: MASTER ══ -->
 <div id="tab-master" class="pane active">
-  <div class="stats" id="statRow"></div>
   <div class="controls">
     <input class="si si-wide" type="text" id="srch" placeholder="🔍  Search description, note, category…" oninput="renderTable()">
     <div class="pos-rel">
@@ -925,16 +967,7 @@ function renderTable(){
     tb.appendChild(tr);
   });
 
-  const counts={T1:0,T2:0,T3:0,T4:0,C2:0,EX:0};
-  rows.forEach(d=>{if(counts[d.flag]!==undefined)counts[d.flag]++;});
-  document.getElementById('statRow').innerHTML=`
-    <div class="sc"><div class="n">${rows.length}</div><div class="l">Records</div></div>
-    <div class="sc"><div class="n" style="color:var(--T3fg)">${counts.T3}</div><div class="l">T3 Blocked</div></div>
-    <div class="sc"><div class="n" style="color:var(--T4fg)">${counts.T4}</div><div class="l">T4 Full ITC</div></div>
-    <div class="sc"><div class="n" style="color:var(--C2fg)">${counts.C2}</div><div class="l">C2 Partial</div></div>
-    <div class="sc"><div class="n" style="color:var(--T2fg)">${counts.T2}</div><div class="l">T2 Exempt</div></div>
-    <div class="sc"><div class="n" style="color:var(--T1fg)">${counts.T1}</div><div class="l">T1 Non-Biz</div></div>
-    <div class="sc"><div class="n" style="color:#374151">${counts.EX}</div><div class="l">EX Exempt</div></div>`;
+  
 }
 
 // ── CONSTRUCTION TABLE ──
@@ -971,6 +1004,36 @@ function switchTab(id,btn){
   document.getElementById('tab-'+id).classList.add('active');
   btn.classList.add('active');
 }
+
+const CIRC_MODAL_DATA = {
+  "cgst-act-2017-sec-17-5": {"badge": "CGST Act 2017 \u2014 Sec 16, 17(5)", "tag": "CGST Act 2017 \u2014 Sec 17(5)", "title": "Blocked Credits \u2014 Primary Law", "body": "<p>Lists all categories of ineligible ITC: (a)/(b) motor vehicles, food, catering, beauty, health insurance, LTC, club membership; (c) works contract for construction of immovable property [except plant and machinery]; (d) goods/services for construction of immovable property on own account [except plant and machinery]. Finance Act 2025 Sec 124: retrospective amendment from 01.07.2017 \u2014 'plant or machinery' \u2192 'plant and machinery', nullifying Safari Retreats SC ruling for buildings used as plants.</p>"},
+  "cgst-rule-42-43": {"badge": "CGST Rule 42 & 43", "tag": "CGST Rule 42 & 43", "title": "ITC Apportionment for Common Inputs (C2 Flag)", "body": "<p>Rule 42: Monthly provisional reversal formula D1=(E/F)\u00d7C2 where E=exempt+non-business turnover, F=total turnover. Annual true-up in September GSTR-3B return. Rule 43: ITC on capital goods used for common/exempt purposes \u2014 1/60th per month reversal over 5 years. C2 flag must be followed by these monthly reversals.</p>"},
+  "rba-27-2018-gst-circular-11-2018-26-03-2018": {"badge": "RBA 27/2018 (GST Circ 11/2018)", "tag": "RBA 27/2018 (GST Circular 11/2018) \u2014 26.03.2018", "title": "Master ITC Flagging Checklist for Indian Railways", "body": "<p>First comprehensive ITC flag checklist: T1 (non-business), T2 (exempt operations), T3 (restricted/blocked), T4 (full credit \u2014 taxable), C2 (partial credit). Annexure-A provides 11 categories. Flagging to be done in IPAS at demand generation stage, reviewable at bill passing. Checklist is illustrative and not exhaustive. Responsibility of Railways to correctly complete flagging per GST Rules.</p>"},
+  "rba-19-2024-gst-circular-04-2024-13-06-2024": {"badge": "RBA 19/2024 (GST Circ 04/2024)", "tag": "RBA 19/2024 (GST Circular 04/2024) \u2014 13.06.2024", "title": "Amendment to RBA 27/2018 \u2014 3 Critical Changes", "body": "<p>Substitutes Sl.3, Sl.7, Sl.9 of Annexure-A to RBA 27/2018. (i) Sl.3: Goods procured for use in repairing wagons/coaches/locos \u2192 T3 (No credit). Previously ambiguous. (ii) Sl.7: Goods for construction of P&M like railway tracks, signalling, telecom equipment, concrete/wooden/iron-steel sleepers, lathe machines, cranes \u2192 T3 (No credit). (iii) Sl.9: GTA services \u2014 C2 (Partial credit) if 12%/18% GST; T3 (No credit) if 5% GST. Irrespective of forward/reverse charge. Checklist remains illustrative.</p>"},
+  "rba-86-2020-gst-circular-46-2020-04-11-2020": {"badge": "RBA 86/2020 (GST Circ 46/2020)", "tag": "RBA 86/2020 (GST Circular 46/2020) \u2014 04.11.2020", "title": "ITC Re-flagging & Monthly Review Guidelines", "body": "<p>Mandates monthly review and reflagging of all IPAS invoices. Units must furnish annual certificate confirming: (a) all ITC flagging/reflagging thoroughly checked, (b) errors rectified, (c) correct ITC flagging ensured. Excess ITC due to wrong flagging attracts interest @18% p.a. under CGST Sec 50. NR HQ GST Cell letter 19.08.2025 directed re-flagging certificate for FY 2024-25 by 26/08/2025.</p>"},
+  "cbic-circular-228-22-2024-gst-15-07-2024": {"badge": "CBIC Circular 228/2024", "tag": "CBIC Circular 228/22/2024-GST \u2014 15.07.2024", "title": "53rd GST Council \u2014 Railway-Specific Exemptions", "body": "<p>Three key exemptions: (1) IR public services (platform tickets, retiring rooms, cloak rooms, battery-operated cars) EXEMPT from GST w.e.f. 15.07.2024. (2) Supply of services between IR zones/divisions EXEMPT w.e.f. 15.07.2024; regularised 20.10.2023\u201314.07.2024. (3) SPV\u2013IR infrastructure concession transactions (RVNL/DFCCIL allowing IR to use infrastructure) EXEMPT; regularised from 01.07.2017 to 14.07.2024. These were previously wrongly being charged GST causing ITC complications.</p>"},
+  "finance-act-2025-sec-124-retro-01-07-2017": {"badge": "Finance Act 2025 \u2014 Sec 124 (retro 01.07.2017)", "tag": "Finance Act 2025 \u2014 Sec 124 (retro 01.07.2017)", "title": "'Plant and Machinery' \u2014 Retrospective Amendment to Sec 17(5)(d)", "body": "<p>Substitutes 'plant or machinery' with 'plant and machinery' in Section 17(5)(d) retrospectively from 01.07.2017. Adds Explanation 2: notwithstanding any court/tribunal order, 'plant or machinery' shall always be read as 'plant and machinery'. This explicitly nullifies the Supreme Court ruling in Safari Retreats Private Ltd. (Oct 2024) which had allowed ITC on buildings used as 'plant'. For Railways: building/immovable property construction remains T3 always, even if the building functions as a plant in the business. OHE and signalling equipment \u2014 pure P&M \u2014 remain T4.</p>"},
+  "rba-27-2025-gst-2-0": {"badge": "RBA 27/2025 \u2014 GST 2.0 Rates w.e.f. 22.09.2025", "tag": "\ud83c\udd95 RBA 27/2025 (GST Circular 06/2025) \u2014 19.09.2025", "title": "GST 2.0 Rate Rationalisation w.e.f. 22.09.2025", "body": "<p>56th GST Council (03.09.2025) rationalized the 4-tier GST structure into a 2-tier system: Standard Rate 18%, Merit Rate 5%, De-merit 40%. Effective <strong>22.09.2025</strong> per Notifications 09\u201315/2025-CT(R) dated 17.09.2025.</p>\n    <p style=\"margin-top:10px\"><strong>Key railway-relevant changes:</strong></p>\n    <ul>\n      <li>Works contract \u2014 earth work &gt;75% to Govt: 12% \u2192 18% with ITC</li>\n      <li>GTA \u2014 transport of goods (12%/18% option): 12% \u2192 18% with ITC</li>\n      <li>Multimodal transport of goods: 12% \u2192 5% without ITC</li>\n      <li>Renting of motor vehicle / goods carriage: 12% \u2192 18%</li>\n      <li>Air transport \u2014 business class: 12% \u2192 18%</li>\n      <li>Individual life and health insurance: now EXEMPT</li>\n      <li>AC machines: 28% \u2192 18%</li>\n      <li>Wood sleepers: 12% \u2192 5% (ITC flag unchanged \u2014 still T3)</li>\n      <li>Cement: 28% \u2192 18% (ITC flag unchanged \u2014 still T3)</li>\n    </ul>\n    <p style=\"margin-top:10px\"><strong>Important:</strong> ITC flags in IPAS do NOT change due to this circular \u2014 only the GST rate charged on invoices changes. Check time-of-supply rules under CGST Sec 14 for bills spanning the 22.09.2025 transition date.</p>"},
+  "rba-13-2026-gst-circular-3-2026-june-2026": {"badge": "RBA 13/2026 \u2014 Demand 11 Staff Welfare ITC Rules", "tag": "RBA 13/2026 (GST Circular 3/2026) \u2014 June 2026 \ud83c\udd95", "title": "Demand 11 (SMH-09) Staff Welfare \u2014 ITC Eligibility Framework", "body": "<p>Reviews ITC eligibility for transactions under erstwhile Demand 11 (SMH-09) Abstract-J \u2014 Staff Welfare and Amenities. Based on Zonal Railway feedback and RB GST consultants' opinion: ITC is GENERALLY UNAVAILABLE for Demand 11 transactions. DEFAULT TREATMENT: All Demand 11 expenditure \u2192 T3 (No ITC). EXCEPTION-BASED ALLOWANCE (C2/T4) only if: (A) Statutory Obligation Test \u2014 expenditure mandatory under law (e.g. canteen under Factories Act), or (B) Operational Nexus Test \u2014 direct/proximate connection with core railway operations not barred u/s 17(5) (e.g. technical training for train operations). SYSTEM ENFORCEMENT: IPAS now displays an 'ITC Justification' button whenever Demand-11 + T4/C2 flag is selected. Bill submission is BLOCKED until justification is entered and saved via popup, selecting one of: 'Not covered under blocked credits under Section 17(5)', 'Statutory obligation \u2014 expenditure mandated under applicable law', or 'Others (Specify)' with mandatory description and remarks. Production Units must issue local instructions in consultation with GST consultants since this allocation-based system change is railway-specific and not available to them by default. Mandatory staff training required.</p>"}
+};
+
+function openCircModal(slug){
+  const d = CIRC_MODAL_DATA[slug];
+  if(!d) return;
+  document.getElementById('circModalTag').textContent = d.tag;
+  document.getElementById('circModalTag').className = 'circ-modal-tag' + (slug.includes('2025-gst-2-0') || slug.includes('13-2026') ? ' new' : '');
+  document.getElementById('circModalTitle').textContent = d.title;
+  document.getElementById('circModalBody').innerHTML = d.body;
+  document.getElementById('circModalOverlay').classList.add('show');
+  document.body.style.overflow = 'hidden';
+}
+function closeCircModal(){
+  document.getElementById('circModalOverlay').classList.remove('show');
+  document.body.style.overflow = '';
+}
+document.addEventListener('keydown', function(e){
+  if(e.key === 'Escape') closeCircModal();
+});
 
 renderTable();
 </script>
