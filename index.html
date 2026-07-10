@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -12,22 +12,22 @@
   --T3bg:#fcebeb;--T3fg:#791f1f;--T3bd:#e24b4a;
   --T4bg:#eaf3de;--T4fg:#27500a;--T4bd:#639922;
   --C2bg:#e6f1fb;--C2fg:#0c447c;--C2bd:#378add;
-  --bg:#f5f7fa;--card:#fff;--border:#d1dce8;
+  --bg:#eef3f8;--card:#fff;--border:#d1dce8;
   --text:#1a2233;--muted:#6b7a94;--mono:'Courier New',monospace;
   --warn-bg:#fff8e1;--warn-bd:#f9be70;--warn-fg:#7a3500;
+  --gov:#062b4f;--gov2:#0b4f79;--mint:#14b8a6;--gold:#f3b43f;
 }
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--text);font-size:13px;line-height:1.5}
+body{font-family:'Segoe UI',Arial,sans-serif;background:radial-gradient(circle at top right,rgba(20,184,166,.14),transparent 28%),linear-gradient(180deg,#f7fbff 0,#eef3f8 42%,#e8eef6 100%);color:var(--text);font-size:13px;line-height:1.5}
 a{color:var(--navy3)}
 
 /* HEADER */
-.hdr{background:linear-gradient(135deg,var(--navy),var(--navy2) 60%,var(--navy3));color:#fff;padding:20px 20px 16px;text-align:center}
-.hdr h1{font-size:21px;font-weight:700;letter-spacing:.3px;display:flex;align-items:center;justify-content:center;gap:10px}
-.hdr p{font-size:12px;opacity:.85;margin-top:6px;font-weight:500}
-.hbadges{display:flex;gap:7px;flex-wrap:wrap;margin-top:13px;justify-content:center}
-.hbadge{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);border-radius:12px;font-size:10px;font-family:inherit;padding:4px 11px;color:#fff;text-decoration:none;display:inline-block;transition:all .15s;cursor:pointer;outline:none}
-.hbadge:hover{background:rgba(255,255,255,.3);border-color:rgba(255,255,255,.5);transform:translateY(-1px)}
-.hbadge:active{transform:translateY(0)}
+.hdr{background:linear-gradient(135deg,var(--gov),var(--gov2) 62%,#10749a);color:#fff;padding:18px 20px 16px;text-align:center;position:relative;overflow:hidden;border-bottom:3px solid var(--gold)}
+.hdr:before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(255,255,255,.09) 1px,transparent 1px),linear-gradient(0deg,rgba(255,255,255,.06) 1px,transparent 1px);background-size:34px 34px;opacity:.35}
+.hdr>*{position:relative}
+.gov-kicker{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.24);border-radius:999px;padding:4px 12px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;margin-bottom:10px}
+.hdr h1{font-size:23px;font-weight:800;letter-spacing:.2px;display:flex;align-items:center;justify-content:center;gap:10px}
+.hdr p{font-size:12px;opacity:.9;margin-top:6px;font-weight:500}
 
 /* CIRCULAR REFERENCE MODAL */
 .circ-modal-overlay{display:none;position:fixed;inset:0;background:rgba(15,25,45,.55);backdrop-filter:blur(2px);z-index:1000;align-items:center;justify-content:center;padding:20px}
@@ -46,11 +46,16 @@ a{color:var(--navy3)}
 .circ-modal-body li{margin-bottom:6px}
 
 /* LEGEND */
-.top-alert{background:linear-gradient(135deg,#7a3500,#9c4500);padding:16px 24px;display:flex;flex-direction:column;gap:10px;box-shadow:inset 0 -3px 8px rgba(0,0,0,.15)}
+.top-alert{background:linear-gradient(135deg,#7a3500,#9c4500);padding:14px 24px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;box-shadow:inset 0 -3px 8px rgba(0,0,0,.15);transition:max-height .25s ease,padding .25s ease,opacity .2s ease;max-height:260px;overflow:hidden;position:relative}
+.top-alert.is-hidden{max-height:0;padding-top:0;padding-bottom:0;opacity:0;pointer-events:none}
 .ta-row{display:flex;align-items:flex-start;gap:12px;color:#fff;font-size:13px;line-height:1.6}
 .ta-icon{font-size:18px;flex-shrink:0;margin-top:1px}
 .ta-text{flex:1}
 .ta-text strong{color:#ffe066;font-weight:700}
+.alert-tools{position:absolute;right:12px;top:8px;display:flex;gap:6px}
+.alert-btn{border:1px solid rgba(255,255,255,.4);background:rgba(255,255,255,.13);color:#fff;border-radius:999px;padding:4px 10px;font-size:10px;font-weight:700;cursor:pointer}
+.alert-reopen{display:none;position:fixed;right:14px;bottom:14px;z-index:60;border:none;background:linear-gradient(135deg,var(--gov),var(--gov2));color:#fff;border-radius:999px;padding:9px 13px;font-size:11px;font-weight:800;box-shadow:0 10px 28px rgba(15,45,94,.25);cursor:pointer}
+.alert-reopen.show{display:block}
 .legend{background:var(--card);border-bottom:1px solid var(--border);padding:8px 20px;display:flex;gap:10px;flex-wrap:wrap;align-items:center}
 .badge{display:inline-block;padding:3px 9px;border-radius:4px;font-size:11px;font-weight:700;border:1px solid transparent;white-space:nowrap}
 .badge-T1{background:var(--T1bg);color:var(--T1fg);border-color:var(--T1bd)}
@@ -61,13 +66,20 @@ a{color:var(--navy3)}
 .badge-EX{background:#f3f4f6;color:#374151;border-color:#9ca3af}
 
 /* TABS */
-.tabs{background:var(--card);border-bottom:1px solid var(--border);display:flex;gap:5px;overflow-x:auto;padding:10px 20px 0;box-shadow:0 1px 4px rgba(15,45,94,.05)}
-.tab{background:none;border:none;border-radius:10px 10px 0 0;padding:11px 18px;font-size:12.5px;font-weight:600;color:var(--muted);cursor:pointer;white-space:nowrap;transition:all .2s ease;position:relative;top:1px}
+.tabs{background:rgba(255,255,255,.92);border-bottom:1px solid var(--border);display:flex;gap:7px;flex-wrap:wrap;overflow-x:visible;padding:10px 20px;box-shadow:0 1px 4px rgba(15,45,94,.05);position:sticky;top:0;z-index:20;backdrop-filter:blur(8px);align-items:center}
+.tab{background:#f7fafc;border:1px solid var(--border);border-radius:8px;padding:10px 14px;font-size:12px;font-weight:700;color:var(--muted);cursor:pointer;white-space:nowrap;transition:all .2s ease;position:relative}
 .tab:hover{color:var(--navy2);background:var(--bg)}
-.tab.active{color:#fff;background:linear-gradient(135deg,var(--navy),var(--navy3));box-shadow:0 -3px 12px rgba(15,45,94,.2);font-weight:700;transform:translateY(-1px)}
+.tab.active{color:#fff;background:linear-gradient(135deg,var(--gov),var(--gov2));border-color:rgba(255,255,255,.2);box-shadow:0 8px 18px rgba(15,45,94,.18);font-weight:800;transform:translateY(-1px)}
+.tab-search{margin-left:auto;display:flex;gap:6px;align-items:center;min-width:260px}
+.tab-search input{width:220px;padding:9px 10px;border:1px solid var(--border);border-radius:8px;font-size:12px;color:var(--text);background:#fff}
+.tab-search button{border:none;border-radius:8px;background:var(--gov2);color:#fff;padding:9px 11px;font-size:11px;font-weight:800;cursor:pointer}
 
 /* MAIN */
 .main{max-width:1500px;margin:0 auto;padding:16px 20px}
+.compliance-strip{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-bottom:14px}
+.compliance-tile{background:rgba(255,255,255,.88);border:1px solid var(--border);border-radius:8px;padding:10px 12px;box-shadow:0 6px 18px rgba(15,45,94,.06)}
+.compliance-tile b{display:block;color:var(--gov);font-size:11px;text-transform:uppercase;letter-spacing:.35px;margin-bottom:3px}
+.compliance-tile span{font-size:11px;color:var(--muted);line-height:1.45}
 .pane{display:none}.pane.active{display:block}
 
 /* CONTROLS */
@@ -114,6 +126,12 @@ tbody tr:nth-child(even) td{background:#f9fbfd}
 .fund-B{display:inline-block;font-size:10px;padding:1px 5px;border-radius:3px;font-weight:700;background:#ede7f6;color:#311b92;border:1px solid #b39ddb}
 .nodata{text-align:center;padding:40px;color:var(--muted)}
 mark{background:#fff176;border-radius:2px;padding:0 1px}
+.search-info{display:none;background:#f8fbff;border:1px solid var(--border);border-radius:8px;padding:10px 12px;margin-bottom:12px}
+.search-info.show{display:block}
+.search-info h4{font-size:12px;color:var(--gov);margin-bottom:6px}
+.search-info-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:8px}
+.search-hit{background:#fff;border:1px solid #dce7f2;border-radius:7px;padding:8px 9px;font-size:11px;line-height:1.45}
+.search-hit b{color:var(--navy2)}
 
 /* DUAL FLAG COLUMN */
 .flag-rly{display:inline-flex;flex-direction:column;gap:3px}
@@ -161,7 +179,29 @@ mark{background:#fff176;border-radius:2px;padding:0 1px}
 
 /* FOOTER */
 .footer{background:var(--navy);color:rgba(255,255,255,.6);text-align:center;padding:11px;font-size:10px;margin-top:24px}
-@media print{.controls,.tabs,.hbadges{display:none!important}.pane{display:block!important}table{font-size:9px}}
+@media print{.controls,.tabs{display:none!important}.pane{display:block!important}table{font-size:9px}}
+@media (max-width:980px){
+  .top-alert{grid-template-columns:1fr}
+  .compliance-strip{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:620px){
+  .hdr{padding:14px 14px 12px}
+  .hdr h1{font-size:19px;line-height:1.25;align-items:flex-start}
+  .hdr p{font-size:11px}
+  .legend{padding:8px 12px}
+  .tabs{position:static;display:grid;grid-template-columns:1fr 1fr;padding:8px 12px}
+  .tab{font-size:11px;padding:9px 8px;white-space:normal;text-align:center}
+  .tab-search{grid-column:1/-1;margin-left:0;min-width:0}
+  .tab-search input{width:100%}
+  .main{padding:12px}
+  .controls{display:grid;grid-template-columns:1fr}
+  .si,.si-wide,.rst{width:100%;min-width:0}
+  .pos-rel{width:100%}
+  .sug-box{min-width:100%}
+  .compliance-strip{grid-template-columns:1fr}
+  .top-alert{padding:12px}
+  .ta-row{font-size:12px}
+}
 </style>
 </head>
 <body>
@@ -180,22 +220,20 @@ mark{background:#fff176;border-radius:2px;padding:0 1px}
 </div>
 
 <div class="hdr">
+  <div class="gov-kicker">Government of India · Ministry of Railways · GST Cell Reference</div>
   <h1>🚆 Railway GST ITC Flagging Reference Tool</h1>
   <p>O/O Sr. DFM · Northern Railway · Moradabad Division &nbsp;|&nbsp; Bill-Passing Stage Reference · IPAS Compliance</p>
-  <div class="hbadges">
-    <button class="hbadge" onclick="openCircModal('cgst-act-2017-sec-17-5')">CGST Act 2017 — Sec 16, 17(5)</button>
-    <button class="hbadge" onclick="openCircModal('cgst-rule-42-43')">CGST Rule 42 &amp; 43</button>
-    <button class="hbadge" onclick="openCircModal('rba-27-2018-gst-circular-11-2018-26-03-2018')">RBA 27/2018 (GST Circ 11/2018)</button>
-    <button class="hbadge" onclick="openCircModal('rba-19-2024-gst-circular-04-2024-13-06-2024')">RBA 19/2024 (GST Circ 04/2024)</button>
-    <button class="hbadge" onclick="openCircModal('rba-86-2020-gst-circular-46-2020-04-11-2020')">RBA 86/2020 (GST Circ 46/2020)</button>
-    <button class="hbadge" onclick="openCircModal('cbic-circular-228-22-2024-gst-15-07-2024')">CBIC Circular 228/2024</button>
-    <button class="hbadge" onclick="openCircModal('finance-act-2025-sec-124-retro-01-07-2017')">Finance Act 2025 — Sec 124 (retro 01.07.2017)</button>
-    <button class="hbadge new" onclick="openCircModal('rba-27-2025-gst-2-0')">🆕 RBA 27/2025 — GST 2.0 Rates w.e.f. 22.09.2025</button>
-    <button class="hbadge new" onclick="openCircModal('rba-13-2026-gst-circular-3-2026-june-2026')">🆕 RBA 13/2026 — Demand 11 Staff Welfare ITC Rules</button>
-  </div>
 </div>
 
-<div class="top-alert">
+<div class="top-alert" id="topAlert">
+  <div class="alert-tools">
+    <button class="alert-btn" onclick="hideTopAlert()">Hide</button>
+  </div>
+  <div class="ta-row">
+    <span class="ta-icon">📌</span>
+    <span class="ta-text"><strong>RBA 19/2024 (GST Circular 04/2024 dated 13.06.2024):</strong>
+    Items 3, 7 and 9 of RBA 27/2018 are substituted. Workshop repair goods and P&amp;M construction goods are <strong>T3 - No Credit</strong>. GTA is <strong>C2</strong> only when ITC is otherwise allowed; if restricted under Sec 17(5), use <strong>T3</strong>.</span>
+  </div>
   <div class="ta-row">
     <span class="ta-icon">🆕</span>
     <span class="ta-text"><strong>RBA 13/2026 (GST Circular 3/2026) — Demand 11 (SMH-09) Staff Welfare:</strong>
@@ -208,6 +246,7 @@ mark{background:#fff176;border-radius:2px;padding:0 1px}
     Rent-a-cab: 12%→18% &nbsp;|&nbsp; Individual life/health insurance: EXEMPT &nbsp;|&nbsp; Multimodal: 12%→5% no ITC</span>
   </div>
 </div>
+<button class="alert-reopen" id="alertReopen" onclick="showTopAlert()">Show updates</button>
 <div class="legend">
   <span style="font-size:10px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.4px">ITC Flags:</span>
   <span class="badge badge-T1">T1 — No ITC (Non-Business)</span>
@@ -230,9 +269,19 @@ mark{background:#fff176;border-radius:2px;padding:0 1px}
   <button class="tab" onclick="switchTab('demand11',this)">🆕 Demand 11 Rules</button>
   <button class="tab" onclick="switchTab('gst2',this)">GST 2.0 Rate Changes</button>
   <button class="tab" onclick="switchTab('circulars',this)">📜 Circulars &amp; Sources</button>
+  <div class="tab-search">
+    <input id="globalHsnSearch" placeholder="Search HSN/SAC from any tab" onkeydown="if(event.key==='Enter')runGlobalHsnSearch()">
+    <button onclick="runGlobalHsnSearch()">Search</button>
+  </div>
 </nav>
 
 <div class="main">
+<div class="compliance-strip">
+  <div class="compliance-tile"><b>HSN/SAC discipline</b><span>Use 6-digit SAC/HSN wherever identifiable. For goods bundles, capture invoice tariff code before flagging.</span></div>
+  <div class="compliance-tile"><b>RBA 19 controls</b><span>Item 3 repair goods and item 7 P&amp;M construction goods are T3. GTA requires rate and Sec 17(5) check.</span></div>
+  <div class="compliance-tile"><b>ITC rule path</b><span>Sec 16 eligibility first, then Sec 17(1)/(2), Sec 17(5), and Rule 42/43 apportionment for C2.</span></div>
+  <div class="compliance-tile"><b>Bill-passing proof</b><span>Keep invoice, work order, end-use, fund head, GST rate, and justification note with every flag decision.</span></div>
+</div>
 
 <!-- ══ TAB 1: MASTER ══ -->
 <div id="tab-master" class="pane active">
@@ -271,6 +320,7 @@ mark{background:#fff176;border-radius:2px;padding:0 1px}
     </select>
     <button class="rst" onclick="resetAll()">↺ Reset</button>
   </div>
+  <div id="hsnSearchInfo" class="search-info"></div>
   <div class="tbl-wrap">
     <table>
       <thead><tr>
@@ -658,29 +708,29 @@ mark{background:#fff176;border-radius:2px;padding:0 1px}
 // fund: C / R / C/R
 const DATA = [
   // ── TRANSPORT ──
-  {sr:"1",desc:"Hiring of vehicles — Rent-a-Cab / staff cars",sub:"Hired vehicles for employees, officers",hsn:"9966",cat:"Transport",flag:"T3",gstbasis:"Sec 17(5)(b) — rent-a-cab blocked",enduse:"All",fund:"R",ipas:"T3",gst:"5%/12%",note:"No ITC regardless of purpose. All motor vehicle / cab hire for staff = blocked.",ref:"CGST Sec 17(5)(b); RBA 27/2018 Sl.11"},
-  {sr:"2",desc:"Taxi / cab hire for officers at locations",sub:"Duty travel, inspection visits",hsn:"9966",cat:"Transport",flag:"T3",gstbasis:"Sec 17(5)(b) — rent-a-cab",enduse:"All",fund:"R",ipas:"T3",gst:"5%/12%",note:"Same as above. Rent-a-cab blocked u/s 17(5)(b).",ref:"RBA 27/2018 Sl.11"},
-  {sr:"3",desc:"Air travel — Economy class",sub:"Officers on duty",hsn:"9964",cat:"Transport",flag:"C2",gstbasis:"Rule 42 — common input service",enduse:"Mixed",fund:"R",ipas:"C2",gst:"5%",note:"Common credit. Officer travel benefits both AC and Non-AC operations. Monthly Rule 42 reversal.",ref:"RBA 27/2018"},
-  {sr:"4",desc:"Air travel — Business / First class",sub:"Senior officers",hsn:"9964",cat:"Transport",flag:"C2",gstbasis:"Rule 42 — common input service",enduse:"Mixed",fund:"R",ipas:"C2",gst:"12%",note:"Partial ITC. Apportion under Rule 42.",ref:"RBA 27/2018"},
-  {sr:"5",desc:"GTA services — at 12% or 18% GST rate",sub:"Goods transport by road, forward or RCM",hsn:"9967",cat:"Courier/GTA",flag:"C2",gstbasis:"RBA 19/2024 Sl.9 — C2 at 12%/18%",enduse:"Mixed",fund:"R",ipas:"C2",gst:"12%/18%",note:"ITC eligible at 12%/18%. C2 — common credit. Apportion monthly Rule 42. (Amended by RBA 19/2024 — previously often wrongly flagged T3.)",ref:"RBA 19/2024 Sl.9 (amends RBA 27/2018 Sl.9)"},
-  {sr:"6",desc:"GTA services — at 5% GST rate",sub:"Goods transport by road, RCM at 5%",hsn:"9967",cat:"Courier/GTA",flag:"T3",gstbasis:"Sec 17(5) — blocked at 5% rate",enduse:"All",fund:"R",ipas:"T3",gst:"5%",note:"ITC BLOCKED when GTA opted at 5%. No credit available. RBA 19/2024 Sl.9 explicitly confirms.",ref:"RBA 19/2024 Sl.9 (amends RBA 27/2018 Sl.9)"},
-  {sr:"7",desc:"Courier / speed post / express delivery",sub:"Document dispatch, small parcel",hsn:"9967",cat:"Courier/GTA",flag:"C2",gstbasis:"Rule 42 — common input service",enduse:"Mixed",fund:"R",ipas:"C2",gst:"18%",note:"Common administrative service. C2. Monthly Rule 42.",ref:"RBA 27/2018"},
+  {sr:"1",desc:"Hiring of vehicles — Rent-a-Cab / staff cars",sub:"Hired vehicles for employees, officers",hsn:"996601",cat:"Transport",flag:"T3",gstbasis:"Sec 17(5)(b) — rent-a-cab blocked",enduse:"All",fund:"R",ipas:"T3",gst:"5%/12%/18%",note:"No ITC regardless of purpose. All motor vehicle / cab hire for staff = blocked. Confirm SAC 996601 or invoice SAC.",ref:"CGST Sec 17(5)(b); RBA 27/2018 Sl.11"},
+  {sr:"2",desc:"Taxi / cab hire for officers at locations",sub:"Duty travel, inspection visits",hsn:"996601",cat:"Transport",flag:"T3",gstbasis:"Sec 17(5)(b) — rent-a-cab",enduse:"All",fund:"R",ipas:"T3",gst:"5%/12%/18%",note:"Same as above. Rent-a-cab blocked u/s 17(5)(b). Confirm full SAC from invoice before bill passing.",ref:"RBA 27/2018 Sl.11"},
+  {sr:"3",desc:"Air travel — Economy class",sub:"Officers on duty",hsn:"996425",cat:"Transport",flag:"C2",gstbasis:"Rule 42 — common input service",enduse:"Mixed",fund:"R",ipas:"C2",gst:"5%",note:"Passenger air transport service. Common credit. Officer travel benefits both AC and Non-AC operations. Monthly Rule 42 reversal.",ref:"RBA 27/2018"},
+  {sr:"4",desc:"Air travel — Business / First class",sub:"Senior officers",hsn:"996425",cat:"Transport",flag:"C2",gstbasis:"Rule 42 — common input service",enduse:"Mixed",fund:"R",ipas:"C2",gst:"12%/18%",note:"Passenger air transport service. Partial ITC. Apportion under Rule 42.",ref:"RBA 27/2018"},
+  {sr:"5",desc:"GTA services — at 12% or 18% GST rate",sub:"Goods transport by road, forward or RCM",hsn:"996511",cat:"Courier/GTA",flag:"C2",gstbasis:"RBA 19/2024 Sl.9 — C2 unless restricted u/s 17(5)",enduse:"Mixed",fund:"R",ipas:"C2",gst:"12%/18%",note:"RBA 19/2024 says GTA received by IR for goods transport is C2 where ITC can be availed, irrespective of forward/reverse charge. If the ITC is restricted u/s 17(5), flag T3.",ref:"RBA 19/2024 Sl.9 (substitutes RBA 27/2018 Sl.9)"},
+  {sr:"6",desc:"GTA services — at 5% GST rate",sub:"Goods transport by road, RCM at 5%",hsn:"996511",cat:"Courier/GTA",flag:"T3",gstbasis:"RBA 19/2024 Sl.9 + rate condition — no ITC at 5%",enduse:"All",fund:"R",ipas:"T3",gst:"5%",note:"If supplier/GTA rate structure restricts ITC, use T3. Preserve rate line and RCM/FCM evidence with bill.",ref:"RBA 19/2024 Sl.9 (substitutes RBA 27/2018 Sl.9)"},
+  {sr:"7",desc:"Courier / speed post / express delivery",sub:"Document dispatch, small parcel",hsn:"996812",cat:"Courier/GTA",flag:"C2",gstbasis:"Rule 42 — common input service",enduse:"Mixed",fund:"R",ipas:"C2",gst:"18%",note:"Courier/local delivery support service. Common administrative service. C2 with monthly Rule 42.",ref:"RBA 27/2018"},
 
   // ── MAINTENANCE / AMC ──
-  {sr:"8",desc:"AMC of Plant & Machinery — exclusively for AC coaches",sub:"Dedicated AC equipment maintenance contract",hsn:"9987",cat:"Maintenance",flag:"T4",gstbasis:"Sec 16 — exclusively taxable supply",enduse:"AC",fund:"R",ipas:"T4",gst:"18%",note:"Exclusively for taxable AC output. Full ITC. Confirm exclusivity in work order before T4 flagging.",ref:"RBA 27/2018 Sl.2,5"},
-  {sr:"9",desc:"AMC of Plant & Machinery — exclusively for Non-AC coaches",sub:"Non-AC carriage maintenance",hsn:"9987",cat:"Maintenance",flag:"T2",gstbasis:"Sec 17(2) — exclusively for exempt supply",enduse:"NonAC",fund:"R",ipas:"T2",gst:"18%",note:"Exclusively for Non-AC / exempt passenger service. T2.",ref:"RBA 27/2018 Sl.2"},
-  {sr:"10",desc:"AMC of Plant & Machinery — mixed fleet / common",sub:"Workshop, depot, loco shed — mixed use",hsn:"9987",cat:"Maintenance",flag:"C2",gstbasis:"Rule 42 — common input (AC+NonAC)",enduse:"Mixed",fund:"R",ipas:"C2",gst:"18%",note:"Mixed use = C2. Most workshop/depot AMC falls here. Monthly Rule 42 apportionment mandatory.",ref:"RBA 27/2018 Sl.2,3"},
-  {sr:"11",desc:"Rehabilitation / POH / major overhaul of P&M",sub:"Periodic Overhaul in workshop",hsn:"9987",cat:"Maintenance",flag:"C2",gstbasis:"Rule 42 — common input",enduse:"Mixed",fund:"R",ipas:"C2",gst:"18%",note:"P&M treatment per RBA 27/2018. Service portion = C2 for mixed fleet. Confirm end-use fleet.",ref:"RBA 27/2018 Sl.2"},
-  {sr:"12",desc:"Repairs & Maintenance — Building structures (immovable)",sub:"Civil repair, structural works on buildings",hsn:"9954",cat:"Construction",flag:"T3",gstbasis:"Sec 17(5)(c) — WC for immovable property",enduse:"All",fund:"C/R",ipas:"T3",gst:"18%",note:"Works contract on immovable = ALWAYS T3. No ITC. Capitalised renovation also T3 (Finance Act 2025 Sec 124).",ref:"CGST Sec 17(5)(c); Finance Act 2025 Sec 124"},
-  {sr:"13",desc:"AMC of immovable property (buildings, colonies, stations)",sub:"Station building AMC, colony maintenance",hsn:"9954",cat:"Construction",flag:"T3",gstbasis:"Sec 17(5)(c) — WC for immovable",enduse:"All",fund:"R",ipas:"T3",gst:"18%",note:"Works contract on immovable. T3 always. Finance Act 2025 clarifies capitalised repairs also T3.",ref:"CGST Sec 17(5)(c); Finance Act 2025 Sec 124"},
-  {sr:"14",desc:"Software / IT application AMC",sub:"IPAS, HRMS, accounting software maintenance",hsn:"9983",cat:"Telecom/IT",flag:"T4",gstbasis:"Not blocked — intangible, not immovable",enduse:"All",fund:"R",ipas:"T4",gst:"18%",note:"Software AMC is not a works contract for immovable property. Not blocked u/s 17(5). Full ITC eligible.",ref:"CGST Act — not covered by Sec 17(5)"},
-  {sr:"15",desc:"Computer / hardware / printer AMC",sub:"Desktop, laptop, printer maintenance",hsn:"9983",cat:"Telecom/IT",flag:"C2",gstbasis:"Rule 42 — common input",enduse:"Mixed",fund:"R",ipas:"C2",gst:"18%",note:"Common use equipment. Partial ITC. Rule 42 apportionment.",ref:"RBA 27/2018"},
+  {sr:"8",desc:"AMC of Plant & Machinery — exclusively for AC coaches",sub:"Dedicated AC equipment maintenance contract",hsn:"998717",cat:"Maintenance",flag:"T4",gstbasis:"Sec 16 — exclusively taxable supply",enduse:"AC",fund:"R",ipas:"T4",gst:"18%",note:"Maintenance/repair of commercial or industrial machinery. Full ITC if exclusively for taxable AC output; confirm exclusivity in work order.",ref:"RBA 27/2018 Sl.2,5"},
+  {sr:"9",desc:"AMC of Plant & Machinery — exclusively for Non-AC coaches",sub:"Non-AC carriage maintenance",hsn:"998717",cat:"Maintenance",flag:"T2",gstbasis:"Sec 17(2) — exclusively for exempt supply",enduse:"NonAC",fund:"R",ipas:"T2",gst:"18%",note:"Exclusively for Non-AC / exempt passenger service. T2.",ref:"RBA 27/2018 Sl.2"},
+  {sr:"10",desc:"AMC of Plant & Machinery — mixed fleet / common",sub:"Workshop, depot, loco shed — mixed use",hsn:"998717",cat:"Maintenance",flag:"C2",gstbasis:"Rule 42 — common input (AC+NonAC)",enduse:"Mixed",fund:"R",ipas:"C2",gst:"18%",note:"Mixed use = C2. Most workshop/depot AMC falls here. Monthly Rule 42 apportionment mandatory.",ref:"RBA 27/2018 Sl.2,3"},
+  {sr:"11",desc:"Rehabilitation / POH / major overhaul of P&M",sub:"Periodic Overhaul in workshop",hsn:"998719",cat:"Maintenance",flag:"C2",gstbasis:"Rule 42 — common input",enduse:"Mixed",fund:"R",ipas:"C2",gst:"18%",note:"Other repair/maintenance service for machinery/equipment. Service portion = C2 for mixed fleet. Confirm end-use fleet.",ref:"RBA 27/2018 Sl.2"},
+  {sr:"12",desc:"Repairs & Maintenance — Building structures (immovable)",sub:"Civil repair, structural works on buildings",hsn:"995461",cat:"Construction",flag:"T3",gstbasis:"Sec 17(5)(c) — WC for immovable property",enduse:"All",fund:"C/R",ipas:"T3",gst:"18%",note:"Construction/repair service for buildings or civil structures. Works contract on immovable = ALWAYS T3. Capitalised renovation also T3.",ref:"CGST Sec 17(5)(c); Finance Act 2025 Sec 124"},
+  {sr:"13",desc:"AMC of immovable property (buildings, colonies, stations)",sub:"Station building AMC, colony maintenance",hsn:"995462",cat:"Construction",flag:"T3",gstbasis:"Sec 17(5)(c) — WC for immovable",enduse:"All",fund:"R",ipas:"T3",gst:"18%",note:"Repair/maintenance of civil engineering works/buildings. T3 always for immovable works contracts.",ref:"CGST Sec 17(5)(c); Finance Act 2025 Sec 124"},
+  {sr:"14",desc:"Software / IT application AMC",sub:"IPAS, HRMS, accounting software maintenance",hsn:"998314",cat:"Telecom/IT",flag:"T4",gstbasis:"Not blocked — intangible, not immovable",enduse:"All",fund:"R",ipas:"T4",gst:"18%",note:"IT design/development/support service. Not blocked u/s 17(5). Full ITC eligible if used for business/taxable operations.",ref:"CGST Act — not covered by Sec 17(5)"},
+  {sr:"15",desc:"Computer / hardware / printer AMC",sub:"Desktop, laptop, printer maintenance",hsn:"998713",cat:"Telecom/IT",flag:"C2",gstbasis:"Rule 42 — common input",enduse:"Mixed",fund:"R",ipas:"C2",gst:"18%",note:"Maintenance/repair of computers and peripheral equipment. Common use equipment. Partial ITC with Rule 42 apportionment.",ref:"RBA 27/2018"},
 
   // ── CONSTRUCTION ──
-  {sr:"16",desc:"Works contract — immovable property construction",sub:"Buildings, ROB, FOB, LHS, walls, culverts",hsn:"9954",cat:"Construction",flag:"T3",gstbasis:"Sec 17(5)(c) — immovable WC blocked",enduse:"All",fund:"C",ipas:"T3",gst:"18% (12% if earth>75%)",note:"Always T3. Works contract for immovable = blocked. No exceptions except P&M. GST @18% or 12% (AAR Karnataka — earthwork predominant).",ref:"CGST Sec 17(5)(c); AAR Karnataka S.K. Swami & Co."},
-  {sr:"17",desc:"Works contract — Plant & Machinery (capital fund)",sub:"Signalling, workshop equipment, traction, lifts",hsn:"9954",cat:"Construction",flag:"T4",gstbasis:"Sec 17(5)(c) P&M exception — eligible",enduse:"All",fund:"C",ipas:"T4",gst:"18%",note:"P&M exception to Sec 17(5)(c). T4 if used for taxable output (AC/freight). Confirm work order specifies P&M. Finance Act 2025 confirms.",ref:"CGST Sec 17(5)(c) exception; RBA 27/2018 Sl.7 (not overridden by RBA 19/2024 Sl.7 which covers goods, not WC)"},
+  {sr:"16",desc:"Works contract — immovable property construction",sub:"Buildings, ROB, FOB, LHS, walls, culverts",hsn:"995411-995429",cat:"Construction",flag:"T3",gstbasis:"Sec 17(5)(c) — immovable WC blocked",enduse:"All",fund:"C",ipas:"T3",gst:"18% (12% if earth>75%)",note:"Always T3. Use exact 9954 sub-code from invoice: building 995411-995419; civil engineering 995421-995429. No exceptions except P&M.",ref:"CGST Sec 17(5)(c); AAR Karnataka S.K. Swami & Co."},
+  {sr:"17",desc:"Works contract — Plant & Machinery (capital fund)",sub:"Signalling, workshop equipment, traction, lifts",hsn:"995461/995469",cat:"Construction",flag:"T4",gstbasis:"Sec 17(5)(c) P&M exception — eligible",enduse:"All",fund:"C",ipas:"T4",gst:"18%",note:"P&M exception to Sec 17(5)(c). Use installation/service SAC from invoice, commonly 995461/995469 for installation works. Confirm work order specifies P&M.",ref:"CGST Sec 17(5)(c) exception; RBA 27/2018 Sl.7 (RBA 19/2024 Sl.7 covers goods, not WC)"},
   {sr:"18",desc:"Lift / escalator installation at stations / FOBs",sub:"Station passenger lifts, escalators",hsn:"995466",cat:"Construction",flag:"T4",gstbasis:"Sec 17(5)(c) P&M exception",enduse:"All",fund:"C",ipas:"T4",gst:"18%",note:"Installation of P&M/equipment. Full ITC. Not blocked. Escalator = SAC 995467.",ref:"CGST Sec 17(5)(c) exception; Finance Act 2025"},
-  {sr:"19",desc:"New railway line / doubling / gauge conversion (civil portion)",sub:"Track laying, earthwork, grading",hsn:"9954",cat:"Construction",flag:"T3",gstbasis:"Sec 17(5)(c)/(d) — immovable civil",enduse:"All",fund:"C",ipas:"T3",gst:"18%/12%",note:"Civil/structural portion = immovable. T3. Goods for track = also T3 per RBA 19/2024 Sl.7.",ref:"CGST Sec 17(5)(c)/(d); RBA 19/2024 Sl.7"},
+  {sr:"19",desc:"New railway line / doubling / gauge conversion (civil portion)",sub:"Track laying, earthwork, grading",hsn:"995421/995429",cat:"Construction",flag:"T3",gstbasis:"Sec 17(5)(c)/(d) — immovable civil",enduse:"All",fund:"C",ipas:"T3",gst:"18%/12%",note:"Civil/structural portion = immovable. T3. Goods for track = also T3 per RBA 19/2024 Sl.7. Capture exact sub-code from invoice.",ref:"CGST Sec 17(5)(c)/(d); RBA 19/2024 Sl.7"},
   {sr:"20",desc:"Staff quarters / railway colony construction",sub:"New residential buildings for staff",hsn:"995411",cat:"Construction",flag:"T3",gstbasis:"Sec 17(5)(c)/(d) — immovable residential",enduse:"All",fund:"C",ipas:"T3",gst:"18%",note:"Immovable residential building. Always T3.",ref:"CGST Sec 17(5)(c)/(d)"},
   {sr:"21",desc:"Office buildings / station buildings / non-residential",sub:"Administrative buildings, station structures",hsn:"995413",cat:"Construction",flag:"T3",gstbasis:"Sec 17(5)(c)/(d) — immovable non-residential",enduse:"All",fund:"C",ipas:"T3",gst:"18%",note:"Immovable non-residential. Always T3.",ref:"CGST Sec 17(5)(c)/(d)"},
   {sr:"22",desc:"ROB / FOB / LHS / road-over/under bridges (structural)",sub:"Grade separators, foot overbridges — civil portion",hsn:"995421",cat:"Construction",flag:"T3",gstbasis:"Sec 17(5)(c)/(d) — immovable civil",enduse:"All",fund:"C",ipas:"T3",gst:"18%",note:"Immovable civil structure. T3. Even ROB deposit works = T3 at IR IPAS stage.",ref:"CGST Sec 17(5)(c)/(d)"},
@@ -689,143 +739,143 @@ const DATA = [
   {sr:"25",desc:"OFC ducts / manholes for telecom (P&M per CBIC 219/2024)",sub:"Ducts and manholes in OFC network",hsn:"995423",cat:"Construction",flag:"C2",gstbasis:"CBIC 219/2024 — OFC infra = P&M, ITC eligible",enduse:"Mixed",fund:"C",ipas:"C2",gst:"18%",note:"CBIC Circular 219/13/2024 explicitly: ducts and manholes for OFC = Plant & Machinery. ITC eligible. Partial C2 as telecom is common service.",ref:"CBIC Circular 219/13/2024-GST dated 26.06.2024"},
 
   // ── P.WAY / OHE / TRACK ──
-  {sr:"26",desc:"P.Way maintenance — service / labour component",sub:"P.Way contracts, track maintenance service",hsn:"9954",cat:"Civil/Track",flag:"C2",gstbasis:"RBA 27/2018 Sl.8 — service C2",enduse:"Mixed",fund:"R",ipas:"C2",gst:"18%",note:"Service portion of P.Way works → C2. Mixed use (freight + passenger both taxable and exempt).",ref:"RBA 27/2018 Sl.8"},
-  {sr:"27",desc:"P.Way maintenance — goods / materials (rails, sleepers, ballast)",sub:"Rails, fish plates, sleepers, ballast, fastenings",hsn:"—",cat:"Goods (Stock)",flag:"T3",gstbasis:"RBA 19/2024 Sl.7 — goods for P&M construction T3",enduse:"All",fund:"R",ipas:"T3",gst:"Varies",note:"Goods procured for track (treated as P&M construction) → T3. RBA 19/2024 Sl.7 explicitly covers track goods.",ref:"RBA 19/2024 Sl.7 (amends RBA 27/2018 Sl.7)"},
-  {sr:"28",desc:"OHE / traction modification and repair — service portion",sub:"OHE upgrade, repair, 1x25kV to 2x25kV",hsn:"9954",cat:"Civil/Track",flag:"C2",gstbasis:"RBA 27/2018 Sl.9 — service C2",enduse:"Mixed",fund:"R",ipas:"C2",gst:"18%",note:"Service component → C2. OHE classified as P&M in RBA 27/2018. Goods component → T3.",ref:"RBA 27/2018 Sl.9"},
-  {sr:"29",desc:"OHE / S&T repair — goods / materials",sub:"Insulators, wires, SCADA equipment, relay",hsn:"—",cat:"Goods (Stock)",flag:"T3",gstbasis:"RBA 19/2024 Sl.3 and Sl.7",enduse:"All",fund:"R",ipas:"T3",gst:"Varies",note:"Goods for P&M repair / construction → T3. RBA 19/2024 covers this explicitly.",ref:"RBA 19/2024 Sl.3 & Sl.7"},
-  {sr:"30",desc:"New OHE / electrification installation (capital)",sub:"New traction installation, electrification project",hsn:"9954",cat:"Civil/Track",flag:"T4",gstbasis:"Sec 17(5)(c) P&M exception — OHE = P&M",enduse:"All",fund:"C",ipas:"T4",gst:"18%",note:"New OHE/traction = Plant & Machinery. T4. Works contract for P&M eligible. Not immovable structure.",ref:"CGST Sec 17(5)(c) exception; RBA 27/2018"},
+  {sr:"26",desc:"P.Way maintenance — service / labour component",sub:"P.Way contracts, track maintenance service",hsn:"995429",cat:"Civil/Track",flag:"C2",gstbasis:"RBA 27/2018 Sl.8 — service C2",enduse:"Mixed",fund:"R",ipas:"C2",gst:"18%",note:"Service portion of P.Way works → C2. Use invoice SAC if different. Mixed use (freight + passenger both taxable and exempt).",ref:"RBA 27/2018 Sl.8"},
+  {sr:"27",desc:"P.Way maintenance — goods / materials (rails, sleepers, ballast)",sub:"Rails, fish plates, sleepers, ballast, fastenings",hsn:"Invoice HSN required",cat:"Goods (Stock)",flag:"T3",gstbasis:"RBA 19/2024 Sl.7 — goods for P&M construction T3",enduse:"All",fund:"R",ipas:"T3",gst:"As per goods tariff",note:"RBA 19/2024 substituted item 7: procurement of goods for construction of P&M such as railway tracks, signalling/telecom equipment, sleepers, machines and cranes = T3. Capture exact goods HSN from invoice.",ref:"RBA 19/2024 Sl.7 (substitutes RBA 27/2018 Sl.7)"},
+  {sr:"28",desc:"OHE / traction modification and repair — service portion",sub:"OHE upgrade, repair, 1x25kV to 2x25kV",hsn:"995469",cat:"Civil/Track",flag:"C2",gstbasis:"RBA 27/2018 Sl.9 — service C2",enduse:"Mixed",fund:"R",ipas:"C2",gst:"18%",note:"Service component → C2. OHE classified as P&M in RBA 27/2018. Goods component → T3 under RBA 19/2024.",ref:"RBA 27/2018 Sl.9; RBA 19/2024 Sl.7"},
+  {sr:"29",desc:"OHE / S&T repair — goods / materials",sub:"Insulators, wires, SCADA equipment, relay",hsn:"Invoice HSN required",cat:"Goods (Stock)",flag:"T3",gstbasis:"RBA 19/2024 Sl.3 and Sl.7",enduse:"All",fund:"R",ipas:"T3",gst:"As per goods tariff",note:"RBA 19/2024 item 3 makes goods procured for repairing wagons, coaches and locomotives T3. Item 7 makes P&M construction goods T3. Capture exact goods HSN from invoice.",ref:"RBA 19/2024 Sl.3 & Sl.7"},
+  {sr:"30",desc:"New OHE / electrification installation (capital)",sub:"New traction installation, electrification project",hsn:"995461/995469",cat:"Civil/Track",flag:"T4",gstbasis:"Sec 17(5)(c) P&M exception — OHE = P&M",enduse:"All",fund:"C",ipas:"T4",gst:"18%",note:"New OHE/traction works contract treated as Plant & Machinery. T4 where work order and invoice establish P&M installation/service; goods portion still needs RBA 19 check.",ref:"CGST Sec 17(5)(c) exception; RBA 27/2018; RBA 19/2024"},
 
   // ── HOUSEKEEPING ──
-  {sr:"31",desc:"OBHS / on-board housekeeping — AC trains exclusively",sub:"On-board housekeeping, AC coaches only",hsn:"9997",cat:"Housekeeping",flag:"T4",gstbasis:"Sec 16 — exclusively taxable supply",enduse:"AC",fund:"R",ipas:"T4",gst:"18%",note:"Exclusively for AC trains (taxable supply). Full ITC. Confirm train-type in work order.",ref:"RBA 27/2018"},
-  {sr:"32",desc:"OBHS / on-board housekeeping — Non-AC trains exclusively",sub:"Housekeeping in Non-AC/Sleeper trains only",hsn:"9997",cat:"Housekeeping",flag:"T2",gstbasis:"Sec 17(2) — exclusively for exempt supply",enduse:"NonAC",fund:"R",ipas:"T2",gst:"18%",note:"Exclusively Non-AC (exempt supply). T2.",ref:"RBA 27/2018"},
-  {sr:"33",desc:"OBHS / on-board housekeeping — mixed trains (AC + Non-AC)",sub:"Housekeeping in trains with both AC and Non-AC",hsn:"9997",cat:"Housekeeping",flag:"C2",gstbasis:"Rule 42 — common input (mixed output)",enduse:"Mixed",fund:"R",ipas:"C2",gst:"18%",note:"Mixed trains = C2. Apportion monthly. Most OBHS contracts will be C2 unless clearly single-type train.",ref:"RBA 27/2018"},
-  {sr:"34",desc:"Clean Train Service (CTS) — AC trains only",sub:"Originating / terminating cleaning, AC trains",hsn:"9997",cat:"Housekeeping",flag:"T4",gstbasis:"Sec 16 — exclusively taxable",enduse:"AC",fund:"R",ipas:"T4",gst:"18%",note:"Exclusively AC. Full ITC.",ref:"RBA 27/2018"},
-  {sr:"35",desc:"Clean Train Service (CTS) — mixed trains",sub:"Originating / terminating cleaning, all types",hsn:"9997",cat:"Housekeeping",flag:"C2",gstbasis:"Rule 42 — mixed output",enduse:"Mixed",fund:"R",ipas:"C2",gst:"18%",note:"Mixed trains = C2.",ref:"RBA 27/2018"},
-  {sr:"36",desc:"Mechanized cleaning — Stations / platforms",sub:"Station concourse, platforms, toilets",hsn:"9997",cat:"Housekeeping",flag:"C2",gstbasis:"Rule 42 — common (serves all passengers)",enduse:"Mixed",fund:"R",ipas:"C2",gst:"18%",note:"Station serves both AC and Non-AC passengers. Always C2.",ref:"RBA 27/2018"},
-  {sr:"37",desc:"Mechanized cleaning — Depots / loco sheds",sub:"Loco depot, carriage depot cleaning",hsn:"9997",cat:"Housekeeping",flag:"C2",gstbasis:"Rule 42 — common input",enduse:"Mixed",fund:"R",ipas:"C2",gst:"18%",note:"Common use across fleet types. C2.",ref:"RBA 27/2018"},
-  {sr:"38",desc:"Mechanized cleaning — Freight wagons (exclusively)",sub:"Goods wagon cleaning",hsn:"9997",cat:"Housekeeping",flag:"T4",gstbasis:"Sec 16 — freight = taxable supply",enduse:"AC",fund:"R",ipas:"T4",gst:"18%",note:"Freight is taxable supply. Exclusively for freight wagons → T4.",ref:"RBA 27/2018"},
-  {sr:"39",desc:"Housekeeping — Officers rest house / residential",sub:"Inspection bungalows, guest houses, rest houses",hsn:"9954",cat:"Housekeeping",flag:"T3",gstbasis:"Sec 17(5) — non-business / personal use",enduse:"All",fund:"R",ipas:"T3",gst:"18%",note:"Non-business / personal use. Blocked.",ref:"CGST Sec 17(5)"},
-  {sr:"40",desc:"Housekeeping — Office premises / workshops / godowns",sub:"Operational office and workshop maintenance",hsn:"9997",cat:"Housekeeping",flag:"C2",gstbasis:"Rule 42 — common business input",enduse:"Mixed",fund:"R",ipas:"C2",gst:"18%",note:"Operational business use — mixed output. C2.",ref:"RBA 27/2018"},
+  {sr:"31",desc:"OBHS / on-board housekeeping — AC trains exclusively",sub:"On-board housekeeping, AC coaches only",hsn:"Invoice SAC required",cat:"Housekeeping",flag:"T4",gstbasis:"Sec 16 — exclusively taxable supply",enduse:"AC",fund:"R",ipas:"T4",gst:"18%",note:"Exclusively for AC trains (taxable supply). Full ITC. Confirm train-type in work order.",ref:"RBA 27/2018"},
+  {sr:"32",desc:"OBHS / on-board housekeeping — Non-AC trains exclusively",sub:"Housekeeping in Non-AC/Sleeper trains only",hsn:"Invoice SAC required",cat:"Housekeeping",flag:"T2",gstbasis:"Sec 17(2) — exclusively for exempt supply",enduse:"NonAC",fund:"R",ipas:"T2",gst:"18%",note:"Exclusively Non-AC (exempt supply). T2.",ref:"RBA 27/2018"},
+  {sr:"33",desc:"OBHS / on-board housekeeping — mixed trains (AC + Non-AC)",sub:"Housekeeping in trains with both AC and Non-AC",hsn:"Invoice SAC required",cat:"Housekeeping",flag:"C2",gstbasis:"Rule 42 — common input (mixed output)",enduse:"Mixed",fund:"R",ipas:"C2",gst:"18%",note:"Mixed trains = C2. Apportion monthly. Most OBHS contracts will be C2 unless clearly single-type train.",ref:"RBA 27/2018"},
+  {sr:"34",desc:"Clean Train Service (CTS) — AC trains only",sub:"Originating / terminating cleaning, AC trains",hsn:"Invoice SAC required",cat:"Housekeeping",flag:"T4",gstbasis:"Sec 16 — exclusively taxable",enduse:"AC",fund:"R",ipas:"T4",gst:"18%",note:"Exclusively AC. Full ITC.",ref:"RBA 27/2018"},
+  {sr:"35",desc:"Clean Train Service (CTS) — mixed trains",sub:"Originating / terminating cleaning, all types",hsn:"Invoice SAC required",cat:"Housekeeping",flag:"C2",gstbasis:"Rule 42 — mixed output",enduse:"Mixed",fund:"R",ipas:"C2",gst:"18%",note:"Mixed trains = C2.",ref:"RBA 27/2018"},
+  {sr:"36",desc:"Mechanized cleaning — Stations / platforms",sub:"Station concourse, platforms, toilets",hsn:"Invoice SAC required",cat:"Housekeeping",flag:"C2",gstbasis:"Rule 42 — common (serves all passengers)",enduse:"Mixed",fund:"R",ipas:"C2",gst:"18%",note:"Station serves both AC and Non-AC passengers. Always C2.",ref:"RBA 27/2018"},
+  {sr:"37",desc:"Mechanized cleaning — Depots / loco sheds",sub:"Loco depot, carriage depot cleaning",hsn:"Invoice SAC required",cat:"Housekeeping",flag:"C2",gstbasis:"Rule 42 — common input",enduse:"Mixed",fund:"R",ipas:"C2",gst:"18%",note:"Common use across fleet types. C2.",ref:"RBA 27/2018"},
+  {sr:"38",desc:"Mechanized cleaning — Freight wagons (exclusively)",sub:"Goods wagon cleaning",hsn:"Invoice SAC required",cat:"Housekeeping",flag:"T4",gstbasis:"Sec 16 — freight = taxable supply",enduse:"AC",fund:"R",ipas:"T4",gst:"18%",note:"Freight is taxable supply. Exclusively for freight wagons → T4.",ref:"RBA 27/2018"},
+  {sr:"39",desc:"Housekeeping — Officers rest house / residential",sub:"Inspection bungalows, guest houses, rest houses",hsn:"Invoice SAC required",cat:"Housekeeping",flag:"T3",gstbasis:"Sec 17(5) — non-business / personal use",enduse:"All",fund:"R",ipas:"T3",gst:"18%",note:"Non-business / personal use. Blocked.",ref:"CGST Sec 17(5)"},
+  {sr:"40",desc:"Housekeeping — Office premises / workshops / godowns",sub:"Operational office and workshop maintenance",hsn:"Invoice SAC required",cat:"Housekeeping",flag:"C2",gstbasis:"Rule 42 — common business input",enduse:"Mixed",fund:"R",ipas:"C2",gst:"18%",note:"Operational business use — mixed output. C2.",ref:"RBA 27/2018"},
 
   // ── CATERING ──
-  {sr:"41",desc:"On-board catering — AC trains exclusively",sub:"IRCTC / contractor catering in AC coaches",hsn:"9963",cat:"Catering",flag:"T4",gstbasis:"RB clarification 20/09/2023 — AC catering taxable",enduse:"AC",fund:"R",ipas:"T4",gst:"5%",note:"Full ITC for AC train catering. RB clarification 20/09/2023. Confirm train type in contract.",ref:"RB letter 20/09/2023; RBA 86/2020"},
-  {sr:"42",desc:"On-board catering — mixed trains",sub:"Catering in trains with AC + Non-AC coaches",hsn:"9963",cat:"Catering",flag:"C2",gstbasis:"Rule 42 — mixed supply",enduse:"Mixed",fund:"R",ipas:"C2",gst:"5%",note:"Mixed train catering = C2. Apportion monthly.",ref:"RB letter 20/09/2023; CGST Rule 42"},
-  {sr:"43",desc:"Running room services",sub:"Rest facilities for running staff (loco pilots etc.)",hsn:"9963",cat:"Staff Welfare",flag:"C2",gstbasis:"Rule 42 — common input",enduse:"Mixed",fund:"R",ipas:"C2",gst:"12%",note:"Running room benefits operational staff for all train types. C2.",ref:"RBA 27/2018"},
+  {sr:"41",desc:"On-board catering — AC trains exclusively",sub:"IRCTC / contractor catering in AC coaches",hsn:"Invoice SAC required",cat:"Catering",flag:"T4",gstbasis:"RB clarification 20/09/2023 — AC catering taxable",enduse:"AC",fund:"R",ipas:"T4",gst:"5%",note:"Full ITC for AC train catering. RB clarification 20/09/2023. Confirm train type in contract.",ref:"RB letter 20/09/2023; RBA 86/2020"},
+  {sr:"42",desc:"On-board catering — mixed trains",sub:"Catering in trains with AC + Non-AC coaches",hsn:"Invoice SAC required",cat:"Catering",flag:"C2",gstbasis:"Rule 42 — mixed supply",enduse:"Mixed",fund:"R",ipas:"C2",gst:"5%",note:"Mixed train catering = C2. Apportion monthly.",ref:"RB letter 20/09/2023; CGST Rule 42"},
+  {sr:"43",desc:"Running room services",sub:"Rest facilities for running staff (loco pilots etc.)",hsn:"Invoice SAC required",cat:"Staff Welfare",flag:"C2",gstbasis:"Rule 42 — common input",enduse:"Mixed",fund:"R",ipas:"C2",gst:"12%",note:"Running room benefits operational staff for all train types. C2.",ref:"RBA 27/2018"},
 
   // ── AC SERVICES ──
-  {sr:"44",desc:"AC coach dedicated maintenance / AMC",sub:"Exclusive AC equipment, cooler unit, condenser",hsn:"9987",cat:"AC Services",flag:"T4",gstbasis:"Sec 16 — exclusively taxable",enduse:"AC",fund:"R",ipas:"T4",gst:"18%",note:"Exclusively for AC (taxable output). T4. Must verify contract scope is AC-only.",ref:"RBA 27/2018 Sl.2,5"},
-  {sr:"45",desc:"Linen / bedroll services — AC coaches only",sub:"Bed rolls, pillow covers, towels for AC passengers",hsn:"9963",cat:"AC Services",flag:"T4",gstbasis:"Sec 16 — exclusively taxable AC supply",enduse:"AC",fund:"R",ipas:"T4",gst:"5%",note:"Exclusively for AC (taxable). Full ITC.",ref:"RBA 27/2018"},
-  {sr:"46",desc:"Linen washing — mixed (AC + Non-AC)",sub:"Laundry for mixed fleet or common linen",hsn:"9997",cat:"AC Services",flag:"C2",gstbasis:"Rule 42 — mixed output",enduse:"Mixed",fund:"R",ipas:"C2",gst:"18%",note:"If mixed fleet linen = C2. Apportion.",ref:"RBA 27/2018"},
+  {sr:"44",desc:"AC coach dedicated maintenance / AMC",sub:"Exclusive AC equipment, cooler unit, condenser",hsn:"Invoice SAC required",cat:"AC Services",flag:"T4",gstbasis:"Sec 16 — exclusively taxable",enduse:"AC",fund:"R",ipas:"T4",gst:"18%",note:"Exclusively for AC (taxable output). T4. Must verify contract scope is AC-only.",ref:"RBA 27/2018 Sl.2,5"},
+  {sr:"45",desc:"Linen / bedroll services — AC coaches only",sub:"Bed rolls, pillow covers, towels for AC passengers",hsn:"Invoice SAC required",cat:"AC Services",flag:"T4",gstbasis:"Sec 16 — exclusively taxable AC supply",enduse:"AC",fund:"R",ipas:"T4",gst:"5%",note:"Exclusively for AC (taxable). Full ITC.",ref:"RBA 27/2018"},
+  {sr:"46",desc:"Linen washing — mixed (AC + Non-AC)",sub:"Laundry for mixed fleet or common linen",hsn:"Invoice SAC required",cat:"AC Services",flag:"C2",gstbasis:"Rule 42 — mixed output",enduse:"Mixed",fund:"R",ipas:"C2",gst:"18%",note:"If mixed fleet linen = C2. Apportion.",ref:"RBA 27/2018"},
 
   // ── NON-BUSINESS ──
-  {sr:"47",desc:"Education services — Railway schools",sub:"School fees, teaching services",hsn:"9992",cat:"Non-Business",flag:"T1",gstbasis:"Rule 42 — non-business purpose",enduse:"All",fund:"R",ipas:"T1",gst:"Exempt",note:"Non-business. No ITC. Schools for staff welfare, not railway operations.",ref:"CGST Rule 42; Sec 17(1)"},
-  {sr:"48",desc:"Hospital / health / clinical services",sub:"Railway hospital, dispensary services",hsn:"9993",cat:"Non-Business",flag:"T1",gstbasis:"Rule 42 — non-business purpose",enduse:"All",fund:"R",ipas:"T1",gst:"Exempt",note:"Non-business welfare activity. T1.",ref:"CGST Rule 42"},
-  {sr:"49",desc:"Colony cleanliness / maintenance (residential)",sub:"Residential colony maintenance services",hsn:"9994",cat:"Non-Business",flag:"T1",gstbasis:"Rule 42 — non-business (staff welfare)",enduse:"All",fund:"R",ipas:"T1",gst:"18%",note:"Staff colony maintenance = non-business. T1.",ref:"CGST Rule 42"},
+  {sr:"47",desc:"Education services — Railway schools",sub:"School fees, teaching services",hsn:"Invoice SAC required",cat:"Non-Business",flag:"T1",gstbasis:"Rule 42 — non-business purpose",enduse:"All",fund:"R",ipas:"T1",gst:"Exempt",note:"Non-business. No ITC. Schools for staff welfare, not railway operations.",ref:"CGST Rule 42; Sec 17(1)"},
+  {sr:"48",desc:"Hospital / health / clinical services",sub:"Railway hospital, dispensary services",hsn:"Invoice SAC required",cat:"Non-Business",flag:"T1",gstbasis:"Rule 42 — non-business purpose",enduse:"All",fund:"R",ipas:"T1",gst:"Exempt",note:"Non-business welfare activity. T1.",ref:"CGST Rule 42"},
+  {sr:"49",desc:"Colony cleanliness / maintenance (residential)",sub:"Residential colony maintenance services",hsn:"Invoice SAC required",cat:"Non-Business",flag:"T1",gstbasis:"Rule 42 — non-business (staff welfare)",enduse:"All",fund:"R",ipas:"T1",gst:"18%",note:"Staff colony maintenance = non-business. T1.",ref:"CGST Rule 42"},
 
   // ── EXEMPT OPS ──
-  {sr:"50",desc:"Non-AC / Sleeper / 2nd class — exclusive inputs",sub:"Inputs solely for Non-AC coach operations",hsn:"9964",cat:"Exempt Ops",flag:"T2",gstbasis:"Sec 17(2) — used for exempt supply",enduse:"NonAC",fund:"R",ipas:"T2",gst:"Exempt",note:"GST-exempt passenger service. Inputs exclusively for this = T2.",ref:"GST Notif 12/2017-CT(R); Sec 17(2)"},
-  {sr:"51",desc:"Platform ticket / retiring room / cloak room services (exclusive inputs)",sub:"Services related to exempt public facilities",hsn:"9964",cat:"Exempt Ops",flag:"T2",gstbasis:"CBIC 228/2024 — services exempt from 15.07.2024",enduse:"All",fund:"R",ipas:"T2",gst:"Exempt",note:"IR public services = exempt per Notif 04/2024-CT(R). Inputs exclusively for this = T2.",ref:"CBIC Circular 228/2024; Notif 04/2024-CT(R)"},
+  {sr:"50",desc:"Non-AC / Sleeper / 2nd class — exclusive inputs",sub:"Inputs solely for Non-AC coach operations",hsn:"Invoice SAC required",cat:"Exempt Ops",flag:"T2",gstbasis:"Sec 17(2) — used for exempt supply",enduse:"NonAC",fund:"R",ipas:"T2",gst:"Exempt",note:"GST-exempt passenger service. Inputs exclusively for this = T2.",ref:"GST Notif 12/2017-CT(R); Sec 17(2)"},
+  {sr:"51",desc:"Platform ticket / retiring room / cloak room services (exclusive inputs)",sub:"Services related to exempt public facilities",hsn:"Invoice SAC required",cat:"Exempt Ops",flag:"T2",gstbasis:"CBIC 228/2024 — services exempt from 15.07.2024",enduse:"All",fund:"R",ipas:"T2",gst:"Exempt",note:"IR public services = exempt per Notif 04/2024-CT(R). Inputs exclusively for this = T2.",ref:"CBIC Circular 228/2024; Notif 04/2024-CT(R)"},
 
   // ── BLOCKED 17(5) ──
-  {sr:"52",desc:"Life / health insurance of employees",sub:"Group mediclaim, life insurance policy",hsn:"9971",cat:"Insurance",flag:"T3",gstbasis:"Sec 17(5)(b)(iii) — employee insurance blocked",enduse:"All",fund:"R",ipas:"T3",gst:"18%",note:"Always blocked u/s 17(5)(b)(iii). No ITC unless mandated by law.",ref:"CGST Sec 17(5)(b)(iii)"},
-  {sr:"53",desc:"Leave Travel Concession (LTC) for employees",sub:"LTC advance or reimbursement",hsn:"9964",cat:"Employee Benefit",flag:"T3",gstbasis:"Sec 17(5)(b) — personal benefit blocked",enduse:"All",fund:"R",ipas:"T3",gst:"5%",note:"Blocked u/s 17(5)(b). No ITC.",ref:"CGST Sec 17(5)(b)"},
-  {sr:"54",desc:"Imprest bill payments (petty cash)",sub:"Contingency, petty imprest bills",hsn:"—",cat:"Misc",flag:"T3",gstbasis:"Nature — typically blocked or non-eligible items",enduse:"All",fund:"R",ipas:"T3",gst:"Varies",note:"Imprest bills usually contain blocked items or small amounts. Use T3 as default. Review each.",ref:"RBA 27/2018"},
+  {sr:"52",desc:"Life / health insurance of employees",sub:"Group mediclaim, life insurance policy",hsn:"Invoice SAC required",cat:"Insurance",flag:"T3",gstbasis:"Sec 17(5)(b)(iii) — employee insurance blocked",enduse:"All",fund:"R",ipas:"T3",gst:"18%",note:"Always blocked u/s 17(5)(b)(iii). No ITC unless mandated by law.",ref:"CGST Sec 17(5)(b)(iii)"},
+  {sr:"53",desc:"Leave Travel Concession (LTC) for employees",sub:"LTC advance or reimbursement",hsn:"Invoice SAC required",cat:"Employee Benefit",flag:"T3",gstbasis:"Sec 17(5)(b) — personal benefit blocked",enduse:"All",fund:"R",ipas:"T3",gst:"5%",note:"Blocked u/s 17(5)(b). No ITC.",ref:"CGST Sec 17(5)(b)"},
+  {sr:"54",desc:"Imprest bill payments (petty cash)",sub:"Contingency, petty imprest bills",hsn:"Invoice HSN/SAC required",cat:"Misc",flag:"T3",gstbasis:"Nature — typically blocked or non-eligible items",enduse:"All",fund:"R",ipas:"T3",gst:"Varies",note:"Imprest bills usually contain blocked items or small amounts. Use T3 as default. Review each.",ref:"RBA 27/2018"},
 
   // ── GOODS (STOCK) ──
-  {sr:"55",desc:"Goods procured for repair of wagons / coaches / locos (workshop)",sub:"Materials from stores for rolling stock repair",hsn:"—",cat:"Goods (Stock)",flag:"T3",gstbasis:"RBA 19/2024 Sl.3 — goods for P&M repair = T3",enduse:"All",fund:"R",ipas:"T3",gst:"Varies",note:"KEY CHANGE per RBA 19/2024 Sl.3: goods for repair of rolling stock in workshop → T3 always. No ITC.",ref:"RBA 19/2024 Sl.3 (amends RBA 27/2018 Sl.3)"},
-  {sr:"56",desc:"Goods for construction of P&M (tracks, signalling, sleepers, cranes)",sub:"Capital goods procured for P&M creation",hsn:"—",cat:"Goods (Stock)",flag:"T3",gstbasis:"RBA 19/2024 Sl.7 — goods for P&M construction T3",enduse:"All",fund:"C",ipas:"T3",gst:"Varies",note:"RBA 19/2024 Sl.7: goods for P&M creation → T3. Includes rails, sleepers, signalling components, cranes.",ref:"RBA 19/2024 Sl.7 (amends RBA 27/2018 Sl.7)"},
-  {sr:"57",desc:"Goods for creation of immovable assets (buildings, civil works)",sub:"Cement, steel, bricks for capital structures",hsn:"—",cat:"Goods (Capital)",flag:"T3",gstbasis:"Sec 17(5)(d) — goods for immovable on own account",enduse:"All",fund:"C",ipas:"T3",gst:"Varies",note:"Capital goods for immovable assets. Blocked u/s 17(5)(d). Finance Act 2025.",ref:"CGST Sec 17(5)(d); Finance Act 2025 Sec 124"},
+  {sr:"55",desc:"Goods procured for repair of wagons / coaches / locos (workshop)",sub:"Materials from stores for rolling stock repair",hsn:"Invoice HSN/SAC required",cat:"Goods (Stock)",flag:"T3",gstbasis:"RBA 19/2024 Sl.3 — goods for P&M repair = T3",enduse:"All",fund:"R",ipas:"T3",gst:"Varies",note:"KEY CHANGE per RBA 19/2024 Sl.3: goods for repair of rolling stock in workshop → T3 always. No ITC.",ref:"RBA 19/2024 Sl.3 (amends RBA 27/2018 Sl.3)"},
+  {sr:"56",desc:"Goods for construction of P&M (tracks, signalling, sleepers, cranes)",sub:"Capital goods procured for P&M creation",hsn:"Invoice HSN/SAC required",cat:"Goods (Stock)",flag:"T3",gstbasis:"RBA 19/2024 Sl.7 — goods for P&M construction T3",enduse:"All",fund:"C",ipas:"T3",gst:"Varies",note:"RBA 19/2024 Sl.7: goods for P&M creation → T3. Includes rails, sleepers, signalling components, cranes.",ref:"RBA 19/2024 Sl.7 (amends RBA 27/2018 Sl.7)"},
+  {sr:"57",desc:"Goods for creation of immovable assets (buildings, civil works)",sub:"Cement, steel, bricks for capital structures",hsn:"Invoice HSN/SAC required",cat:"Goods (Capital)",flag:"T3",gstbasis:"Sec 17(5)(d) — goods for immovable on own account",enduse:"All",fund:"C",ipas:"T3",gst:"Varies",note:"Capital goods for immovable assets. Blocked u/s 17(5)(d). Finance Act 2025.",ref:"CGST Sec 17(5)(d); Finance Act 2025 Sec 124"},
 
   // ── PROFESSIONAL SERVICES ──
-  {sr:"58",desc:"Telephone / mobile phone services",sub:"Landline, mobile bills — offices",hsn:"9984",cat:"Telecom/IT",flag:"C2",gstbasis:"Rule 42 — common input service",enduse:"Mixed",fund:"R",ipas:"C2",gst:"18%",note:"Common use. Partial ITC Rule 42.",ref:"RBA 27/2018"},
-  {sr:"59",desc:"Data transmission / internet / leased lines",sub:"Broadband, MPLS, leased circuits",hsn:"9984",cat:"Telecom/IT",flag:"C2",gstbasis:"Rule 42 — common input service",enduse:"Mixed",fund:"R",ipas:"C2",gst:"18%",note:"Common service. C2. Monthly apportionment.",ref:"RBA 27/2018"},
-  {sr:"60",desc:"Bank charges / financial services",sub:"Bank commission, processing fees",hsn:"9971",cat:"Professional",flag:"C2",gstbasis:"Rule 42 — common input",enduse:"Mixed",fund:"R",ipas:"C2",gst:"18%",note:"Common credit. Apportion Rule 42.",ref:"RBA 27/2018"},
-  {sr:"61",desc:"Security services",sub:"Security agency contracts, CISF augmentation",hsn:"9985",cat:"Security",flag:"C2",gstbasis:"Rule 42 — common input (mixed premises)",enduse:"Mixed",fund:"R",ipas:"C2",gst:"18%",note:"Station/office security = common input. C2.",ref:"RBA 27/2018"},
-  {sr:"62",desc:"Advertising / media agency services",sub:"Ad agency, hoardings, media buying",hsn:"9983",cat:"Professional",flag:"C2",gstbasis:"Rule 42 — common input",enduse:"Mixed",fund:"R",ipas:"C2",gst:"18%",note:"Common. Partial ITC Rule 42.",ref:"RBA 27/2018"},
-  {sr:"63",desc:"Clearing & forwarding agent services",sub:"Parcel/goods forwarding agents",hsn:"9983",cat:"Professional",flag:"C2",gstbasis:"Rule 42 — common input",enduse:"Mixed",fund:"R",ipas:"C2",gst:"18%",note:"Partial ITC.",ref:"RBA 27/2018"},
-  {sr:"64",desc:"Manpower supply / recruitment agency",sub:"Contractual labour supply, security outsourcing",hsn:"9997",cat:"Manpower",flag:"C2",gstbasis:"Rule 42 — common input",enduse:"Mixed",fund:"R",ipas:"C2",gst:"18%",note:"Common input. Partial ITC.",ref:"RBA 27/2018"},
-  {sr:"65",desc:"Architect / structural design services",sub:"Design for buildings, stations, structures",hsn:"9983",cat:"Professional",flag:"C2",gstbasis:"Rule 42 — common; T3 if exclusively for immovable",enduse:"Mixed",fund:"C/R",ipas:"C2",gst:"18%",note:"Partial ITC normally. If exclusively for immovable property construction work → T3.",ref:"RBA 27/2018"},
-  {sr:"66",desc:"Consultancy / project management charges",sub:"DPR, survey, project consultancy",hsn:"9983",cat:"Professional",flag:"C2",gstbasis:"Rule 42 — common input service",enduse:"Mixed",fund:"C/R",ipas:"C2",gst:"18%",note:"Common credit. Rule 42.",ref:"RBA 27/2018"},
+  {sr:"58",desc:"Telephone / mobile phone services",sub:"Landline, mobile bills — offices",hsn:"Invoice SAC required",cat:"Telecom/IT",flag:"C2",gstbasis:"Rule 42 — common input service",enduse:"Mixed",fund:"R",ipas:"C2",gst:"18%",note:"Common use. Partial ITC Rule 42.",ref:"RBA 27/2018"},
+  {sr:"59",desc:"Data transmission / internet / leased lines",sub:"Broadband, MPLS, leased circuits",hsn:"Invoice SAC required",cat:"Telecom/IT",flag:"C2",gstbasis:"Rule 42 — common input service",enduse:"Mixed",fund:"R",ipas:"C2",gst:"18%",note:"Common service. C2. Monthly apportionment.",ref:"RBA 27/2018"},
+  {sr:"60",desc:"Bank charges / financial services",sub:"Bank commission, processing fees",hsn:"Invoice SAC required",cat:"Professional",flag:"C2",gstbasis:"Rule 42 — common input",enduse:"Mixed",fund:"R",ipas:"C2",gst:"18%",note:"Common credit. Apportion Rule 42.",ref:"RBA 27/2018"},
+  {sr:"61",desc:"Security services",sub:"Security agency contracts, CISF augmentation",hsn:"Invoice SAC required",cat:"Security",flag:"C2",gstbasis:"Rule 42 — common input (mixed premises)",enduse:"Mixed",fund:"R",ipas:"C2",gst:"18%",note:"Station/office security = common input. C2.",ref:"RBA 27/2018"},
+  {sr:"62",desc:"Advertising / media agency services",sub:"Ad agency, hoardings, media buying",hsn:"Invoice SAC required",cat:"Professional",flag:"C2",gstbasis:"Rule 42 — common input",enduse:"Mixed",fund:"R",ipas:"C2",gst:"18%",note:"Common. Partial ITC Rule 42.",ref:"RBA 27/2018"},
+  {sr:"63",desc:"Clearing & forwarding agent services",sub:"Parcel/goods forwarding agents",hsn:"Invoice SAC required",cat:"Professional",flag:"C2",gstbasis:"Rule 42 — common input",enduse:"Mixed",fund:"R",ipas:"C2",gst:"18%",note:"Partial ITC.",ref:"RBA 27/2018"},
+  {sr:"64",desc:"Manpower supply / recruitment agency",sub:"Contractual labour supply, security outsourcing",hsn:"Invoice SAC required",cat:"Manpower",flag:"C2",gstbasis:"Rule 42 — common input",enduse:"Mixed",fund:"R",ipas:"C2",gst:"18%",note:"Common input. Partial ITC.",ref:"RBA 27/2018"},
+  {sr:"65",desc:"Architect / structural design services",sub:"Design for buildings, stations, structures",hsn:"Invoice SAC required",cat:"Professional",flag:"C2",gstbasis:"Rule 42 — common; T3 if exclusively for immovable",enduse:"Mixed",fund:"C/R",ipas:"C2",gst:"18%",note:"Partial ITC normally. If exclusively for immovable property construction work → T3.",ref:"RBA 27/2018"},
+  {sr:"66",desc:"Consultancy / project management charges",sub:"DPR, survey, project consultancy",hsn:"Invoice SAC required",cat:"Professional",flag:"C2",gstbasis:"Rule 42 — common input service",enduse:"Mixed",fund:"C/R",ipas:"C2",gst:"18%",note:"Common credit. Rule 42.",ref:"RBA 27/2018"},
 
   // ── DEPOSIT / SPV ──
-  {sr:"67",desc:"RVNL / DFCCIL / IRCON SPV services to IR",sub:"Works by SPVs during concession period",hsn:"9954",cat:"Deposit/SPV",flag:"EX",gstbasis:"CBIC 228/2024 — exempt from GST",enduse:"All",fund:"C",ipas:"EX",gst:"Exempt (w.e.f. 15.07.2024)",note:"Exempt per CBIC 228/2024. Regularised from 01.07.2017. No GST charged on inward supply → no ITC question.",ref:"CBIC Circular 228/22/2024-GST"},
-  {sr:"68",desc:"ROB deposit work — State Govt funded",sub:"Grade separator executed by IR for State",hsn:"9954",cat:"Deposit/SPV",flag:"T3",gstbasis:"Sec 17(5)(c)/(d) — immovable asset created",enduse:"All",fund:"C",ipas:"T3",gst:"18%",note:"ROB = immovable bridge. T3 at IR IPAS. Deposit receipts = liability, not input supply.",ref:"CGST Sec 17(5)(c)/(d)"},
-  {sr:"69",desc:"Electrification deposit work — OHE / traction",sub:"State/SPV funded OHE electrification",hsn:"9954",cat:"Deposit/SPV",flag:"T4",gstbasis:"Sec 17(5)(c) P&M exception",enduse:"All",fund:"C",ipas:"T4",gst:"18%",note:"OHE/traction = P&M. T4 eligible. Deposit funds source irrelevant for ITC determination.",ref:"CGST Sec 17(5)(c) exception"},
-  {sr:"70",desc:"Signalling / Kavach deposit work",sub:"IBS, ASC, Kavach equipment installation",hsn:"9954",cat:"Deposit/SPV",flag:"T4",gstbasis:"Sec 17(5)(c) P&M exception",enduse:"All",fund:"C",ipas:"T4",gst:"18%",note:"Signalling = P&M. T4 eligible.",ref:"CGST Sec 17(5)(c) exception"},
+  {sr:"67",desc:"RVNL / DFCCIL / IRCON SPV services to IR",sub:"Works by SPVs during concession period",hsn:"Invoice SAC required",cat:"Deposit/SPV",flag:"EX",gstbasis:"CBIC 228/2024 — exempt from GST",enduse:"All",fund:"C",ipas:"EX",gst:"Exempt (w.e.f. 15.07.2024)",note:"Exempt per CBIC 228/2024. Regularised from 01.07.2017. No GST charged on inward supply → no ITC question.",ref:"CBIC Circular 228/22/2024-GST"},
+  {sr:"68",desc:"ROB deposit work — State Govt funded",sub:"Grade separator executed by IR for State",hsn:"Invoice SAC required",cat:"Deposit/SPV",flag:"T3",gstbasis:"Sec 17(5)(c)/(d) — immovable asset created",enduse:"All",fund:"C",ipas:"T3",gst:"18%",note:"ROB = immovable bridge. T3 at IR IPAS. Deposit receipts = liability, not input supply.",ref:"CGST Sec 17(5)(c)/(d)"},
+  {sr:"69",desc:"Electrification deposit work — OHE / traction",sub:"State/SPV funded OHE electrification",hsn:"Invoice SAC required",cat:"Deposit/SPV",flag:"T4",gstbasis:"Sec 17(5)(c) P&M exception",enduse:"All",fund:"C",ipas:"T4",gst:"18%",note:"OHE/traction = P&M. T4 eligible. Deposit funds source irrelevant for ITC determination.",ref:"CGST Sec 17(5)(c) exception"},
+  {sr:"70",desc:"Signalling / Kavach deposit work",sub:"IBS, ASC, Kavach equipment installation",hsn:"Invoice SAC required",cat:"Deposit/SPV",flag:"T4",gstbasis:"Sec 17(5)(c) P&M exception",enduse:"All",fund:"C",ipas:"T4",gst:"18%",note:"Signalling = P&M. T4 eligible.",ref:"CGST Sec 17(5)(c) exception"},
 
   // ── CAPITAL GOODS ──
-  {sr:"71",desc:"New rolling stock — AC coaches / freight wagons",sub:"New AC coaches, wagons procured",hsn:"—",cat:"Goods (Capital)",flag:"T4",gstbasis:"Sec 16 — P&M for taxable supply",enduse:"AC",fund:"C",ipas:"T4",gst:"Varies",note:"P&M — rolling stock for taxable output. T4.",ref:"CGST Sec 17(5)(c) exception"},
-  {sr:"72",desc:"New rolling stock — DRF mixed fleet replacement",sub:"Coach/wagon/loco replacement via DRF",hsn:"—",cat:"Goods (Capital)",flag:"C2",gstbasis:"Rule 42 — mixed fleet (AC+NonAC)",enduse:"Mixed",fund:"C",ipas:"C2",gst:"Varies",note:"Mixed fleet (AC + NonAC replacement) = C2. Apportion.",ref:"CGST Rule 42"},
-  {sr:"73",desc:"IRFC lease finance charges (rolling stock lease)",sub:"EMI / lease charges to IRFC for coaches/wagons",hsn:"9971",cat:"Financial",flag:"C2",gstbasis:"Rule 42 — financial lease, mixed fleet",enduse:"Mixed",fund:"C",ipas:"C2",gst:"18%",note:"Lease financing for mixed fleet. C2. Apportion Rule 42.",ref:"CGST Rule 42"},
+  {sr:"71",desc:"New rolling stock — AC coaches / freight wagons",sub:"New AC coaches, wagons procured",hsn:"Invoice HSN/SAC required",cat:"Goods (Capital)",flag:"T4",gstbasis:"Sec 16 — P&M for taxable supply",enduse:"AC",fund:"C",ipas:"T4",gst:"Varies",note:"P&M — rolling stock for taxable output. T4.",ref:"CGST Sec 17(5)(c) exception"},
+  {sr:"72",desc:"New rolling stock — DRF mixed fleet replacement",sub:"Coach/wagon/loco replacement via DRF",hsn:"Invoice HSN/SAC required",cat:"Goods (Capital)",flag:"C2",gstbasis:"Rule 42 — mixed fleet (AC+NonAC)",enduse:"Mixed",fund:"C",ipas:"C2",gst:"Varies",note:"Mixed fleet (AC + NonAC replacement) = C2. Apportion.",ref:"CGST Rule 42"},
+  {sr:"73",desc:"IRFC lease finance charges (rolling stock lease)",sub:"EMI / lease charges to IRFC for coaches/wagons",hsn:"Invoice SAC required",cat:"Financial",flag:"C2",gstbasis:"Rule 42 — financial lease, mixed fleet",enduse:"Mixed",fund:"C",ipas:"C2",gst:"18%",note:"Lease financing for mixed fleet. C2. Apportion Rule 42.",ref:"CGST Rule 42"},
 
   // ── INTER-DIVISION ──
-  {sr:"74",desc:"Inter-zone / inter-division services within IR",sub:"Services exchanged between zones/divisions",hsn:"—",cat:"Internal Transfer",flag:"EX",gstbasis:"CBIC 228/2024 / Notif 04/2024-CT(R) — exempt",enduse:"All",fund:"R",ipas:"EX",gst:"Exempt (w.e.f. 15.07.2024)",note:"Inter-zone/division IR transactions EXEMPT from GST per CBIC 228/2024. No GST charged → no ITC question.",ref:"CBIC Circular 228/22/2024; Notif 04/2024-CT(R) 12.07.2024"},
+  {sr:"74",desc:"Inter-zone / inter-division services within IR",sub:"Services exchanged between zones/divisions",hsn:"Invoice HSN/SAC required",cat:"Internal Transfer",flag:"EX",gstbasis:"CBIC 228/2024 / Notif 04/2024-CT(R) — exempt",enduse:"All",fund:"R",ipas:"EX",gst:"Exempt (w.e.f. 15.07.2024)",note:"Inter-zone/division IR transactions EXEMPT from GST per CBIC 228/2024. No GST charged → no ITC question.",ref:"CBIC Circular 228/22/2024; Notif 04/2024-CT(R) 12.07.2024"},
   // ── EXCEL Sr. 25 ──
-  {sr:"E25",desc:"Chartered Accountant Services",sub:"Professional accounting and audit services",hsn:"9982",cat:"Professional",flag:"C2",gstbasis:"Rule 42 — common professional input",eu:"Mixed",fund:"R",ipas:"C2",gst:"18%",notif:"Notif 11 CGST-Rates Sr.20",note:"Partially eligible. Rule 42 monthly apportionment.",ref:"RBA 27/2018",rc:false},
+  {sr:"E25",desc:"Chartered Accountant Services",sub:"Professional accounting and audit services",hsn:"Invoice SAC required",cat:"Professional",flag:"C2",gstbasis:"Rule 42 — common professional input",eu:"Mixed",fund:"R",ipas:"C2",gst:"18%",notif:"Notif 11 CGST-Rates Sr.20",note:"Partially eligible. Rule 42 monthly apportionment.",ref:"RBA 27/2018",rc:false},
   // ── EXCEL Sr. 27 ──
-  {sr:"E27",desc:"Market Research Agency Service",sub:"Market surveys, research reports",hsn:"9983",cat:"Professional",flag:"C2",gstbasis:"Rule 42 — common input",eu:"Mixed",fund:"R",ipas:"C2",gst:"18%",notif:"Notif 11 CGST-Rates Sr.21",note:"Partially eligible. Rule 42.",ref:"RBA 27/2018",rc:false},
+  {sr:"E27",desc:"Market Research Agency Service",sub:"Market surveys, research reports",hsn:"Invoice SAC required",cat:"Professional",flag:"C2",gstbasis:"Rule 42 — common input",eu:"Mixed",fund:"R",ipas:"C2",gst:"18%",notif:"Notif 11 CGST-Rates Sr.21",note:"Partially eligible. Rule 42.",ref:"RBA 27/2018",rc:false},
   // ── EXCEL Sr. 28 ──
-  {sr:"E28",desc:"Scientific & Technical Consultancy Services",sub:"",hsn:"9983",cat:"Professional",flag:"C2",gstbasis:"Rule 42 — common input",eu:"Mixed",fund:"R",ipas:"C2",gst:"18%",notif:"Notif 11 CGST-Rates Sr.21",note:"Partially eligible. Rule 42.",ref:"RBA 27/2018",rc:false},
+  {sr:"E28",desc:"Scientific & Technical Consultancy Services",sub:"",hsn:"Invoice SAC required",cat:"Professional",flag:"C2",gstbasis:"Rule 42 — common input",eu:"Mixed",fund:"R",ipas:"C2",gst:"18%",notif:"Notif 11 CGST-Rates Sr.21",note:"Partially eligible. Rule 42.",ref:"RBA 27/2018",rc:false},
   // ── EXCEL Sr. 29 ──
-  {sr:"E29",desc:"Online Information & Database Access / Retrieval Services",sub:"Through computer network",hsn:"9985",cat:"Telecom/IT",flag:"C2",gstbasis:"Rule 42 — common input",eu:"Mixed",fund:"R",ipas:"C2",gst:"18%",notif:"Notif 11 CGST-Rates Sr.23",note:"Partially eligible. Rule 42.",ref:"RBA 27/2018",rc:false},
+  {sr:"E29",desc:"Online Information & Database Access / Retrieval Services",sub:"Through computer network",hsn:"Invoice SAC required",cat:"Telecom/IT",flag:"C2",gstbasis:"Rule 42 — common input",eu:"Mixed",fund:"R",ipas:"C2",gst:"18%",notif:"Notif 11 CGST-Rates Sr.23",note:"Partially eligible. Rule 42.",ref:"RBA 27/2018",rc:false},
   // ── EXCEL Sr. 30 ──
-  {sr:"E30",desc:"Sound Recording Studio / Agency Service",sub:"",hsn:"9997",cat:"Professional",flag:"C2",gstbasis:"Rule 42 — common input",eu:"Mixed",fund:"R",ipas:"C2",gst:"18%",notif:"Notif 11 CGST-Rates Sr.35",note:"Partially eligible.",ref:"RBA 27/2018",rc:false},
+  {sr:"E30",desc:"Sound Recording Studio / Agency Service",sub:"",hsn:"Invoice SAC required",cat:"Professional",flag:"C2",gstbasis:"Rule 42 — common input",eu:"Mixed",fund:"R",ipas:"C2",gst:"18%",notif:"Notif 11 CGST-Rates Sr.35",note:"Partially eligible.",ref:"RBA 27/2018",rc:false},
   // ── EXCEL Sr. 31 ──
-  {sr:"E31",desc:"Cable Operators",sub:"Cable TV, DTH service",hsn:"9997",cat:"Telecom/IT",flag:"C2",gstbasis:"Rule 42 — common input",eu:"Mixed",fund:"R",ipas:"C2",gst:"18%",notif:"Notif 11 CGST-Rates Sr.35",note:"Partially eligible.",ref:"RBA 27/2018",rc:false},
+  {sr:"E31",desc:"Cable Operators",sub:"Cable TV, DTH service",hsn:"Invoice SAC required",cat:"Telecom/IT",flag:"C2",gstbasis:"Rule 42 — common input",eu:"Mixed",fund:"R",ipas:"C2",gst:"18%",notif:"Notif 11 CGST-Rates Sr.35",note:"Partially eligible.",ref:"RBA 27/2018",rc:false},
   // ── EXCEL Sr. 33 ──
-  {sr:"E33",desc:"Technical Testing and Analysis Service",sub:"Pure Labour — end-use based",hsn:"9983",cat:"Professional",flag:"T4",gstbasis:"Sec 16 — eligible; end-use: T4 AC, T2 NonAC, C2 mixed",eu:"Mixed",fund:"R",ipas:"T4-AC | T2-NonAC | C2-Both",gst:"18%",notif:"Notif 11 CGST-Rates Sr.21",note:"Pure labour. T4 if AC, T2 if Non-AC, C2 if mixed. Determine end-use at bill-passing.",ref:"RBA 27/2018",rc:false},
+  {sr:"E33",desc:"Technical Testing and Analysis Service",sub:"Pure Labour — end-use based",hsn:"Invoice SAC required",cat:"Professional",flag:"T4",gstbasis:"Sec 16 — eligible; end-use: T4 AC, T2 NonAC, C2 mixed",eu:"Mixed",fund:"R",ipas:"T4-AC | T2-NonAC | C2-Both",gst:"18%",notif:"Notif 11 CGST-Rates Sr.21",note:"Pure labour. T4 if AC, T2 if Non-AC, C2 if mixed. Determine end-use at bill-passing.",ref:"RBA 27/2018",rc:false},
   // ── EXCEL Sr. 34 ──
-  {sr:"E34",desc:"Technical Inspection & Certification Agency Service",sub:"Pure Labour — end-use based",hsn:"9983",cat:"Professional",flag:"T4",gstbasis:"Sec 16 — eligible; end-use determines AC/NonAC/Mixed",eu:"Mixed",fund:"R",ipas:"T4-AC | T2-NonAC | C2-Both",gst:"18%",notif:"Notif 11 CGST-Rates Sr.21",note:"Pure labour. T4 if AC, T2 if Non-AC, C2 if mixed.",ref:"RBA 27/2018",rc:false},
+  {sr:"E34",desc:"Technical Inspection & Certification Agency Service",sub:"Pure Labour — end-use based",hsn:"Invoice SAC required",cat:"Professional",flag:"T4",gstbasis:"Sec 16 — eligible; end-use determines AC/NonAC/Mixed",eu:"Mixed",fund:"R",ipas:"T4-AC | T2-NonAC | C2-Both",gst:"18%",notif:"Notif 11 CGST-Rates Sr.21",note:"Pure labour. T4 if AC, T2 if Non-AC, C2 if mixed.",ref:"RBA 27/2018",rc:false},
   // ── EXCEL Sr. 35 ──
-  {sr:"E35",desc:"Internet Telecommunication Services",sub:"Internet service provider bills",hsn:"9997",cat:"Telecom/IT",flag:"C2",gstbasis:"Rule 42 — common input",eu:"Mixed",fund:"R",ipas:"C2",gst:"18%",notif:"Notif 11 CGST-Rates Sr.35",note:"Partially eligible. Rule 42.",ref:"RBA 27/2018",rc:false},
+  {sr:"E35",desc:"Internet Telecommunication Services",sub:"Internet service provider bills",hsn:"Invoice SAC required",cat:"Telecom/IT",flag:"C2",gstbasis:"Rule 42 — common input",eu:"Mixed",fund:"R",ipas:"C2",gst:"18%",notif:"Notif 11 CGST-Rates Sr.35",note:"Partially eligible. Rule 42.",ref:"RBA 27/2018",rc:false},
   // ── EXCEL Sr. 36 ──
-  {sr:"E36",desc:"Design Service (excl. interior decoration and fashion designing)",sub:"Engineering/structural design services",hsn:"9983",cat:"Professional",flag:"C2",gstbasis:"Rule 42 — common input",eu:"Mixed",fund:"R",ipas:"C2",gst:"18%",notif:"Notif 11 CGST-Rates Sr.21",note:"Partially eligible.",ref:"RBA 27/2018",rc:false},
+  {sr:"E36",desc:"Design Service (excl. interior decoration and fashion designing)",sub:"Engineering/structural design services",hsn:"Invoice SAC required",cat:"Professional",flag:"C2",gstbasis:"Rule 42 — common input",eu:"Mixed",fund:"R",ipas:"C2",gst:"18%",notif:"Notif 11 CGST-Rates Sr.21",note:"Partially eligible.",ref:"RBA 27/2018",rc:false},
   // ── EXCEL Sr. 37 ──
-  {sr:"E37",desc:"Information Technology Software Service",sub:"Custom software, IT services",hsn:"9973",cat:"Telecom/IT",flag:"C2",gstbasis:"Rule 42 — common input (T4 if exclusively taxable ops)",eu:"Mixed",fund:"R",ipas:"C2",gst:"18%",notif:"Notif 11 CGST-Rates Sr.17(ii)",note:"Partially eligible. If exclusively for taxable operations only → consider T4.",ref:"RBA 27/2018",rc:false},
+  {sr:"E37",desc:"Information Technology Software Service",sub:"Custom software, IT services",hsn:"Invoice SAC required",cat:"Telecom/IT",flag:"C2",gstbasis:"Rule 42 — common input (T4 if exclusively taxable ops)",eu:"Mixed",fund:"R",ipas:"C2",gst:"18%",notif:"Notif 11 CGST-Rates Sr.17(ii)",note:"Partially eligible. If exclusively for taxable operations only → consider T4.",ref:"RBA 27/2018",rc:false},
   // ── EXCEL Sr. 38 ──
-  {sr:"E38",desc:"Services in Relation to Supply of Tangible Goods",sub:"",hsn:"9971",cat:"Professional",flag:"C2",gstbasis:"Rule 42 — common input; rate = same as on like goods",eu:"Mixed",fund:"R",ipas:"C2",gst:"Same rate as on supply of like goods",notif:"Notif 11 CGST-Rates Sr.17(iii)",note:"Partially eligible. GST rate = same as on like goods supply.",ref:"RBA 27/2018",rc:false},
+  {sr:"E38",desc:"Services in Relation to Supply of Tangible Goods",sub:"",hsn:"Invoice SAC required",cat:"Professional",flag:"C2",gstbasis:"Rule 42 — common input; rate = same as on like goods",eu:"Mixed",fund:"R",ipas:"C2",gst:"Same rate as on supply of like goods",notif:"Notif 11 CGST-Rates Sr.17(iii)",note:"Partially eligible. GST rate = same as on like goods supply.",ref:"RBA 27/2018",rc:false},
   // ── EXCEL Sr. 39 — EXEMPT ──
-  {sr:"E39",desc:"Legal Consultancy Service",sub:"Legal advice, representation — EXEMPT per Notif 02/2018",hsn:"9982",cat:"Exempt",flag:"EX",gstbasis:"Notif 02/2018 CGST-Rates — legal services exempt",eu:"All",fund:"R",ipas:"NA",gst:"Exempt",notif:"Notif 11 CGST-Rates Sr.20 / Notif 02/2018",note:"Exempted under Notif 02/2018 CGST-Rates. No GST charged. No ITC question.",ref:"Notif 02/2018 CGST-Rates",rc:false},
+  {sr:"E39",desc:"Legal Consultancy Service",sub:"Legal advice, representation — EXEMPT per Notif 02/2018",hsn:"Invoice SAC required",cat:"Exempt",flag:"EX",gstbasis:"Notif 02/2018 CGST-Rates — legal services exempt",eu:"All",fund:"R",ipas:"NA",gst:"Exempt",notif:"Notif 11 CGST-Rates Sr.20 / Notif 02/2018",note:"Exempted under Notif 02/2018 CGST-Rates. No GST charged. No ITC question.",ref:"Notif 02/2018 CGST-Rates",rc:false},
   // ── EXCEL Sr. 41 ──
-  {sr:"E41",desc:"Pest / Rodent Control Service",sub:"",hsn:"9997",cat:"Housekeeping",flag:"C2",gstbasis:"Rule 42 — common input",eu:"Mixed",fund:"R",ipas:"C2",gst:"18%",notif:"Notif 11 CGST-Rates Sr.35",note:"Partially eligible. Rule 42.",ref:"RBA 27/2018",rc:false},
+  {sr:"E41",desc:"Pest / Rodent Control Service",sub:"",hsn:"Invoice SAC required",cat:"Housekeeping",flag:"C2",gstbasis:"Rule 42 — common input",eu:"Mixed",fund:"R",ipas:"C2",gst:"18%",notif:"Notif 11 CGST-Rates Sr.35",note:"Partially eligible. Rule 42.",ref:"RBA 27/2018",rc:false},
   // ── EXCEL Sr. 42 — GTA Road (maps to sr 4/5 in previous but adds RCM detail) ──
-  {sr:"E42",desc:"Transport of Material by Road — GTA (RCM)",sub:"Goods Transport Agency — 100% RCM by Railways",hsn:"9965",cat:"Courier/GTA",flag:"C2",gstbasis:"RBA 19/2024 Sl.9 — C2 at 12%/18%; T3 at 5%",eu:"Mixed",fund:"R",ipas:"C2 if 12%/18% | T3 if 5%",gst:"5% (no ITC) / 18% with ITC (was 12%) ✦",notif:"Notif 11 CGST-Rates Sr.3(iii)",note:"RCM: Railways pays 100% GST. 5% if GTA claims no ITC → T3. 18% (was 12%) if GTA claims ITC → C2. Rate 12%→18% w.e.f. 22.09.2025.",ref:"RBA 19/2024 Sl.9; RBA 27/2025 GST 2.0",rc:true},
+  {sr:"E42",desc:"Transport of Material by Road — GTA (RCM)",sub:"Goods Transport Agency — 100% RCM by Railways",hsn:"Invoice SAC required",cat:"Courier/GTA",flag:"C2",gstbasis:"RBA 19/2024 Sl.9 — C2 at 12%/18%; T3 at 5%",eu:"Mixed",fund:"R",ipas:"C2 if 12%/18% | T3 if 5%",gst:"5% (no ITC) / 18% with ITC (was 12%) ✦",notif:"Notif 11 CGST-Rates Sr.3(iii)",note:"RCM: Railways pays 100% GST. 5% if GTA claims no ITC → T3. 18% (was 12%) if GTA claims ITC → C2. Rate 12%→18% w.e.f. 22.09.2025.",ref:"RBA 19/2024 Sl.9; RBA 27/2025 GST 2.0",rc:true},
   // ── EXCEL Sr. 43 ──
-  {sr:"E43",desc:"AMC of Bio Toilets",sub:"Sanitation Conservation",hsn:"9994",cat:"Housekeeping",flag:"C2",gstbasis:"Rule 42 — end-use: T4 AC, T2 NonAC, C2 mixed",eu:"Mixed",fund:"R",ipas:"T4-AC | T2-NonAC | C2-Both",gst:"18%",notif:"Notif 11 CGST-Rates Sr.32",note:"T4 if exclusively AC coaches. T2 if Non-AC. C2 if both. Determine at demand generation.",ref:"RBA 27/2018",rc:false},
+  {sr:"E43",desc:"AMC of Bio Toilets",sub:"Sanitation Conservation",hsn:"Invoice SAC required",cat:"Housekeeping",flag:"C2",gstbasis:"Rule 42 — end-use: T4 AC, T2 NonAC, C2 mixed",eu:"Mixed",fund:"R",ipas:"T4-AC | T2-NonAC | C2-Both",gst:"18%",notif:"Notif 11 CGST-Rates Sr.32",note:"T4 if exclusively AC coaches. T2 if Non-AC. C2 if both. Determine at demand generation.",ref:"RBA 27/2018",rc:false},
   // ── EXCEL Sr. 44 ──
-  {sr:"E44",desc:"Painting",sub:"Painting of coaches, buildings, structures",hsn:"9997",cat:"Maintenance",flag:"C2",gstbasis:"Rule 42 — common input. T3 if immovable property.",eu:"Mixed",fund:"R",ipas:"C2",gst:"18%",notif:"Notif 11 CGST-Rates Sr.35",note:"C2 for rolling stock painting. T3 if painting of immovable buildings (WC for immovable).",ref:"RBA 27/2018",rc:false},
+  {sr:"E44",desc:"Painting",sub:"Painting of coaches, buildings, structures",hsn:"Invoice SAC required",cat:"Maintenance",flag:"C2",gstbasis:"Rule 42 — common input. T3 if immovable property.",eu:"Mixed",fund:"R",ipas:"C2",gst:"18%",notif:"Notif 11 CGST-Rates Sr.35",note:"C2 for rolling stock painting. T3 if painting of immovable buildings (WC for immovable).",ref:"RBA 27/2018",rc:false},
   // ── EXCEL Sr. 45 ──
-  {sr:"E45",desc:"Advertisements Placed in Newspapers by Railways",sub:"",hsn:"9983",cat:"Professional",flag:"C2",gstbasis:"Rule 42 — common input; 5% GST on newspaper ads",eu:"Mixed",fund:"R",ipas:"C2",gst:"5%",notif:"Notif 11 CGST-Rates Sr.21",note:"Partially eligible. 5% GST on newspaper advertisements.",ref:"RBA 27/2018",rc:false},
+  {sr:"E45",desc:"Advertisements Placed in Newspapers by Railways",sub:"",hsn:"Invoice SAC required",cat:"Professional",flag:"C2",gstbasis:"Rule 42 — common input; 5% GST on newspaper ads",eu:"Mixed",fund:"R",ipas:"C2",gst:"5%",notif:"Notif 11 CGST-Rates Sr.21",note:"Partially eligible. 5% GST on newspaper advertisements.",ref:"RBA 27/2018",rc:false},
   // ── EXCEL Sr. 46 ──
-  {sr:"E46",desc:"Professional Charges (REMCL, MSETCL, MSLDC, Power Grid, TATA Power)",sub:"Power utility professional/service charges",hsn:"9983",cat:"Professional",flag:"C2",gstbasis:"Rule 42 — common input",eu:"Mixed",fund:"R",ipas:"C2",gst:"18%",notif:"Notif 11 CGST-Rates Sr.21",note:"Partially eligible. Rule 42.",ref:"RBA 27/2018",rc:false},
+  {sr:"E46",desc:"Professional Charges (REMCL, MSETCL, MSLDC, Power Grid, TATA Power)",sub:"Power utility professional/service charges",hsn:"Invoice SAC required",cat:"Professional",flag:"C2",gstbasis:"Rule 42 — common input",eu:"Mixed",fund:"R",ipas:"C2",gst:"18%",notif:"Notif 11 CGST-Rates Sr.21",note:"Partially eligible. Rule 42.",ref:"RBA 27/2018",rc:false},
   // ── EXCEL Sr. 47 ──
-  {sr:"E47",desc:"Annual Subscription Bills for Magazines",sub:"ITC only if used for business purpose",hsn:"9997",cat:"Professional",flag:"C2",gstbasis:"Rule 42 — common input if used for business",eu:"Mixed",fund:"R",ipas:"C2",gst:"18%",notif:"Notif 11 CGST-Rates Sr.35",note:"C2 if used for business. T1 if personal use only. Verify purpose.",ref:"RBA 27/2018",rc:false},
+  {sr:"E47",desc:"Annual Subscription Bills for Magazines",sub:"ITC only if used for business purpose",hsn:"Invoice SAC required",cat:"Professional",flag:"C2",gstbasis:"Rule 42 — common input if used for business",eu:"Mixed",fund:"R",ipas:"C2",gst:"18%",notif:"Notif 11 CGST-Rates Sr.35",note:"C2 if used for business. T1 if personal use only. Verify purpose.",ref:"RBA 27/2018",rc:false},
   // ── EXCEL Sr. 48 — EXEMPT ──
   {sr:"E48",desc:"Railway Board's Contract Bills (custom duty, inland freight, commissioning)",sub:"Inter-zone/division payments under Ministry of Railways",hsn:"NA",cat:"Exempt",flag:"EX",gstbasis:"Notif 12 CGST-Rates Sr.8 — inter-zone/division exempt",eu:"All",fund:"R",ipas:"NA",gst:"Exempt",notif:"Notif 12 CGST-Rates Sr.8",note:"Services between zones/divisions under Ministry of Railways = EXEMPT. Confirmed by CBIC 228/2024.",ref:"Notif 12 CGST-Rates Sr.8; CBIC Circular 228/2024",rc:false},
   // ── EXCEL Sr. 49 — EXEMPT ──
   {sr:"E49",desc:"Fuel Bills — Reimbursement to Railway Officers",sub:"Employee services to employer in course of employment",hsn:"NA",cat:"Exempt",flag:"EX",gstbasis:"Schedule III CGST Act Sr.1 — employee services outside GST",eu:"All",fund:"R",ipas:"NA",gst:"Outside GST (Schedule III)",notif:"Schedule III CGST Act Sr.1",note:"Services by employee to employer = outside scope of GST. No GST charged on reimbursements.",ref:"Schedule III CGST Act",rc:false},
   // ── EXCEL Sr. 50 — EXEMPT ──
-  {sr:"E50",desc:"Officers Training — India",sub:"75%+ expenditure borne by Central/State/UT Govt",hsn:"9985",cat:"Non-Business",flag:"EX",gstbasis:"Notif 12 CGST-Rates Sr.72 — Govt-funded training exempt",eu:"All",fund:"R",ipas:"NA",gst:"Exempt",notif:"Notif 12 CGST-Rates Sr.72",note:"Exempt if 75% or more of training expenditure borne by Central/State/UT Govt.",ref:"Notif 12 CGST-Rates Sr.72",rc:false},
+  {sr:"E50",desc:"Officers Training — India",sub:"75%+ expenditure borne by Central/State/UT Govt",hsn:"Invoice SAC required",cat:"Non-Business",flag:"EX",gstbasis:"Notif 12 CGST-Rates Sr.72 — Govt-funded training exempt",eu:"All",fund:"R",ipas:"NA",gst:"Exempt",notif:"Notif 12 CGST-Rates Sr.72",note:"Exempt if 75% or more of training expenditure borne by Central/State/UT Govt.",ref:"Notif 12 CGST-Rates Sr.72",rc:false},
   // ── EXCEL Sr. 51 — EXEMPT ──
-  {sr:"E51",desc:"Officers Training — Abroad",sub:"75%+ expenditure borne by Central/State/UT Govt",hsn:"9985",cat:"Non-Business",flag:"EX",gstbasis:"Notif 12 CGST-Rates Sr.72 — Govt-funded training exempt",eu:"All",fund:"R",ipas:"NA",gst:"Exempt",notif:"Notif 12 CGST-Rates Sr.72",note:"Exempt if 75% or more borne by Govt. Same rule as India training.",ref:"Notif 12 CGST-Rates Sr.72",rc:false},
+  {sr:"E51",desc:"Officers Training — Abroad",sub:"75%+ expenditure borne by Central/State/UT Govt",hsn:"Invoice SAC required",cat:"Non-Business",flag:"EX",gstbasis:"Notif 12 CGST-Rates Sr.72 — Govt-funded training exempt",eu:"All",fund:"R",ipas:"NA",gst:"Exempt",notif:"Notif 12 CGST-Rates Sr.72",note:"Exempt if 75% or more borne by Govt. Same rule as India training.",ref:"Notif 12 CGST-Rates Sr.72",rc:false},
   // ── EXCEL Sr. 53 ──
-  {sr:"E53",desc:"Renting of Residential Premises",sub:"RCM — 100% payable by Railways as service receiver",hsn:"9972",cat:"Transport",flag:"C2",gstbasis:"Rule 42 if on-duty staff | Sec 17(5) if personal use",eu:"Mixed",fund:"R",ipas:"C2-on-duty | T3-otherwise",gst:"18% (RCM — 100% by Railways)",notif:"Notif 13/2017 Sr.5AA",note:"RCM under Notif 13/2017 Sr.5AA. C2 if rented for on-duty operational staff. T3 if for personal/non-operational use by staff.",ref:"Notif 13/2017 Sr.5AA; CGST Sec 17(5)",rc:false},
+  {sr:"E53",desc:"Renting of Residential Premises",sub:"RCM — 100% payable by Railways as service receiver",hsn:"Invoice SAC required",cat:"Transport",flag:"C2",gstbasis:"Rule 42 if on-duty staff | Sec 17(5) if personal use",eu:"Mixed",fund:"R",ipas:"C2-on-duty | T3-otherwise",gst:"18% (RCM — 100% by Railways)",notif:"Notif 13/2017 Sr.5AA",note:"RCM under Notif 13/2017 Sr.5AA. C2 if rented for on-duty operational staff. T3 if for personal/non-operational use by staff.",ref:"Notif 13/2017 Sr.5AA; CGST Sec 17(5)",rc:false},
   // ── EXCEL Sr. 54 ──
-  {sr:"E54",desc:"Construction/Repair of Pipeline/Conduit/Plant — Water Supply/Sewerage",sub:"WCT — water treatment, sewerage treatment or disposal",hsn:"9954",cat:"Construction",flag:"T3",gstbasis:"Sec 17(5)(c) — WC for immovable; Notif 20 Sr.3(iii)",eu:"All",fund:"C",ipas:"T3",gst:"18% (w.e.f. 18.07.2022)",notif:"Notif 20 CGST-Rates Sr.3(iii)",note:"Not eligible. Water/sewerage infrastructure = immovable. T3.",ref:"Notif 20 CGST-Rates Sr.3(iii); CGST Sec 17(5)(c)",rc:false},
+  {sr:"E54",desc:"Construction/Repair of Pipeline/Conduit/Plant — Water Supply/Sewerage",sub:"WCT — water treatment, sewerage treatment or disposal",hsn:"Invoice SAC required",cat:"Construction",flag:"T3",gstbasis:"Sec 17(5)(c) — WC for immovable; Notif 20 Sr.3(iii)",eu:"All",fund:"C",ipas:"T3",gst:"18% (w.e.f. 18.07.2022)",notif:"Notif 20 CGST-Rates Sr.3(iii)",note:"Not eligible. Water/sewerage infrastructure = immovable. T3.",ref:"Notif 20 CGST-Rates Sr.3(iii); CGST Sec 17(5)(c)",rc:false},
   // ── EXCEL Sr. 55 — Railway Track original works ──
-  {sr:"E55",desc:"Construction/Installation of Original Works — Railways (Track Laying)",sub:"Track = P&M per RBA 27/2018 | service C2 | goods T3",hsn:"9954",cat:"Civil/Track",flag:"C2",gstbasis:"RBA 27/2018 Sl.8 service C2 | RBA 19/2024 Sl.7 goods T3",eu:"Mixed",fund:"C",ipas:"C2-Services | T3-Goods",gst:"18% railways (w.e.f. 18.07.2022) | Earth WC >75% to Govt: 18% (was 12%) ✦",notif:"Notif 20 CGST-Rates Sr.3(v)",note:"Track = P&M per RBA 27/2018. Service procured → C2. Goods procured → T3 per RBA 19/2024 Sl.7. Split bills essential. Earth WC rate 12%→18% w.e.f. 22.09.2025.",ref:"RBA 27/2018 Sl.8; RBA 19/2024 Sl.7; RBA 27/2025 GST 2.0",rc:true},
+  {sr:"E55",desc:"Construction/Installation of Original Works — Railways (Track Laying)",sub:"Track = P&M per RBA 27/2018 | service C2 | goods T3",hsn:"Invoice SAC required",cat:"Civil/Track",flag:"C2",gstbasis:"RBA 27/2018 Sl.8 service C2 | RBA 19/2024 Sl.7 goods T3",eu:"Mixed",fund:"C",ipas:"C2-Services | T3-Goods",gst:"18% railways (w.e.f. 18.07.2022) | Earth WC >75% to Govt: 18% (was 12%) ✦",notif:"Notif 20 CGST-Rates Sr.3(v)",note:"Track = P&M per RBA 27/2018. Service procured → C2. Goods procured → T3 per RBA 19/2024 Sl.7. Split bills essential. Earth WC rate 12%→18% w.e.f. 22.09.2025.",ref:"RBA 27/2018 Sl.8; RBA 19/2024 Sl.7; RBA 27/2025 GST 2.0",rc:true},
   // ── EXCEL Sr. 56 ──
-  {sr:"E56",desc:"Dry Cleaning / Laundry Services",sub:"",hsn:"9997",cat:"Housekeeping",flag:"T4",gstbasis:"Sec 16/17(2)/Rule 42 — end-use: T4 AC, T2 NonAC, C2 mixed",eu:"Mixed",fund:"R",ipas:"T4-AC | T2-NonAC | C2-Both",gst:"18%",notif:"Notif 11 CGST-Rates Sr.35",note:"T4 if exclusively AC coaches. T2 if Non-AC. C2 if mixed. Determine end-use at bill-passing.",ref:"RBA 27/2018",rc:false},
+  {sr:"E56",desc:"Dry Cleaning / Laundry Services",sub:"",hsn:"Invoice SAC required",cat:"Housekeeping",flag:"T4",gstbasis:"Sec 16/17(2)/Rule 42 — end-use: T4 AC, T2 NonAC, C2 mixed",eu:"Mixed",fund:"R",ipas:"T4-AC | T2-NonAC | C2-Both",gst:"18%",notif:"Notif 11 CGST-Rates Sr.35",note:"T4 if exclusively AC coaches. T2 if Non-AC. C2 if mixed. Determine end-use at bill-passing.",ref:"RBA 27/2018",rc:false},
   // ── EXCEL Sr. 57 ──
-  {sr:"E57",desc:"Multi Modal Transport",sub:"Carriage of goods by at least 2 modes — multimodal transporter",hsn:"9965",cat:"Courier/GTA",flag:"C2",gstbasis:"Rule 42 — common input; GST 2.0: rate 12%→5% no ITC ✦",eu:"Mixed",fund:"R",ipas:"C2",gst:"5% without ITC (was 12% with ITC) ✦",notif:"Notif 11 CGST-Rates; w.e.f. 26.07.2018",note:"GST 2.0 w.e.f. 22.09.2025: rate 12%→5% WITHOUT ITC. Review — if no ITC at 5%, flag may shift to T3. Verify per RBA 27/2025.",ref:"RBA 27/2018; RBA 27/2025 GST 2.0",rc:true},
+  {sr:"E57",desc:"Multi Modal Transport",sub:"Carriage of goods by at least 2 modes — multimodal transporter",hsn:"Invoice SAC required",cat:"Courier/GTA",flag:"C2",gstbasis:"Rule 42 — common input; GST 2.0: rate 12%→5% no ITC ✦",eu:"Mixed",fund:"R",ipas:"C2",gst:"5% without ITC (was 12% with ITC) ✦",notif:"Notif 11 CGST-Rates; w.e.f. 26.07.2018",note:"GST 2.0 w.e.f. 22.09.2025: rate 12%→5% WITHOUT ITC. Review — if no ITC at 5%, flag may shift to T3. Verify per RBA 27/2025.",ref:"RBA 27/2018; RBA 27/2025 GST 2.0",rc:true},
   // ── EXCEL Sr. 58 ──
-  {sr:"E58",desc:"Procurement of Goods by Units — For Own Consumption",sub:"Goods for own use by Railways (not for resale)",hsn:"As per Tariff Codes",cat:"Goods (Stock)",flag:"T3",gstbasis:"RBA 19/2024 Sl.3 & Sl.7 — goods for own use T3",eu:"All",fund:"R",ipas:"T3",gst:"As applicable per tariff",notif:"w.e.f. 01.07.2017",note:"Not eligible. Goods procured for own consumption (repair/maintenance) → T3 per RBA 19/2024.",ref:"RBA 19/2024 Sl.3 & Sl.7",rc:false},
+  {sr:"E58",desc:"Procurement of Goods by Units — For Own Consumption",sub:"Goods for own use by Railways (not for resale)",hsn:"Invoice HSN required",cat:"Goods (Stock)",flag:"T3",gstbasis:"RBA 19/2024 Sl.3 & Sl.7 — goods for own use T3",eu:"All",fund:"R",ipas:"T3",gst:"As applicable per tariff",notif:"w.e.f. 01.07.2017",note:"Not eligible. Goods procured for own consumption (repair/maintenance) → T3 per RBA 19/2024.",ref:"RBA 19/2024 Sl.3 & Sl.7",rc:false},
   // ── EXCEL Sr. 59 ──
-  {sr:"E59",desc:"Procurement of Goods by Units — For Reselling to Other Parties",sub:"Goods procured for resale",hsn:"As per Tariff Codes",cat:"Goods (Stock)",flag:"T4",gstbasis:"Sec 16 — goods for taxable outward supply (resale)",eu:"All",fund:"R",ipas:"T4",gst:"As applicable per tariff",notif:"w.e.f. 01.07.2017",note:"Full eligible. Goods procured for resale = taxable outward supply. T4.",ref:"CGST Sec 16",rc:false},
+  {sr:"E59",desc:"Procurement of Goods by Units — For Reselling to Other Parties",sub:"Goods procured for resale",hsn:"Invoice HSN required",cat:"Goods (Stock)",flag:"T4",gstbasis:"Sec 16 — goods for taxable outward supply (resale)",eu:"All",fund:"R",ipas:"T4",gst:"As applicable per tariff",notif:"w.e.f. 01.07.2017",note:"Full eligible. Goods procured for resale = taxable outward supply. T4.",ref:"CGST Sec 16",rc:false},
   // ── RBA 13/2026 (GST Circular 3/2026) — Demand 11 Staff Welfare ──
-  {sr:"D11a",desc:"Demand 11 (SMH-09) — Staff Welfare & Amenities (Default)",sub:"Canteen, recreation, welfare facilities — no statutory/operational nexus",hsn:"Varies",cat:"Staff Welfare",flag:"T3",gstbasis:"Sec 17(5) — default treatment per RBA 13/2026",eu:"All",fund:"R",ipas:"T3 (default)",gst:"Varies",notif:"RBA 13/2026 / GST Circular 3/2026",note:"DEFAULT FLAG for ALL Demand 11 expenditure = T3 (No ITC). This is the conservative starting position for every SMH-09 bill unless an exception test is met and justified.",ref:"RBA 13/2026 (GST Circular 3/2026) dt June 2026",rc:true},
-  {sr:"D11b",desc:"Demand 11 — Statutory Obligation Exception (e.g. canteen mandated by Factories Act)",sub:"Expenditure mandatory under any law",hsn:"Varies",cat:"Staff Welfare",flag:"T4",gstbasis:"Statutory Obligation Test — RBA 13/2026 Exception A",eu:"All",fund:"R",ipas:"T4/C2 — requires mandatory IPAS justification",gst:"Varies",notif:"RBA 13/2026 / GST Circular 3/2026",note:"ITC allowed ONLY if expenditure is mandatory under law (e.g. canteen under Factories Act). IPAS requires mandatory 'ITC Justification' popup selecting 'Statutory obligation — expenditure mandated under applicable law' before bill can be passed.",ref:"RBA 13/2026 — Approach Paper Para 3(A)",rc:true},
-  {sr:"D11c",desc:"Demand 11 — Operational Nexus Exception (e.g. technical training for train operations)",sub:"Direct nexus with core railway operations, not barred u/s 17(5)",hsn:"Varies",cat:"Staff Welfare",flag:"C2",gstbasis:"Operational Nexus Test — RBA 13/2026 Exception B",eu:"Mixed",fund:"R",ipas:"T4/C2 — requires mandatory IPAS justification",gst:"Varies",notif:"RBA 13/2026 / GST Circular 3/2026",note:"ITC allowed ONLY where direct/proximate connection to core railway operations exists and is not specifically barred u/s 17(5). Example: technical training for train operations. IPAS requires mandatory justification selecting 'Not covered under blocked credits under Section 17(5)' before bill passing.",ref:"RBA 13/2026 — Approach Paper Para 3(B)",rc:true},
+  {sr:"D11a",desc:"Demand 11 (SMH-09) — Staff Welfare & Amenities (Default)",sub:"Canteen, recreation, welfare facilities — no statutory/operational nexus",hsn:"Invoice HSN/SAC required",cat:"Staff Welfare",flag:"T3",gstbasis:"Sec 17(5) — default treatment per RBA 13/2026",eu:"All",fund:"R",ipas:"T3 (default)",gst:"Varies",notif:"RBA 13/2026 / GST Circular 3/2026",note:"DEFAULT FLAG for ALL Demand 11 expenditure = T3 (No ITC). This is the conservative starting position for every SMH-09 bill unless an exception test is met and justified.",ref:"RBA 13/2026 (GST Circular 3/2026) dt June 2026",rc:true},
+  {sr:"D11b",desc:"Demand 11 — Statutory Obligation Exception (e.g. canteen mandated by Factories Act)",sub:"Expenditure mandatory under any law",hsn:"Invoice HSN/SAC required",cat:"Staff Welfare",flag:"T4",gstbasis:"Statutory Obligation Test — RBA 13/2026 Exception A",eu:"All",fund:"R",ipas:"T4/C2 — requires mandatory IPAS justification",gst:"Varies",notif:"RBA 13/2026 / GST Circular 3/2026",note:"ITC allowed ONLY if expenditure is mandatory under law (e.g. canteen under Factories Act). IPAS requires mandatory 'ITC Justification' popup selecting 'Statutory obligation — expenditure mandated under applicable law' before bill can be passed.",ref:"RBA 13/2026 — Approach Paper Para 3(A)",rc:true},
+  {sr:"D11c",desc:"Demand 11 — Operational Nexus Exception (e.g. technical training for train operations)",sub:"Direct nexus with core railway operations, not barred u/s 17(5)",hsn:"Invoice HSN/SAC required",cat:"Staff Welfare",flag:"C2",gstbasis:"Operational Nexus Test — RBA 13/2026 Exception B",eu:"Mixed",fund:"R",ipas:"T4/C2 — requires mandatory IPAS justification",gst:"Varies",notif:"RBA 13/2026 / GST Circular 3/2026",note:"ITC allowed ONLY where direct/proximate connection to core railway operations exists and is not specifically barred u/s 17(5). Example: technical training for train operations. IPAS requires mandatory justification selecting 'Not covered under blocked credits under Section 17(5)' before bill passing.",ref:"RBA 13/2026 — Approach Paper Para 3(B)",rc:true},
 ];
 
 const CIRCULARS = [
@@ -833,7 +883,7 @@ const CIRCULARS = [
   {id:"CGST Act 2017 — Sec 17(5)",title:"Blocked Credits — Primary Law",body:"Lists all categories of ineligible ITC: (a)/(b) motor vehicles, food, catering, beauty, health insurance, LTC, club membership; (c) works contract for construction of immovable property [except plant and machinery]; (d) goods/services for construction of immovable property on own account [except plant and machinery]. Finance Act 2025 Sec 124: retrospective amendment from 01.07.2017 — 'plant or machinery' → 'plant and machinery', nullifying Safari Retreats SC ruling for buildings used as plants."},
   {id:"CGST Rule 42 & 43",title:"ITC Apportionment for Common Inputs (C2 Flag)",body:"Rule 42: Monthly provisional reversal formula D1=(E/F)×C2 where E=exempt+non-business turnover, F=total turnover. Annual true-up in September GSTR-3B return. Rule 43: ITC on capital goods used for common/exempt purposes — 1/60th per month reversal over 5 years. C2 flag must be followed by these monthly reversals."},
   {id:"RBA 27/2018 (GST Circular 11/2018) — 26.03.2018",title:"Master ITC Flagging Checklist for Indian Railways",body:"First comprehensive ITC flag checklist: T1 (non-business), T2 (exempt operations), T3 (restricted/blocked), T4 (full credit — taxable), C2 (partial credit). Annexure-A provides 11 categories. Flagging to be done in IPAS at demand generation stage, reviewable at bill passing. Checklist is illustrative and not exhaustive. Responsibility of Railways to correctly complete flagging per GST Rules."},
-  {id:"RBA 19/2024 (GST Circular 04/2024) — 13.06.2024",title:"Amendment to RBA 27/2018 — 3 Critical Changes",body:"Substitutes Sl.3, Sl.7, Sl.9 of Annexure-A to RBA 27/2018. (i) Sl.3: Goods procured for use in repairing wagons/coaches/locos → T3 (No credit). Previously ambiguous. (ii) Sl.7: Goods for construction of P&M like railway tracks, signalling, telecom equipment, concrete/wooden/iron-steel sleepers, lathe machines, cranes → T3 (No credit). (iii) Sl.9: GTA services — C2 (Partial credit) if 12%/18% GST; T3 (No credit) if 5% GST. Irrespective of forward/reverse charge. Checklist remains illustrative."},
+  {id:"RBA 19/2024 (GST Circular 04/2024) — 13.06.2024",title:"RBA 19/2024 — Substitution of RBA 27/2018 Items 3, 7 and 9",body:"From the scanned Railway Board letter dated 13.06.2024: Items 3, 7 and 9 of RBA 27/2018 are substituted. Sl.3: goods procured for use in repairing wagons, coaches and locomotives used for transportation of goods/passengers → T3 - No credit, availment N, utilisation N. Sl.7: procurement of goods for construction of Plant & Machinery such as railway tracks, signalling and telecommunication equipment, concrete/wooden/iron-steel sleepers, lathe machines and cranes → T3 - No credit, availment N, utilisation N. Sl.9: GTA services received by IR for transporting goods inward/outward used in workshop → C2 - Partial Credit or T3 - No credit; irrespective of forward/reverse charge, IR can avail and flag C2, however if ITC is restricted u/s 17(5), flag T3. Checklist remains illustrative; flagging depends on facts and circumstances of each transaction."},
   {id:"RBA 86/2020 (GST Circular 46/2020) — 04.11.2020",title:"ITC Re-flagging & Monthly Review Guidelines",body:"Mandates monthly review and reflagging of all IPAS invoices. Units must furnish annual certificate confirming: (a) all ITC flagging/reflagging thoroughly checked, (b) errors rectified, (c) correct ITC flagging ensured. Excess ITC due to wrong flagging attracts interest @18% p.a. under CGST Sec 50. NR HQ GST Cell letter 19.08.2025 directed re-flagging certificate for FY 2024-25 by 26/08/2025."},
   {id:"CBIC Circular 228/22/2024-GST — 15.07.2024",title:"53rd GST Council — Railway-Specific Exemptions",body:"Three key exemptions: (1) IR public services (platform tickets, retiring rooms, cloak rooms, battery-operated cars) EXEMPT from GST w.e.f. 15.07.2024. (2) Supply of services between IR zones/divisions EXEMPT w.e.f. 15.07.2024; regularised 20.10.2023–14.07.2024. (3) SPV–IR infrastructure concession transactions (RVNL/DFCCIL allowing IR to use infrastructure) EXEMPT; regularised from 01.07.2017 to 14.07.2024. These were previously wrongly being charged GST causing ITC complications."},
   {id:"CBIC Circular 219/13/2024-GST — 26.06.2024",title:"OFC Ducts & Manholes = Plant & Machinery — ITC Eligible",body:"Clarifies that ducts and manholes used in OFC (optical fibre cable) network for telecom services = Plant & Machinery. ITC NOT blocked u/s 17(5)(c)/(d) even if immovable. Relevant for Railway telecom infrastructure bills. These are basic components of OFC network and integral to telecom service supply. ITC on such infrastructure is eligible."},
@@ -867,6 +917,7 @@ cats.forEach(c=>{const o=document.createElement('option');o.value=c;o.textConten
 
 // ── HSN LIST ──
 const ALL_HSN=[...new Set(DATA.map(d=>d.hsn).filter(h=>h&&h!=='—').concat(CONST_DATA.map(d=>d.hsn.split(' ')[0])))].sort();
+const MASTER_TAB_BUTTON = document.querySelector('.tab[onclick*="master"]');
 
 // ── HELPERS ──
 function badgeClass(f){return f==='EX'?'badge-EX':'badge-'+f;}
@@ -884,6 +935,38 @@ function hl(txt,term){
   if(!term||!txt) return txt||'';
   const e=term.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
   return String(txt).replace(new RegExp('('+e+')','gi'),'<mark>$1</mark>');
+}
+function normalizedSearchText(d){
+  return `${d.sr||''} ${d.hsn||''} ${d.desc||''} ${d.sub||''} ${d.use||''} ${d.cat||''} ${d.flag||''} ${d.note||''} ${d.ref||''} ${d.basis||''} ${d.gstbasis||''} ${d.notif||''}`.toLowerCase();
+}
+function isCodeLike(v){return /[0-9]/.test(v);}
+
+function renderSearchInfo(term){
+  const box=document.getElementById('hsnSearchInfo');
+  if(!box)return;
+  const t=(term||'').trim().toLowerCase();
+  if(!t){box.classList.remove('show');box.innerHTML='';return;}
+  const masterHits=DATA.filter(d=>normalizedSearchText(d).includes(t)).slice(0,6);
+  const constHits=CONST_DATA.filter(d=>normalizedSearchText(d).includes(t)).slice(0,6);
+  const hits=[
+    ...masterHits.map(d=>`<div class="search-hit"><b>${hl(d.hsn,t)}</b> ${flagBadge(d.flag)}<br>${hl(d.desc,t)}<br><span style="color:var(--muted)">${hl(d.note||d.gstbasis||'',t)}</span></div>`),
+    ...constHits.map(d=>`<div class="search-hit"><b>${hl(d.hsn,t)}</b> ${flagBadge(d.flag.split(' ')[0])}<br>${hl(d.desc,t)}<br><span style="color:var(--muted)">${hl(d.use||d.note||'',t)}</span></div>`)
+  ];
+  if(!hits.length){box.classList.remove('show');box.innerHTML='';return;}
+  box.innerHTML=`<h4>Matching HSN/SAC details for "${term}"</h4><div class="search-info-grid">${hits.join('')}</div>`;
+  box.classList.add('show');
+}
+
+function runGlobalHsnSearch(){
+  const val=(document.getElementById('globalHsnSearch').value||'').trim();
+  if(!val)return;
+  switchTab('master',MASTER_TAB_BUTTON);
+  document.getElementById('hsnSrch').value=isCodeLike(val)?val:'';
+  document.getElementById('srch').value=isCodeLike(val)?'':val;
+  document.getElementById('hsnX').style.display=isCodeLike(val)?'block':'none';
+  hideSug();
+  renderTable();
+  document.getElementById('tab-master').scrollIntoView({behavior:'smooth',block:'start'});
 }
 
 // ── HSN SUGGESTIONS ──
@@ -914,6 +997,8 @@ function hideSug(){document.getElementById('hsnSug').style.display='none';}
 
 function resetAll(){
   ['srch','hsnSrch'].forEach(id=>document.getElementById(id).value='');
+  const global=document.getElementById('globalHsnSearch');
+  if(global)global.value='';
   ['flagSel','catSel','fundSel','euSel','rcSel'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
   document.getElementById('hsnX').style.display='none';
   hideSug();
@@ -944,6 +1029,7 @@ function renderTable(){
   const tb=document.getElementById('tBody');
   tb.innerHTML='';
   document.getElementById('noData').style.display=rows.length?'none':'block';
+  renderSearchInfo(hq || q);
 
   rows.forEach(d=>{
     const tr=document.createElement('tr');
@@ -1002,8 +1088,18 @@ function switchTab(id,btn){
   document.querySelectorAll('.pane').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));
   document.getElementById('tab-'+id).classList.add('active');
-  btn.classList.add('active');
+  if(btn)btn.classList.add('active');
 }
+
+function hideTopAlert(){
+  document.getElementById('topAlert').classList.add('is-hidden');
+  document.getElementById('alertReopen').classList.add('show');
+}
+function showTopAlert(){
+  document.getElementById('topAlert').classList.remove('is-hidden');
+  document.getElementById('alertReopen').classList.remove('show');
+}
+window.addEventListener('load',()=>setTimeout(hideTopAlert,10000));
 
 const CIRC_MODAL_DATA = {
   "cgst-act-2017-sec-17-5": {"badge": "CGST Act 2017 \u2014 Sec 16, 17(5)", "tag": "CGST Act 2017 \u2014 Sec 17(5)", "title": "Blocked Credits \u2014 Primary Law", "body": "<p>Lists all categories of ineligible ITC: (a)/(b) motor vehicles, food, catering, beauty, health insurance, LTC, club membership; (c) works contract for construction of immovable property [except plant and machinery]; (d) goods/services for construction of immovable property on own account [except plant and machinery]. Finance Act 2025 Sec 124: retrospective amendment from 01.07.2017 \u2014 'plant or machinery' \u2192 'plant and machinery', nullifying Safari Retreats SC ruling for buildings used as plants.</p>"},
@@ -1039,3 +1135,4 @@ renderTable();
 </script>
 </body>
 </html>
+
