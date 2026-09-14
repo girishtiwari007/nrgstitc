@@ -183,6 +183,21 @@ mark{background:#fff176;border-radius:2px;padding:0 1px}
 .circ-body h4{font-size:12px;font-weight:700;color:var(--navy)}
 .circ-body p{font-size:11px;margin-top:2px;line-height:1.5;color:var(--text)}
 
+/* PROCUREMENT FAQ */
+.faq-toolbar{display:grid;grid-template-columns:minmax(260px,1fr) minmax(180px,260px) auto;gap:8px;align-items:center;margin:12px 0}
+.faq-toolbar input,.faq-toolbar select{width:100%;padding:9px 10px;border:1px solid var(--border);border-radius:7px;background:#fff;color:var(--text);font-size:12px}
+.faq-count{font-size:11px;font-weight:700;color:var(--navy2);white-space:nowrap}
+.proc-faq{background:var(--card);border:1px solid var(--border);border-radius:7px;margin-bottom:8px;overflow:hidden}
+.proc-faq summary{list-style:none;cursor:pointer;padding:11px 13px;display:grid;grid-template-columns:auto auto 1fr;gap:9px;align-items:start;font-size:12px;font-weight:700;color:var(--navy)}
+.proc-faq summary::-webkit-details-marker{display:none}
+.proc-faq summary:after{content:'+';font-size:16px;line-height:1;color:var(--navy3);justify-self:end}
+.proc-faq[open] summary:after{content:'−'}
+.faq-no{font-family:var(--mono);background:var(--navy);color:#fff;border-radius:4px;padding:2px 6px;font-size:10px}
+.faq-cat{background:#edf5fb;color:var(--navy2);border-radius:4px;padding:2px 6px;font-size:10px;white-space:nowrap}
+.faq-answer{border-top:1px solid var(--border);padding:11px 14px 13px;font-size:12px;line-height:1.55;color:var(--text)}
+.faq-answer strong{color:var(--navy2)}
+.faq-empty{padding:22px;text-align:center;color:var(--muted);font-size:12px}
+
 /* FOOTER */
 .footer{background:var(--navy);color:rgba(255,255,255,.6);text-align:center;padding:11px;font-size:10px;margin-top:24px}
 @media print{.controls,.tabs{display:none!important}.pane{display:block!important}table{font-size:9px}}
@@ -199,6 +214,9 @@ mark{background:#fff176;border-radius:2px;padding:0 1px}
   .tab{font-size:11px;padding:9px 8px;white-space:normal;text-align:center}
   .tab-search{grid-column:1/-1;margin-left:0;min-width:0}
   .tab-search input{width:100%}
+  .faq-toolbar{grid-template-columns:1fr}
+  .proc-faq summary{grid-template-columns:auto 1fr}
+  .faq-cat{grid-column:2}
   .main{padding:12px}
   .controls{display:grid;grid-template-columns:1fr}
   .si,.si-wide,.rst{width:100%;min-width:0}
@@ -264,6 +282,7 @@ mark{background:#fff176;border-radius:2px;padding:0 1px}
 <nav class="tabs">
   <button class="tab active" onclick="switchTab('master',this)">📊 Master ITC Table</button>
   <button class="tab" onclick="switchTab('mainrules',this)">📌 Main ITC Rule Summary</button>
+  <button class="tab" onclick="switchTab('procfaq',this)">Procurement FAQ</button>
   <button class="tab" onclick="switchTab('const',this)">🏗️ Construction &amp; 9954</button>
   <button class="tab" onclick="switchTab('deposit',this)">💼 Deposit &amp; Capital/Revenue</button>
   <button class="tab" onclick="switchTab('decision',this)">🔍 Decision Guide</button>
@@ -438,6 +457,23 @@ mark{background:#fff176;border-radius:2px;padding:0 1px}
   <div class="alert-red">
     <strong>Practical rule order:</strong> Invoice HSN/SAC and GST rate → Section 16 eligibility → exempt/non-business check → Section 17(5) blocked credit check → Rule 42/43 for common credit → IPAS flag T1/T2/T3/T4/C2.
   </div>
+</div>
+
+<!-- PROCUREMENT FAQ TAB -->
+<div id="tab-procfaq" class="pane">
+  <div class="alert">
+    <strong>Southern Railway Procurement FAQ - condensed Q&amp;A knowledge base</strong><br>
+    Covers 50 recurring procurement questions. The handbook states that it is guidance, was updated through October 2023, and must not replace current law, SOP, Railway Board circulars or tender conditions.
+    <a class="source-link" href="https://sr.indianrailways.gov.in/cris/uploads/files/1730186560030-FAQonProcurement.pdf" target="_blank" rel="noopener">Open complete official source PDF</a>
+  </div>
+  <div class="faq-toolbar">
+    <input id="procFaqSearch" type="search" placeholder="Search question, answer, GST, dealer, PAC, BG..." oninput="renderProcurementFaq()">
+    <select id="procFaqCategory" onchange="renderProcurementFaq()">
+      <option value="">All categories</option>
+    </select>
+    <span class="faq-count" id="procFaqCount"></span>
+  </div>
+  <div id="procFaqList"></div>
 </div>
 
 <!-- ══ TAB 2: CONSTRUCTION ══ -->
@@ -891,6 +927,59 @@ const DATA = [
   {sr:"D11c",desc:"Demand 11 — Operational Nexus Exception (e.g. technical training for train operations)",sub:"Direct nexus with core railway operations, not barred u/s 17(5)",hsn:"Invoice HSN/SAC required",cat:"Staff Welfare",flag:"C2",gstbasis:"Operational Nexus Test — RBA 13/2026 Exception B",eu:"Mixed",fund:"R",ipas:"T4/C2 — requires mandatory IPAS justification",gst:"Varies",notif:"RBA 13/2026 / GST Circular 3/2026",note:"ITC allowed ONLY where direct/proximate connection to core railway operations exists and is not specifically barred u/s 17(5). Example: technical training for train operations. IPAS requires mandatory justification selecting 'Not covered under blocked credits under Section 17(5)' before bill passing.",ref:"RBA 13/2026 — Approach Paper Para 3(B)",rc:true},
 ];
 
+const PROCUREMENT_FAQ = [
+  {n:1,c:"Contract Act",q:"Can an offer from the previous tender be accepted after the case has been re-tendered?",a:"No. Re-tendering amounts to rejection of the earlier offer, so that offer cannot later be revived even if its validity had not expired."},
+  {n:2,c:"Contract Act",q:"Can Railway issue a PO with the tender delivery period when L1 offered a longer delivery period?",a:"Only with the bidder's agreement. Without a Time Preference Clause, acceptance must follow the offered delivery period; imposing the shorter period is a counter-offer."},
+  {n:3,c:"Contract Act",q:"If the OEM discontinues the contracted model before delivery, should GD be levied or SD forfeited?",a:"Normally no, where performance became impossible without the dealer's fault. Cancel the contract without financial repercussions after verifying the OEM evidence."},
+  {n:4,c:"Contract Act",q:"Why should a Letter of Acceptance be issued before the Purchase Order?",a:"The LOA promptly communicates acceptance and prevents the offer from lapsing or being withdrawn while the detailed PO is being processed."},
+  {n:5,c:"Contract Act",q:"Can Railway unilaterally advance the delivery period and levy LD for non-compliance?",a:"No. A unilateral amendment is not enforceable; LD is not due when supply is within the original agreed delivery period."},
+  {n:6,c:"Contract Act",q:"Can Railway unilaterally postpone delivery and cancel with GD when the contractor objects?",a:"No. Contract changes require mutual consent; a contested unilateral postponement cannot support levy of GD."},
+  {n:7,c:"Contract Act",q:"May a bidder quote a validity period shorter than the period requested in the tender?",a:"Yes. The handbook says a bidder may offer shorter validity, although Railway must accept or obtain extension before that offer expires."},
+  {n:8,c:"Contract Act",q:"Can a contract arise when LOA is issued after offer validity but the bidder deposits SD?",a:"The expired offer cannot be accepted unilaterally, but the bidder's deposit of SD may constitute acceptance by conduct, permitting the PO on those accepted terms."},
+  {n:9,c:"GST",q:"How should an offer quoting Nil GST be examined?",a:"Check whether the item is exempt, the bidder is under composition, regular, or unregistered. Record GSTIN/status and the applicable contractual GST or RCM responsibility; do not accept unexplained Nil GST from a regular taxpayer."},
+  {n:10,c:"GST",q:"Can a vendor change the HSN and GST rate after award while keeping the all-in cost unchanged?",a:"No. Post-contract HSN/rate substitution may vitiate tender ranking and should not be accepted; SVC applies to a statutory rate change under the same HSN, not to changing HSN."},
+  {n:11,c:"GST",q:"Can SVC be inserted after award when both tender and offer were without SVC?",a:"No. A later SVC and GST escalation cannot be introduced unless the liability was agreed in the contract; include a suitable SVC at tender stage where required."},
+  {n:12,c:"GST",q:"Which GST-ITC flag should Zonal Railways use for procurement of goods?",a:"T3 - No ITC. The handbook says Zonal Railways cannot utilise ITC of input goods for output services and directs indentors to select T3 for goods procurement."},
+  {n:13,c:"MSE",q:"How is MSE preference applied when tender quantity is indivisible?",a:"An eligible MSE within L1 plus 15% may be offered the full indivisible quantity after matching L1, subject to technical suitability and applicable tender conditions."},
+  {n:14,c:"MSE",q:"Is MSE preference up to 25% or minimum 25%?",a:"Individual tenders provide preference up to 25%; the Ministry-level annual procurement target is at least 25%."},
+  {n:15,c:"MSE",q:"Can Security Deposit be waived merely because the bidder is an MSE?",a:"No. The cited instructions exempt eligible MSEs from EMD, not automatically from Security Deposit."},
+  {n:16,c:"PPP-MII",q:"Does a PAC item with zero local content receive automatic exemption from Make in India rules?",a:"No. A non-local PAC source generally requires a Global Tender Enquiry and prescribed approval; PAC status itself does not create PPP-MII exemption."},
+  {n:17,c:"PPP-MII",q:"Can technical suitability override zero local content under PPP-MII?",a:"No. Technical suitability and PPP-MII compliance are separate checks; Stores must pass over an offer that is ineligible under the applicable local-content rule."},
+  {n:18,c:"PPP-MII",q:"Can a dealer claim 100% local content for an imported item?",a:"No. An imported product is treated as non-local; an inconsistent 100% local-content claim should not be accepted."},
+  {n:19,c:"PPP-MII",q:"Does PPP-MII apply when the estimate is below Rs 5 lakh but the offer exceeds Rs 5 lakh?",a:"The handbook applies the threshold to the tender estimate, not the received offer. Ensure the estimate was genuine and procurement was not split to avoid the policy."},
+  {n:20,c:"Board Circulars",q:"Can L2 be accepted if L1 withdraws before acceptance is communicated?",a:"No under the cited prevailing CVC position. The case should be re-tendered, with cartel or integrity concerns examined."},
+  {n:21,c:"Board Circulars",q:"Can a developmental vendor receive a bulk order?",a:"Yes for a directory item having not more than three approved vendors, subject to the conditions in the cited Railway Board instructions."},
+  {n:22,c:"Board Circulars",q:"Is approval by one of several vendor-approving agencies valid across Indian Railways?",a:"Yes. A vendor approved by one competent agency for the item is treated as approved for procurement across Railways and Production Units."},
+  {n:23,c:"Board Circulars",q:"Can the second Reverse Auction TC be handled at a lower level when final prices fall below the original threshold?",a:"No where the technical evaluation was handled by a higher-level TC. That higher TC should continue and finalise the case."},
+  {n:24,c:"Board Circulars",q:"What can be done when approved vendors quote unreasonably high rates?",a:"If the tender included the enabling condition, consider capable unapproved sources with recorded reasons and reasonable rates; otherwise re-tender with the condition. Suspected cartel conduct may be referred to CCI."},
+  {n:25,c:"Board Circulars",q:"Can L1's original rate be accepted after L1 rejects Railway's counter-offer?",a:"No. After rejection of the counter-offer, the original offer cannot be revived; under normal circumstances discharge and re-tender the case."},
+  {n:26,c:"Board Circulars",q:"Can a fixed-price vendor be forced to match its lower rate in another Railway contract?",a:"Only where a valid Fall Clause applies. The handbook limits this to Rate Contracts and Long-Term Contracts, not fixed-quantity contracts."},
+  {n:27,c:"Board Circulars",q:"Can post-tender clarification be obtained for a missing performance certificate?",a:"Yes for historical documents that existed at tender opening, such as completion evidence for an already-submitted PO. Do not invite a new PO or new qualification after opening."},
+  {n:28,c:"PVC",q:"Should Price Variation Clause be omitted merely because delivery is short?",a:"Not automatically. The handbook permits PVC irrespective of delivery period where applicable, especially for critical/high-value items exposed to price volatility; follow current GFR and tender policy."},
+  {n:29,c:"PVC",q:"Can an offer with PVC be accepted when the tender expressly had no PVC?",a:"No. The offer departs from the tender condition and should not be accepted on that basis."},
+  {n:30,c:"Option Clause",q:"Can the quantity option be exercised after original supply was accepted but before delivery-period expiry?",a:"Yes. Exercise depends on the original or extended PO delivery period, not the earlier date on which supply was accepted."},
+  {n:31,c:"Option Clause",q:"What is the minimum tender value for including a quantity option clause?",a:"It may be included at any value where required; the cited instruction made the plus-30% clause mandatory from Rs 1.5 crore."},
+  {n:32,c:"SOP",q:"Can a single offer be accepted in a Limited Tender or Open Tender?",a:"A Limited Tender single offer is normally re-tendered unless justified urgency applies or it recurs after re-tender; a reasonable single offer in an Open Tender may be accepted."},
+  {n:33,c:"SOP",q:"Can a depot officer accept supply received after delivery-period expiry without HQ extension?",a:"Within the cited delegation: delay up to six months for orders up to Rs 8 lakh, or up to 21 days for Rs 8-15 lakh where initial DP did not exceed six months. Otherwise obtain prior extension."},
+  {n:34,c:"SOP",q:"Can short or excess delivery be accepted without formal PO amendment?",a:"The cited SOP permits depot acceptance up to 5% of contract value or Rs 8 lakh, whichever is less, within PCMM purchase powers; GD need not be levied for an accepted shortfall within that authority."},
+  {n:35,c:"Security Deposit",q:"Does an authorised dealer receive the approved OEM's Security Deposit exemption?",a:"The handbook says yes: the dealer acts for the approved principal OEM, so the OEM's applicable SD exemption extends to its authorised dealer."},
+  {n:36,c:"Security Deposit",q:"Must the original Bank Guarantee be surrendered before invocation?",a:"No. A valid demand by Railway is sufficient under the cited RBI model wording; physical surrender of the original BG is not a stated precondition."},
+  {n:37,c:"Security Deposit",q:"Can Railway invoke a BG while a contractual dispute or arbitration is pending?",a:"Yes, where the BG is unconditional and unequivocal. The cited model wording allows payment notwithstanding pending disputes."},
+  {n:38,c:"Security Deposit",q:"Should corrections to a BG be routed through the vendor?",a:"No. Railway, as beneficiary, should communicate required corrections directly to the issuing bank."},
+  {n:39,c:"Security Deposit",q:"How long should Security Deposit remain valid for a goods contract?",a:"Under the September 2022 IRS conditions cited by the handbook, SD should remain valid for at least 60 days beyond the end of the warranty period."},
+  {n:40,c:"General Damages",q:"What quantum of General Damages should be levied?",a:"The handbook links GD to the SD amount and records 5% of outstanding contract value from 1 April 2023. Verify the currently applicable SD/GD rate before action."},
+  {n:41,c:"General Damages",q:"How should a failed-supply PO be cancelled when Railway later says the item is not required?",a:"Either cancel with GD for vendor failure, or cancel without GD for non-requirement with recorded reasons. Do not levy GD while citing only 'item not required'."},
+  {n:42,c:"PAC",q:"Is PAC unnecessary when three dealers offer the same single make?",a:"No. PAC is based on make/OEM, not the number of dealers; a single-make requirement still needs PAC."},
+  {n:43,c:"PAC",q:"Can procurement proceed with a PAC that is neither A-certified nor C-certified?",a:"No. The PAC must be properly certified because source availability and delegated purchase powers differ between the two certifications."},
+  {n:44,c:"Miscellaneous",q:"Can an uncalled make be accepted merely because it is lowest?",a:"No, unless the tender permitted 'equivalent' or 'similar' makes and the offered make is technically suitable with a reasonable rate."},
+  {n:45,c:"Miscellaneous",q:"Can a Rs 15 lakh PAC item be purchased through Single Tender?",a:"The Southern Railway policy cited in the handbook requires Open Tender above Rs 10 lakh, even for a PAC item. Recheck the currently applicable local policy."},
+  {n:46,c:"Miscellaneous",q:"Can a shortlisted Limited Tender vendor be passed over after opening for poor past performance?",a:"Normally no. Eligibility and past performance should be checked while forming the panel; later rejection on those grounds may undermine transparency."},
+  {n:47,c:"Miscellaneous",q:"How can Railway recover from a vendor that fails to replace rejected warranty material and has no pending bills?",a:"Refer the contractual dispute to arbitration under the applicable IRS clause; if an award remains unpaid, seek court execution and attachment as legally advised."},
+  {n:48,c:"Miscellaneous",q:"Do Railway Board procurement instructions automatically apply to purchases on GeM?",a:"No. GeM purchases are governed by GeM terms and processes, which prevail over conflicting offline procedures unless a requirement is incorporated or applicable on the platform."},
+  {n:49,c:"Miscellaneous",q:"Is a dealer's OEM authorisation acceptable when valid at tender opening but shorter than the delivery period?",a:"The offer may be considered if otherwise suitable, but valid OEM authorisation must also exist when the supply is received."},
+  {n:50,c:"Miscellaneous",q:"Can a consignee approve a vendor sample when the tender, offer and contract contain no sample clause?",a:"No. Without a contractual sample-approval provision, the consignee should reject the request."}
+];
+
 const CIRCULARS = [
   {id:"Railway Procurement FAQ — GST Q.12",title:"Input Goods for Zonal Railways — T3 Bill-Passing Rule",body:"The Railway procurement FAQ states that Zonal Railways cannot avail or utilise ITC of input goods for their output services and directs indentors to select T3 while procuring goods. Applied to HSN 85176290: routers, switches and similar telecom/data-transmission equipment supplied as goods are T3. A separately identified installation, AMC or other service must be assessed independently under its SAC and actual end-use.",url:"https://sr.indianrailways.gov.in/cris/uploads/files/1730186560030-FAQonProcurement.pdf#page=31"},
   {id:"RBA 13/2026 (GST Circular 3/2026) — June 2026 🆕",title:"Demand 11 (SMH-09) Staff Welfare — ITC Eligibility Framework",isNew:true,body:"Reviews ITC eligibility for transactions under erstwhile Demand 11 (SMH-09) Abstract-J — Staff Welfare and Amenities. Based on Zonal Railway feedback and RB GST consultants' opinion: ITC is GENERALLY UNAVAILABLE for Demand 11 transactions. DEFAULT TREATMENT: All Demand 11 expenditure → T3 (No ITC). EXCEPTION-BASED ALLOWANCE (C2/T4) only if: (A) Statutory Obligation Test — expenditure mandatory under law (e.g. canteen under Factories Act), or (B) Operational Nexus Test — direct/proximate connection with core railway operations not barred u/s 17(5) (e.g. technical training for train operations). SYSTEM ENFORCEMENT: IPAS now displays an 'ITC Justification' button whenever Demand-11 + T4/C2 flag is selected. Bill submission is BLOCKED until justification is entered and saved via popup, selecting one of: 'Not covered under blocked credits under Section 17(5)', 'Statutory obligation — expenditure mandated under applicable law', or 'Others (Specify)' with mandatory description and remarks. Production Units must issue local instructions in consultation with GST consultants since this allocation-based system change is railway-specific and not available to them by default. Mandatory staff training required.",url:"#"},
@@ -1088,6 +1177,30 @@ CONST_DATA.forEach(d=>{
   cb.appendChild(tr);
 });
 
+// ── PROCUREMENT FAQ ──
+const procFaqCategory=document.getElementById('procFaqCategory');
+[...new Set(PROCUREMENT_FAQ.map(item=>item.c))].forEach(category=>{
+  const option=document.createElement('option');
+  option.value=category;
+  option.textContent=category;
+  procFaqCategory.appendChild(option);
+});
+
+function renderProcurementFaq(){
+  const query=(document.getElementById('procFaqSearch').value||'').trim().toLowerCase();
+  const category=procFaqCategory.value;
+  const matches=PROCUREMENT_FAQ.filter(item=>{
+    if(category&&item.c!==category)return false;
+    return !query||`${item.n} ${item.c} ${item.q} ${item.a}`.toLowerCase().includes(query);
+  });
+  document.getElementById('procFaqCount').textContent=`${matches.length} of ${PROCUREMENT_FAQ.length} questions`;
+  document.getElementById('procFaqList').innerHTML=matches.length?matches.map(item=>`
+    <details class="proc-faq">
+      <summary><span class="faq-no">Q${item.n}</span><span class="faq-cat">${item.c}</span><span>${item.q}</span></summary>
+      <div class="faq-answer"><strong>Answer:</strong> ${item.a}</div>
+    </details>`).join(''):'<div class="faq-empty">No procurement questions match this search.</div>';
+}
+
 // ── CIRCULARS ──
 const cl=document.getElementById('circularList');
 CIRCULARS.forEach(c=>{
@@ -1146,6 +1259,7 @@ document.addEventListener('keydown', function(e){
   if(e.key === 'Escape') closeCircModal();
 });
 
+renderProcurementFaq();
 renderTable();
 </script>
 </body>
