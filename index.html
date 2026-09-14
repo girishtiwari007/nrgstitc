@@ -402,6 +402,17 @@ mark{background:#fff176;border-radius:2px;padding:0 1px}
     </div>
 
     <div class="rule-summary-card">
+      <h3>Bill-Passing Reference: Procurement of Input Goods</h3>
+      <p><strong>Railway source:</strong> Southern Railway Vigilance, Frequently Asked Questions on Procurement of Goods, GST Question 12 (pages 31-32).</p>
+      <ul>
+        <li>Zonal Railways are instructed to select <strong>T3 - No ITC</strong> for procurement of input goods.</li>
+        <li>Accordingly, networking and telecommunication equipment under <strong>HSN 85176290</strong> should be flagged <strong>T3</strong> when supplied as goods.</li>
+        <li>For a bundled installation or AMC bill, identify and examine the service component separately using its SAC and actual end-use.</li>
+      </ul>
+      <a class="source-link" href="https://sr.indianrailways.gov.in/cris/uploads/files/1730186560030-FAQonProcurement.pdf#page=31" target="_blank" rel="noopener">Open embedded source PDF at GST Question 12</a>
+    </div>
+
+    <div class="rule-summary-card">
       <h3>5. GST 2.0 Rate Rationalisation</h3>
       <p><strong>Primary source:</strong> RBA 27/2025, GST Circular 06/2025.</p>
       <ul>
@@ -722,6 +733,7 @@ const DATA = [
   {sr:"13",desc:"AMC of immovable property (buildings, colonies, stations)",sub:"Station building AMC, colony maintenance",hsn:"995462",cat:"Construction",flag:"T3",gstbasis:"Sec 17(5)(c) — WC for immovable",enduse:"All",fund:"R",ipas:"T3",gst:"18%",note:"Repair/maintenance of civil engineering works/buildings. T3 always for immovable works contracts.",ref:"CGST Sec 17(5)(c); Finance Act 2025 Sec 124"},
   {sr:"14",desc:"Software / IT application AMC",sub:"IPAS, HRMS, accounting software maintenance",hsn:"998314",cat:"Telecom/IT",flag:"T4",gstbasis:"Not blocked — intangible, not immovable",enduse:"All",fund:"R",ipas:"T4",gst:"18%",note:"IT design/development/support service. Not blocked u/s 17(5). Full ITC eligible if used for business/taxable operations.",ref:"CGST Act — not covered by Sec 17(5)"},
   {sr:"15",desc:"Computer / hardware / printer AMC",sub:"Desktop, laptop, printer maintenance",hsn:"998713",cat:"Telecom/IT",flag:"C2",gstbasis:"Rule 42 — common input",enduse:"Mixed",fund:"R",ipas:"C2",gst:"18%",note:"Maintenance/repair of computers and peripheral equipment. Common use equipment. Partial ITC with Rule 42 apportionment.",ref:"RBA 27/2018"},
+  {sr:"15A",desc:"Networking / telecommunication equipment — input goods",sub:"Routers, network switches and other data reception, conversion or transmission apparatus",hsn:"85176290",cat:"Telecom/IT",flag:"T3",gstbasis:"Zonal Railway input goods — ITC blocked/restricted under Railway GST procurement instructions",enduse:"All",fund:"C/R",ipas:"T3",gst:"18%",note:"Select T3 when HSN 85176290 is supplied as goods to a Zonal Railway. Do not use C2/T4 merely because the equipment supports operations. If installation, AMC or another service is separately invoiced, examine that service under its SAC and end-use.",ref:"Southern Railway Procurement FAQ, GST Q.12, pp.31-32; Railway Board RBA 68/2018, RBA 98/2019 and RBA 18/2020"},
 
   // ── CONSTRUCTION ──
   {sr:"16",desc:"Works contract — immovable property construction",sub:"Buildings, ROB, FOB, LHS, walls, culverts",hsn:"995411-995429",cat:"Construction",flag:"T3",gstbasis:"Sec 17(5)(c) — immovable WC blocked",enduse:"All",fund:"C",ipas:"T3",gst:"18% (earthwork >75% to Govt was 12% till 21.09.2025)",note:"Always T3. Use exact 9954 sub-code from invoice: building 995411-995419; civil engineering 995421-995429. GST 2.0 moved earthwork >75% to Govt from 12% to 18% w.e.f. 22.09.2025.",ref:"CGST Sec 17(5)(c); RBA 27/2025 GST 2.0"},
@@ -880,6 +892,7 @@ const DATA = [
 ];
 
 const CIRCULARS = [
+  {id:"Railway Procurement FAQ — GST Q.12",title:"Input Goods for Zonal Railways — T3 Bill-Passing Rule",body:"The Railway procurement FAQ states that Zonal Railways cannot avail or utilise ITC of input goods for their output services and directs indentors to select T3 while procuring goods. Applied to HSN 85176290: routers, switches and similar telecom/data-transmission equipment supplied as goods are T3. A separately identified installation, AMC or other service must be assessed independently under its SAC and actual end-use.",url:"https://sr.indianrailways.gov.in/cris/uploads/files/1730186560030-FAQonProcurement.pdf#page=31"},
   {id:"RBA 13/2026 (GST Circular 3/2026) — June 2026 🆕",title:"Demand 11 (SMH-09) Staff Welfare — ITC Eligibility Framework",isNew:true,body:"Reviews ITC eligibility for transactions under erstwhile Demand 11 (SMH-09) Abstract-J — Staff Welfare and Amenities. Based on Zonal Railway feedback and RB GST consultants' opinion: ITC is GENERALLY UNAVAILABLE for Demand 11 transactions. DEFAULT TREATMENT: All Demand 11 expenditure → T3 (No ITC). EXCEPTION-BASED ALLOWANCE (C2/T4) only if: (A) Statutory Obligation Test — expenditure mandatory under law (e.g. canteen under Factories Act), or (B) Operational Nexus Test — direct/proximate connection with core railway operations not barred u/s 17(5) (e.g. technical training for train operations). SYSTEM ENFORCEMENT: IPAS now displays an 'ITC Justification' button whenever Demand-11 + T4/C2 flag is selected. Bill submission is BLOCKED until justification is entered and saved via popup, selecting one of: 'Not covered under blocked credits under Section 17(5)', 'Statutory obligation — expenditure mandated under applicable law', or 'Others (Specify)' with mandatory description and remarks. Production Units must issue local instructions in consultation with GST consultants since this allocation-based system change is railway-specific and not available to them by default. Mandatory staff training required.",url:"#"},
   {id:"CGST Act 2017 — Sec 17(5)",title:"Blocked Credits — Primary Law",body:"Lists all categories of ineligible ITC: (a)/(b) motor vehicles, food, catering, beauty, health insurance, LTC, club membership; (c) works contract for construction of immovable property [except plant and machinery]; (d) goods/services for construction of immovable property on own account [except plant and machinery]. Finance Act 2025 Sec 124: retrospective amendment from 01.07.2017 — 'plant or machinery' → 'plant and machinery', nullifying Safari Retreats SC ruling for buildings used as plants."},
   {id:"CGST Rule 42 & 43",title:"ITC Apportionment for Common Inputs (C2 Flag)",body:"Rule 42: Monthly provisional reversal formula D1=(E/F)×C2 where E=exempt+non-business turnover, F=total turnover. Annual true-up in September GSTR-3B return. Rule 43: ITC on capital goods used for common/exempt purposes — 1/60th per month reversal over 5 years. C2 flag must be followed by these monthly reversals."},
@@ -1080,7 +1093,8 @@ const cl=document.getElementById('circularList');
 CIRCULARS.forEach(c=>{
   const d=document.createElement('div');
   d.className='circ-card';
-  d.innerHTML=`<div class="circ-id">${c.id}</div><div class="circ-body"><h4>${c.title}</h4><p>${c.body}</p></div>`;
+  const sourceLink=c.url&&c.url!=='#'?`<a class="source-link" href="${c.url}" target="_blank" rel="noopener">Open source PDF</a>`:'';
+  d.innerHTML=`<div class="circ-id">${c.id}</div><div class="circ-body"><h4>${c.title}</h4><p>${c.body}</p>${sourceLink}</div>`;
   cl.appendChild(d);
 });
 
