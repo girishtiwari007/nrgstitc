@@ -5,6 +5,12 @@ Use this folder as the repository root for `girishtiwari007/nrgstitc`.
 Files to publish:
 
 - `index.html`
+- `assets/`
+- `docs/`
+- `scripts/`
+- `server.js`
+- `package.json`
+- `.gitignore`
 - `README.md`
 - `.nojekyll`
 

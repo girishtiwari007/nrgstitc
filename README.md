@@ -1,39 +1,60 @@
-# NR GST ITC Flagging Reference
+# NR GST ITC Knowledge Portal
 
-Standalone GST ITC flagging portal for Northern Railway / Moradabad Division.
+Professional GST ITC flagging and reference portal for Northern Railway / Moradabad Division. It combines the master HSN/SAC table, Railway Board guidance, circular links, procurement FAQs, construction references, ITC flags, and invoice-level decision notes.
 
-## Separation
+## Important Separation
 
-This folder is intentionally separate from the Revenue Liability Portal in the workspace root.
+This repository is the GST ITC portal only. Keep it separate from the Revenue Liability Portal and do not merge either portal's `index.html` into the other.
 
-- GST ITC portal: `nrgstitc/index.html`
-- Revenue Liability Portal: `../index.html`
+## Run
 
-Do not merge these two HTML files unless a separate integration task is planned.
+No installation is required. Either open `index.html` directly or run the local backend:
 
-## Current Update
+```powershell
+npm start
+```
 
-- Futuristic government-style interface added.
-- RBA 19/2024 PDF reviewed and reflected in the page.
-- RBA 19/2024 substitution rules added for RBA 27/2018 items 3, 7 and 9.
-- Four-digit-only HSN/SAC values removed from data fields.
-- Exact 6-digit SACs are used where clear.
-- Variable goods/services now require invoice-level HSN/SAC confirmation.
-- Railway-division service SACs expanded for professional, technical and support services, including 998349, 998334, 998339, 998346, 998347, 998513, 998525, 998531 and 998538.
-- GST 2.0 rate tags reverified on 13-Aug-2026. Portal notes RBA 27/2025 / 22.09.2025 rate changes and CBIC Notification 01/2026-CT(R) alignment from 01.05.2026.
+Then open `http://localhost:3000`. Use `npm run dev` for automatic server restarts during development.
+
+## Test
+
+```powershell
+npm test
+```
+
+The smoke suite checks JavaScript syntax, all 164 master records, mandatory data fields, duplicate serials, key HSN/SAC entries, static delivery, API search/filter behavior, and path traversal protection.
+
+## Project Structure
+
+```text
+index.html                 Page structure
+assets/css/portal.css      Responsive portal styling
+assets/js/data.js          Shared knowledge dataset
+assets/js/app.js           Browser behavior
+server.js                  Dependency-free Node.js server and API
+scripts/smoke-test.js      Data and endpoint tests
+docs/ARCHITECTURE.md       Design and backend evolution notes
+```
+
+## API
+
+The backend exposes versioned, read-only endpoints at `/api/v1`. Examples:
+
+```text
+GET /api/health
+GET /api/v1/meta
+GET /api/v1/master?hsn=85176290
+GET /api/v1/master?flag=T3&category=Transport
+GET /api/v1/faqs?q=dealer
+GET /api/v1/search?q=998349
+```
+
+See `docs/ARCHITECTURE.md` for the complete endpoint list and the recommended path to authentication, database storage, review workflows, and audit history.
+
+## Deployment
+
+GitHub Pages continues to serve the static portal from the repository root. The Node backend requires a Node.js host; set `PORT` when the platform does not use port 3000.
 
 ## Compliance Basis
 
-The tool follows this decision flow:
-
-1. Confirm invoice HSN/SAC and GST rate.
-2. Check basic ITC eligibility under CGST Section 16.
-3. Check non-business/exempt use under Section 17(1) and 17(2).
-4. Check blocked credits under Section 17(5).
-5. Use C2 only where Rule 42/43 apportionment is required.
-
-RBA 19/2024 controls:
-
-- Goods for repairing wagons, coaches and locomotives: T3.
-- Goods for construction of Plant & Machinery such as tracks, signalling, telecom equipment, sleepers, machines and cranes: T3.
-- GTA services: C2 where ITC is otherwise available; T3 where ITC is restricted under Section 17(5) or rate condition.
+The portal guides users through CGST Sections 16 and 17, Rules 42/43, Railway Board flagging instructions, end use, funding source, and current source material. It is a decision-support knowledge base, not a substitute for invoice facts, current notifications, or competent tax review.
