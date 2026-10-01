@@ -19,7 +19,7 @@ function get(port, pathname) {
 }
 
 async function run() {
-  assert.strictEqual(data.master.length, 164, 'Master record count changed unexpectedly');
+  assert.strictEqual(data.master.length, 165, 'Master record count changed unexpectedly');
   assert.strictEqual(new Set(data.master.map((item) => item.sr)).size, data.master.length, 'Duplicate serial numbers');
   for (const item of data.master) {
     for (const key of ['sr', 'desc', 'hsn', 'cat', 'flag', 'note', 'ref']) {
@@ -27,6 +27,7 @@ async function run() {
     }
   }
   assert.ok(data.master.some((item) => String(item.hsn).includes('85176290')), 'HSN 85176290 is missing');
+  assert.ok(data.master.some((item) => String(item.hsn).includes('85181000') && item.flag === 'T3'), 'HSN 85181000 T3 record is missing');
   assert.ok(data.master.some((item) => String(item.hsn).includes('998349')), 'SAC 998349 is missing');
 
   const index = fs.readFileSync(path.join(__dirname, '..', 'index.html'), 'utf8');

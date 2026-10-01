@@ -27,6 +27,7 @@
     {sr:"14",desc:"Software / IT application AMC",sub:"IPAS, HRMS, accounting software maintenance",hsn:"998314",cat:"Telecom/IT",flag:"T4",gstbasis:"Not blocked — intangible, not immovable",enduse:"All",fund:"R",ipas:"T4",gst:"18%",note:"IT design/development/support service. Not blocked u/s 17(5). Full ITC eligible if used for business/taxable operations.",ref:"CGST Act — not covered by Sec 17(5)"},
     {sr:"15",desc:"Computer / hardware / printer AMC",sub:"Desktop, laptop, printer maintenance",hsn:"998713",cat:"Telecom/IT",flag:"C2",gstbasis:"Rule 42 — common input",enduse:"Mixed",fund:"R",ipas:"C2",gst:"18%",note:"Maintenance/repair of computers and peripheral equipment. Common use equipment. Partial ITC with Rule 42 apportionment.",ref:"RBA 27/2018"},
     {sr:"15A",desc:"Networking / telecommunication equipment — input goods",sub:"Routers, network switches and other data reception, conversion or transmission apparatus",hsn:"85176290",cat:"Telecom/IT",flag:"T3",gstbasis:"Zonal Railway input goods — ITC blocked/restricted under Railway GST procurement instructions",enduse:"All",fund:"C/R",ipas:"T3",gst:"18%",note:"Select T3 when HSN 85176290 is supplied as goods to a Zonal Railway. Do not use C2/T4 merely because the equipment supports operations. If installation, AMC or another service is separately invoiced, examine that service under its SAC and end-use.",ref:"Southern Railway Procurement FAQ, GST Q.12, pp.31-32; Railway Board RBA 68/2018, RBA 98/2019 and RBA 18/2020"},
+    {sr:"15B",desc:"Microphones and stands — input goods",sub:"Gooseneck, desk, wireless or public-address microphones and microphone stands",hsn:"85181000",cat:"Telecom/IT",flag:"T3",gstbasis:"Zonal Railway input goods — ITC blocked/restricted under Railway GST procurement instructions",enduse:"All",fund:"C/R",ipas:"T3",gst:"18%",note:"Heading 8518 attracts 18% GST; tariff item 85181000 covers microphones and stands therefor. Select T3 when purchased as goods by a Zonal Railway, including for station announcements, control rooms or public-address systems. Separately invoiced installation, repair or AMC service must be examined independently under its SAC and actual end-use.",ref:"CBIC GST Goods Rate Schedule III Sl.380; Southern Railway Procurement FAQ, GST Q.12, pp.31-32; Railway Board RBA 68/2018, RBA 98/2019 and RBA 18/2020"},
   
     // ── CONSTRUCTION ──
     {sr:"16",desc:"Works contract — immovable property construction",sub:"Buildings, ROB, FOB, LHS, walls, culverts",hsn:"995411-995429",cat:"Construction",flag:"T3",gstbasis:"Sec 17(5)(c) — immovable WC blocked",enduse:"All",fund:"C",ipas:"T3",gst:"18% (earthwork >75% to Govt was 12% till 21.09.2025)",note:"Always T3. Use exact 9954 sub-code from invoice: building 995411-995419; civil engineering 995421-995429. GST 2.0 moved earthwork >75% to Govt from 12% to 18% w.e.f. 22.09.2025.",ref:"CGST Sec 17(5)(c); RBA 27/2025 GST 2.0"},
@@ -346,7 +347,7 @@
     meta: {
       title: 'Northern Railway GST ITC Knowledge Portal',
       schemaVersion: '1.0.0',
-      updatedAt: '2026-09-28'
+      updatedAt: '2026-09-29'
     }
   };
 }));
