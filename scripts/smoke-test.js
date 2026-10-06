@@ -19,7 +19,7 @@ function get(port, pathname) {
 }
 
 async function run() {
-  assert.strictEqual(data.master.length, 165, 'Master record count changed unexpectedly');
+  assert.strictEqual(data.master.length, 184, 'Master record count changed unexpectedly');
   assert.strictEqual(new Set(data.master.map((item) => item.sr)).size, data.master.length, 'Duplicate serial numbers');
   for (const item of data.master) {
     for (const key of ['sr', 'desc', 'hsn', 'cat', 'flag', 'note', 'ref']) {
@@ -28,6 +28,11 @@ async function run() {
   }
   assert.ok(data.master.some((item) => String(item.hsn).includes('85176290')), 'HSN 85176290 is missing');
   assert.ok(data.master.some((item) => String(item.hsn).includes('85181000') && item.flag === 'T3'), 'HSN 85181000 T3 record is missing');
+  for (const sac of ['998313', '998315', '998319', '998333', '998336', '998337', '998338', '998361', '998371', '997112', '997134', '996712', '996743', '996811', '996911', '996921']) {
+    assert.ok(data.master.some((item) => String(item.hsn).includes(sac)), `SAC ${sac} is missing`);
+  }
+  const legal = data.master.find((item) => item.sr === 'E39');
+  assert.ok(legal && legal.flag !== 'EX' && String(legal.hsn).includes('998212'), 'Legal-service classification was not corrected');
   assert.ok(data.master.some((item) => String(item.hsn).includes('998349')), 'SAC 998349 is missing');
 
   const index = fs.readFileSync(path.join(__dirname, '..', 'index.html'), 'utf8');
