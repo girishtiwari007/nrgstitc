@@ -4,7 +4,7 @@
 
 - `index.html` contains the accessible page structure only.
 - `assets/css/portal.css` owns layout, responsive behavior, and visual styling.
-- `assets/js/data.js` is the canonical knowledge dataset. It supports browsers and CommonJS so the page and API read the same records.
+- `assets/js/data.js` is the canonical knowledge dataset. It supports browsers and CommonJS so the page and API read the same records. Every master record is enriched with organisation scope, supply type, code-verification status and a mapped official source URL.
 - `assets/js/app.js` owns filters, tabs, tables, modals, exports, and other browser behavior.
 - `server.js` serves the static portal and exposes a versioned, read-only JSON API.
 - `scripts/smoke-test.js` validates required records, data integrity, static delivery, API filters, and path traversal protection.
@@ -25,7 +25,7 @@ Recommended future order:
 
 - `GET /api/health`
 - `GET /api/v1/meta`
-- `GET /api/v1/master?q=&hsn=&flag=&category=&fund=&endUse=&changed=`
+- `GET /api/v1/master?q=&hsn=&flag=&category=&fund=&endUse=&scope=&codeStatus=&supplyType=&changed=`
 - `GET /api/v1/master/:sr`
 - `GET /api/v1/faqs?q=&category=`
 - `GET /api/v1/circulars`

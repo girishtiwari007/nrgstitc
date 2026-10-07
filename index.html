@@ -79,7 +79,7 @@
 
 <div class="main">
 <div class="compliance-strip">
-  <div class="compliance-tile"><b>HSN/SAC discipline</b><span>Use 6-digit SAC/HSN wherever identifiable. For goods bundles, capture invoice tariff code before flagging.</span></div>
+  <div class="compliance-tile"><b>HSN/SAC discipline</b><span>Verified codes are marked by status. Heading, range and invoice-specific records require the exact invoice tariff code before flagging.</span></div>
   <div class="compliance-tile"><b>RBA 19 controls</b><span>Item 3 repair goods and item 7 P&amp;M construction goods are T3. GTA requires rate and Sec 17(5) check.</span></div>
   <div class="compliance-tile"><b>ITC rule path</b><span>Sec 16 eligibility first, then Sec 17(1)/(2), Sec 17(5), and Rule 42/43 apportionment for C2.</span></div>
   <div class="compliance-tile"><b>Bill-passing proof</b><span>Keep invoice, work order, end-use, fund head, GST rate, and justification note with every flag decision.</span></div>
@@ -116,12 +116,29 @@
       <option value="Mixed">Mixed (AC+NonAC)</option>
       <option value="All">All/General</option>
     </select>
+    <select class="si" id="scopeSel" onchange="renderTable()">
+      <option value="">All Organisations</option>
+      <option value="Division">Division</option>
+      <option value="Zonal HQ">Zonal HQ</option>
+      <option value="Workshop">Zonal Workshop</option>
+      <option value="Production Unit">Production Unit</option>
+    </select>
+    <select class="si" id="codeSel" onchange="renderTable()">
+      <option value="">All Code Status</option>
+      <option value="Verified 6-digit SAC">Verified 6-digit SAC</option>
+      <option value="Verified 8-digit HSN">Verified 8-digit HSN</option>
+      <option value="Verified alternatives - select by scope">Verified alternatives</option>
+      <option value="Heading/range - verify exact invoice code">Heading/range</option>
+      <option value="Invoice-specific">Invoice-specific</option>
+      <option value="Review required">Review required</option>
+    </select>
     <select class="si" id="rcSel" onchange="renderTable()">
       <option value="">All Rates</option>
       <option value="1">GST 2.0 Changed</option>
     </select>
     <button class="rst" onclick="resetAll()">Reset</button>
   </div>
+  <div class="scope-notice"><strong>Scope control:</strong> Zonal Railway Divisions, HQ and workshops generally use T3 for input goods. Production Unit T4 treatment applies only to documented taxable manufacture or resale. P&amp;M eligibility removes a Section 17(5) block but common-use services may still require C2 under Rule 42.</div>
   <div id="hsnSearchInfo" class="search-info"></div>
   <div class="tbl-wrap master-table-wrap">
     <table class="master-table">

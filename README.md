@@ -1,6 +1,6 @@
 # NR GST ITC Knowledge Portal
 
-Professional GST ITC flagging and reference portal for Northern Railway / Moradabad Division. It combines the master HSN/SAC table, Railway Board guidance, circular links, procurement FAQs, construction references, ITC flags, and invoice-level decision notes.
+Professional GST ITC flagging and reference portal for Northern Railway / Moradabad Division. It combines the master HSN/SAC table, Railway Board guidance, circular links, procurement FAQs, construction references, organisation scope, code-verification status, ITC flags, and invoice-level decision notes.
 
 ## Important Separation
 
@@ -45,6 +45,8 @@ GET /api/health
 GET /api/v1/meta
 GET /api/v1/master?hsn=85176290
 GET /api/v1/master?flag=T3&category=Transport
+GET /api/v1/master?scope=Workshop&codeStatus=Verified%206-digit%20SAC
+GET /api/v1/master?supplyType=Goods
 GET /api/v1/faqs?q=dealer
 GET /api/v1/search?q=998349
 ```

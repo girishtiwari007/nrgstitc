@@ -22,9 +22,10 @@ async function run() {
   assert.strictEqual(data.master.length, 208, 'Master record count changed unexpectedly');
   assert.strictEqual(new Set(data.master.map((item) => item.sr)).size, data.master.length, 'Duplicate serial numbers');
   for (const item of data.master) {
-    for (const key of ['sr', 'desc', 'hsn', 'cat', 'flag', 'note', 'ref']) {
+    for (const key of ['sr', 'desc', 'hsn', 'cat', 'flag', 'note', 'ref', 'supplyType', 'codeStatus', 'sourceUrl']) {
       assert.ok(String(item[key] ?? '').trim(), `Master ${item.sr || '?'} is missing ${key}`);
     }
+    assert.ok(Array.isArray(item.scope) && item.scope.length, `Master ${item.sr} is missing organisation scope`);
   }
   assert.ok(data.master.some((item) => String(item.hsn).includes('85176290')), 'HSN 85176290 is missing');
   assert.ok(data.master.some((item) => String(item.hsn).includes('85181000') && item.flag === 'T3'), 'HSN 85181000 T3 record is missing');
@@ -41,6 +42,16 @@ async function run() {
     assert.ok(data.master.some((item) => String(item.hsn).includes(hsn) && item.flag === 'T3'), `Railway input-goods HSN ${hsn} T3 record is missing`);
   }
   assert.ok(data.master.some((item) => String(item.hsn).includes('998349')), 'SAC 998349 is missing');
+  assert.ok(data.master.filter((item) => /^Invoice /.test(item.hsn)).length <= 40, 'Too many unresolved invoice-code placeholders');
+  for (const sr of ['14', '17', '18', '30', '69', '70']) {
+    assert.strictEqual(data.master.find((item) => item.sr === sr).flag, 'C2', `Master ${sr} must default to C2 for common Railway use`);
+  }
+  for (const sr of ['71', '72']) {
+    const item = data.master.find((entry) => entry.sr === sr);
+    assert.strictEqual(item.flag, 'T3', `Zonal Railway rolling-stock record ${sr} must be T3`);
+    assert.ok(!item.scope.includes('Production Unit'), `Record ${sr} must not merge Zonal Railway and Production Unit treatment`);
+  }
+  assert.deepStrictEqual(data.master.find((item) => item.sr === 'E59').scope, ['Production Unit']);
   const rbaRateFaq = data.procurementFaq.filter((item) => item.c === 'RBA 27/2025 - Rate Transition');
   assert.strictEqual(rbaRateFaq.length, 12, 'RBA 27/2025 transition FAQ must contain all 12 questions');
   assert.ok(rbaRateFaq.some((item) => /e-way bill/i.test(item.q)), 'RBA 27/2025 e-way bill FAQ is missing');
@@ -77,6 +88,10 @@ async function run() {
     const blocked = await get(port, '/api/v1/master?flag=T3');
     assert.strictEqual(blocked.status, 200);
     assert.ok(JSON.parse(blocked.body).items.every((item) => item.flag === 'T3'));
+
+    const workshop = await get(port, '/api/v1/master?scope=Workshop&codeStatus=Verified%206-digit%20SAC');
+    assert.strictEqual(workshop.status, 200);
+    assert.ok(JSON.parse(workshop.body).items.every((item) => item.scope.includes('Workshop') && item.codeStatus === 'Verified 6-digit SAC'));
 
     const traversal = await get(port, '/..%2FREADME.md');
     assert.strictEqual(traversal.status, 403);

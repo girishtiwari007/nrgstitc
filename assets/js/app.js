@@ -48,9 +48,16 @@ function hl(txt,term){
   return String(txt).replace(new RegExp('('+e+')','gi'),'<mark>$1</mark>');
 }
 function normalizedSearchText(d){
-  return `${d.sr||''} ${d.hsn||''} ${d.desc||''} ${d.sub||''} ${d.use||''} ${d.cat||''} ${d.flag||''} ${d.note||''} ${d.ref||''} ${d.basis||''} ${d.gstbasis||''} ${d.notif||''}`.toLowerCase();
+  return `${d.sr||''} ${d.hsn||''} ${d.desc||''} ${d.sub||''} ${d.use||''} ${d.cat||''} ${d.flag||''} ${d.note||''} ${d.ref||''} ${d.basis||''} ${d.gstbasis||''} ${d.notif||''} ${(d.scope||[]).join(' ')} ${d.supplyType||''} ${d.codeStatus||''}`.toLowerCase();
 }
 function isCodeLike(v){return /[0-9]/.test(v);}
+function codeStatusClass(status){
+  if(status.startsWith('Verified 6')||status.startsWith('Verified 8'))return 'status-verified';
+  if(status.startsWith('Verified alternatives'))return 'status-conditional';
+  if(status.startsWith('Invoice-specific'))return 'status-invoice';
+  return 'status-review';
+}
+function codeStatusPill(status){return `<span class="code-status ${codeStatusClass(status)}">${status}</span>`;}
 
 function renderSearchInfo(term){
   const box=document.getElementById('hsnSearchInfo');
@@ -110,7 +117,7 @@ function resetAll(){
   ['srch','hsnSrch'].forEach(id=>document.getElementById(id).value='');
   const global=document.getElementById('globalHsnSearch');
   if(global)global.value='';
-  ['flagSel','catSel','fundSel','euSel','rcSel'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
+  ['flagSel','catSel','fundSel','euSel','scopeSel','codeSel','rcSel'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
   document.getElementById('hsnX').style.display='none';
   hideSug();
   renderTable();
@@ -132,6 +139,8 @@ function renderTable(){
   const cf=document.getElementById('catSel').value;
   const fnd=document.getElementById('fundSel').value;
   const eu=document.getElementById('euSel').value;
+  const scope=(document.getElementById('scopeSel')||{value:''}).value;
+  const codeStatus=(document.getElementById('codeSel')||{value:''}).value;
   const rc=(document.getElementById('rcSel')||{value:''}).value;
 
   const rows=DATA.filter(d=>{
@@ -139,10 +148,12 @@ function renderTable(){
     if(cf && d.cat!==cf) return false;
     if(fnd && !d.fund.includes(fnd)) return false;
     if(eu && d.eu!==eu && d.enduse!==eu) return false;
+    if(scope && !(d.scope||[]).includes(scope)) return false;
+    if(codeStatus && d.codeStatus!==codeStatus) return false;
     const _rc=(document.getElementById('rcSel')||{value:''}).value;
     if(_rc==='1' && !d.rc) return false;
     if(hq){const h=(d.hsn||'').toLowerCase();if(!h.startsWith(hq)&&!h.includes(hq))return false;}
-    if(q && !`${d.sr} ${d.desc} ${d.sub} ${d.hsn} ${d.cat} ${d.flag} ${d.note} ${d.ref} ${d.gstbasis} ${d.notif||''}`.toLowerCase().includes(q)) return false;
+    if(q && !`${d.sr} ${d.desc} ${d.sub} ${d.hsn} ${d.cat} ${d.flag} ${d.note} ${d.ref} ${d.gstbasis} ${d.notif||''} ${(d.scope||[]).join(' ')} ${d.supplyType} ${d.codeStatus}`.toLowerCase().includes(q)) return false;
     return true;
   });
 
@@ -161,7 +172,7 @@ function renderTable(){
     tr.innerHTML=`
       <td class="td-sr">${d.sr}</td>
       <td class="td-desc">${descDisp}</td>
-      <td class="td-hsn">${hsnDisp}</td>
+      <td class="td-hsn">${hsnDisp}<small class="code-status-compact">${d.codeStatus}</small></td>
       <td class="td-cat">${d.cat}</td>
       <td>${flagBadge(d.flag)}</td>
       <td class="td-gst">${d.gst}</td>
@@ -179,9 +190,12 @@ function renderTable(){
         <div><b>End-use</b><span>${euPill(d.enduse||d.eu)}</span></div>
         <div><b>Fund</b><span>${fundBadge(d.fund)}</span></div>
         <div><b>IPAS code</b><span class="ipas">${d.ipas}</span></div>
+        <div><b>Organisation scope</b><span>${(d.scope||[]).join(', ')}</span></div>
+        <div><b>Supply type</b><span>${d.supplyType}</span></div>
+        <div><b>Code verification</b><span>${codeStatusPill(d.codeStatus)}</span></div>
         <div><b>Notification</b><span>${d.notif||'Confirm applicable notification'}</span></div>
         <div class="detail-wide"><b>Compliance note</b><span>${d.note}</span></div>
-        <div class="detail-wide"><b>Source / circular reference</b><span>${d.ref}</span></div>
+        <div class="detail-wide"><b>Source / circular reference</b><span>${d.ref}<br><a class="detail-source-link" href="${d.sourceUrl}" target="_blank" rel="noopener">Open mapped official source</a></span></div>
       </div>
     </td>`;
     tb.appendChild(detail);

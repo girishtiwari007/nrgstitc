@@ -48,6 +48,9 @@ function filterMaster(searchParams) {
   const category = searchParams.get('category') || '';
   const fund = searchParams.get('fund') || '';
   const endUse = searchParams.get('endUse') || '';
+  const scope = searchParams.get('scope') || '';
+  const codeStatus = searchParams.get('codeStatus') || '';
+  const supplyType = searchParams.get('supplyType') || '';
   const changed = searchParams.get('changed') || '';
 
   return portalData.master.filter((item) => {
@@ -56,8 +59,11 @@ function filterMaster(searchParams) {
       && (!hsn || contains(item.hsn, hsn))
       && exact(item.flag, flag)
       && exact(item.cat, category)
-      && exact(item.fund, fund)
+      && (!fund || contains(item.fund, fund))
       && (!endUse || exact(item.enduse || item.eu, endUse))
+      && (!scope || (item.scope || []).some((value) => exact(value, scope)))
+      && exact(item.codeStatus, codeStatus)
+      && exact(item.supplyType, supplyType)
       && (!changed || contains(`${item.gst} ${item.note}`, changed));
   });
 }
