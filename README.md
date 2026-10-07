@@ -22,7 +22,7 @@ Then open `http://localhost:3000`. Use `npm run dev` for automatic server restar
 npm test
 ```
 
-The smoke suite checks JavaScript syntax, all 184 master records, mandatory data fields, duplicate serials, key HSN/SAC entries, static delivery, API search/filter behavior, and path traversal protection.
+The smoke suite checks JavaScript syntax, all 208 master records, mandatory data fields, duplicate serials, key HSN/SAC entries, static delivery, API search/filter behavior, and path traversal protection.
 
 ## Project Structure
 

@@ -116,6 +116,15 @@ function resetAll(){
   renderTable();
 }
 
+function toggleMasterDetail(id,button){
+  const detail=document.getElementById(id);
+  if(!detail)return;
+  const willOpen=detail.hidden;
+  detail.hidden=!willOpen;
+  button.setAttribute('aria-expanded',String(willOpen));
+  button.textContent=willOpen?'Close':'View';
+}
+
 function renderTable(){
   const q=(document.getElementById('srch').value||'').toLowerCase();
   const hq=(document.getElementById('hsnSrch').value||'').trim().toLowerCase();
@@ -142,26 +151,40 @@ function renderTable(){
   document.getElementById('noData').style.display=rows.length?'none':'block';
   renderSearchInfo(hq || q);
 
-  rows.forEach(d=>{
+  rows.forEach((d,index)=>{
     const tr=document.createElement('tr');
+    tr.className='master-row';
     if(d.rc)tr.style.background='#fffde7';
+    const detailId=`master-detail-${index}`;
     const hsnDisp=hq?hl(d.hsn,hq):d.hsn;
     const descDisp=q?hl(d.desc,q):d.desc;
-    const subDisp=q?hl(d.sub||'',q):(d.sub||'');
     tr.innerHTML=`
       <td class="td-sr">${d.sr}</td>
-      <td class="td-desc">${descDisp}<small>${subDisp}</small></td>
+      <td class="td-desc">${descDisp}</td>
       <td class="td-hsn">${hsnDisp}</td>
       <td class="td-cat">${d.cat}</td>
       <td>${flagBadge(d.flag)}</td>
-      <td style="font-size:10px;color:var(--navy3);max-width:160px;line-height:1.4">${d.gstbasis}</td>
-      <td>${euPill(d.enduse||d.eu)}</td>
-      <td>${fundBadge(d.fund)}</td>
-      <td><span class="ipas">${d.ipas}</span></td>
-      <td style="font-size:10px;color:var(--muted);max-width:120px">${d.notif||''}</td><td class="td-gst">${d.gst}</td>
-      <td class="td-note">${d.note}</td>
-      <td class="td-ref">${d.ref}</td>`;
+      <td class="td-gst">${d.gst}</td>
+      <td class="td-detail"><button class="detail-btn" type="button" aria-expanded="false" aria-controls="${detailId}" onclick="toggleMasterDetail('${detailId}',this)">View</button></td>`;
     tb.appendChild(tr);
+
+    const detail=document.createElement('tr');
+    detail.id=detailId;
+    detail.className='master-detail-row';
+    detail.hidden=true;
+    detail.innerHTML=`<td colspan="7">
+      <div class="master-detail-grid">
+        <div class="detail-wide"><b>Exact description / scope</b><span>${d.sub||d.desc}</span></div>
+        <div><b>GST law basis</b><span>${d.gstbasis}</span></div>
+        <div><b>End-use</b><span>${euPill(d.enduse||d.eu)}</span></div>
+        <div><b>Fund</b><span>${fundBadge(d.fund)}</span></div>
+        <div><b>IPAS code</b><span class="ipas">${d.ipas}</span></div>
+        <div><b>Notification</b><span>${d.notif||'Confirm applicable notification'}</span></div>
+        <div class="detail-wide"><b>Compliance note</b><span>${d.note}</span></div>
+        <div class="detail-wide"><b>Source / circular reference</b><span>${d.ref}</span></div>
+      </div>
+    </td>`;
+    tb.appendChild(detail);
   });
 
   

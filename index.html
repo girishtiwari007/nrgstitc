@@ -123,21 +123,25 @@
     <button class="rst" onclick="resetAll()">Reset</button>
   </div>
   <div id="hsnSearchInfo" class="search-info"></div>
-  <div class="tbl-wrap">
-    <table>
+  <div class="tbl-wrap master-table-wrap">
+    <table class="master-table">
+      <colgroup>
+        <col class="col-sr">
+        <col class="col-desc">
+        <col class="col-hsn">
+        <col class="col-cat">
+        <col class="col-flag">
+        <col class="col-rate">
+        <col class="col-detail">
+      </colgroup>
       <thead><tr>
         <th>Sr</th>
         <th>Service / Goods Description</th>
         <th>HSN / SAC</th>
         <th>Category</th>
         <th>Railway ITC Flag</th>
-        <th>GST Law Basis</th>
-        <th>End-Use</th>
-        <th>Fund</th>
-        <th>IPAS Code</th>
-        <th>Notification No.</th><th>GST Rate</th>
-        <th>Compliance Note</th>
-        <th>Circular Ref</th>
+        <th>GST Rate</th>
+        <th><span class="sr-only">Record details</span></th>
       </tr></thead>
       <tbody id="tBody"></tbody>
     </table>
@@ -246,8 +250,9 @@
 <div id="tab-procfaq" class="pane">
   <div class="alert">
     <strong>Southern Railway Procurement FAQ - condensed Q&amp;A knowledge base</strong><br>
-    Covers 50 recurring procurement questions. The handbook states that it is guidance, was updated through October 2023, and must not replace current law, SOP, Railway Board circulars or tender conditions.
+    Covers 50 recurring procurement questions plus 12 GST rate-transition questions circulated with RBA 27/2025. These are condensed guidance and must not replace current law, notified rates, SOP, Railway Board circulars or tender conditions.
     <a class="source-link" href="https://sr.indianrailways.gov.in/cris/uploads/files/1730186560030-FAQonProcurement.pdf" target="_blank" rel="noopener">Open complete official source PDF</a>
+    <a class="source-link" href="https://indianrailways.gov.in/railwayboard/uploads/directorate/accounts/downloads/compendium_2025/RBA%2027-2025_%20GST%20C_No_06_2025%20%281%29.pdf" target="_blank" rel="noopener">Open RBA 27/2025 official PDF</a>
   </div>
   <div class="faq-toolbar">
     <input id="procFaqSearch" type="search" placeholder="Search question, answer, GST, dealer, PAC, BG..." oninput="renderProcurementFaq()">
