@@ -55,12 +55,17 @@ async function run() {
   const rbaRateFaq = data.procurementFaq.filter((item) => item.c === 'RBA 27/2025 - Rate Transition');
   assert.strictEqual(rbaRateFaq.length, 12, 'RBA 27/2025 transition FAQ must contain all 12 questions');
   assert.ok(rbaRateFaq.some((item) => /e-way bill/i.test(item.q)), 'RBA 27/2025 e-way bill FAQ is missing');
+  assert.ok(data.circulars.some((item) => item.id.includes('57th GST Council') && /Pending Legal Effect/i.test(item.title)), '57th GST Council proposal watch is missing');
+  assert.ok(data.circulars.some((item) => item.id.includes('RBA 04/2026')), 'RBA 04/2026 GSTR-3B advisory is missing');
+  assert.ok(data.circulars.some((item) => item.id.includes('RBA 29/2025')), 'RBA 29/2025 GSTR-7 advisory is missing');
+  assert.strictEqual(data.meta.updatedAt, '2026-10-27', 'Dataset review date is stale');
 
   const index = fs.readFileSync(path.join(__dirname, '..', 'index.html'), 'utf8');
   assert.match(index, /assets\/css\/portal\.css/);
   assert.match(index, /assets\/js\/data\.js/);
   assert.match(index, /assets\/js\/app\.js/);
   assert.match(index, /class="master-table"/);
+  assert.match(index, /57th GST Council - Proposal Watch/);
   const app = fs.readFileSync(path.join(__dirname, '..', 'assets', 'js', 'app.js'), 'utf8');
   assert.match(app, /function toggleMasterDetail/);
   assert.match(app, /master-detail-row/);
