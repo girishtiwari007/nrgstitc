@@ -8,6 +8,12 @@
 </head>
 <body>
 
+<div class="launch-disclaimer" id="launchDisclaimer" role="alert" aria-live="assertive">
+  <span class="launch-disclaimer-icon" aria-hidden="true">⚠️</span>
+  <p><strong>Detailed ITC disclaimer:</strong> This portal consolidates Railway Board instructions, including RBA 27/2018 and RBA 19/2024, with official GST law, notifications, circulars and classification references to assist in identifying the appropriate ITC flag at the bill-passing stage. The displayed flag is indicative and not a final tax determination. Actual ITC eligibility depends on invoice particulars, transaction facts, end-use, accounting treatment and prevailing law. Verify the latest official source and consult the Railway GST Cell/GST Consultant before finalising any ITC flag or claim. Incorrect or excess ITC may attract reversal, interest and other consequences under applicable GST law.</p>
+  <button type="button" onclick="hideLaunchDisclaimer()" aria-label="Close detailed disclaimer">×</button>
+</div>
+
 <div class="circ-modal-overlay" id="circModalOverlay" onclick="if(event.target===this)closeCircModal()">
   <div class="circ-modal">
     <div class="circ-modal-hdr">
@@ -25,6 +31,12 @@
   <div class="gov-kicker">Government of India · Ministry of Railways · GST Cell Reference</div>
   <h1>Railway GST ITC Flagging Reference Tool</h1>
   <p>O/O Sr. DFM · Northern Railway · Moradabad Division &nbsp;|&nbsp; Bill-Passing Stage Reference · IPAS Compliance</p>
+</div>
+<div class="header-disclaimer-bar">
+  <div class="itc-caution" role="note" aria-label="Important ITC flagging caution">
+    <span class="itc-caution-icon" aria-hidden="true">⚠️</span>
+    <span><strong>Based on Railway Board instructions and official GST sources, this portal assists in identifying indicative ITC flags.</strong> Verify transaction facts and consult the Railway GST Cell/GST Consultant before any final decision.</span>
+  </div>
 </div>
 
 <div class="top-alert" id="topAlert">
@@ -88,7 +100,10 @@
 <!-- ══ TAB 1: MASTER ══ -->
 <div id="tab-master" class="pane active">
   <div class="controls">
-    <span class="filter-bar-title">Search &amp; Filter <span class="filter-bar-arrow" aria-hidden="true">&#8594;</span></span>
+    <span class="filter-bar-title">
+      <span class="filter-title-copy">Search &amp; Filter<small>Use for required listing</small></span>
+      <span class="filter-bar-arrow" aria-hidden="true">&#9758;</span>
+    </span>
     <input class="si si-wide" type="text" id="srch" placeholder="Search description, note or category" oninput="renderTable()">
     <div class="pos-rel">
       <input class="si" id="hsnSrch" placeholder="HSN/SAC — e.g. 9954 or 995421" oninput="renderTable();showSug()" onblur="setTimeout(hideSug,200)" autocomplete="off" style="min-width:195px;padding-right:24px">
@@ -165,7 +180,7 @@
     </table>
     <div id="noData" class="nodata" style="display:none">No records match selected filters.</div>
   </div>
-  <p style="font-size:10px;color:var(--muted);margin-top:9px">⚠️ Illustrative per RBA 27/2018 &amp; RBA 19/2024. Each bill must be assessed on actual facts &amp; end-use. Interest @18% p.a. applies on excess ITC (CGST Sec 50). Verify edge cases with NR HQ GST Cell.</p>
+  <div id="listingNotice" class="listing-notice" aria-live="polite"></div>
 </div>
 
 <!-- MAIN ITC RULE SUMMARY TAB -->

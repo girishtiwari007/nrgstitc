@@ -64,14 +64,15 @@ function renderSearchInfo(term){
   if(!box)return;
   const t=(term||'').trim().toLowerCase();
   if(!t){box.classList.remove('show');box.innerHTML='';return;}
-  const masterHits=DATA.filter(d=>normalizedSearchText(d).includes(t)).slice(0,6);
-  const constHits=CONST_DATA.filter(d=>normalizedSearchText(d).includes(t)).slice(0,6);
-  const hits=[
-    ...masterHits.map(d=>`<div class="search-hit"><b>${hl(d.hsn,t)}</b> ${flagBadge(d.flag)}<br>${hl(d.desc,t)}<br><span style="color:var(--muted)">${hl(d.note||d.gstbasis||'',t)}</span></div>`),
-    ...constHits.map(d=>`<div class="search-hit"><b>${hl(d.hsn,t)}</b> ${flagBadge(d.flag.split(' ')[0])}<br>${hl(d.desc,t)}<br><span style="color:var(--muted)">${hl(d.use||d.note||'',t)}</span></div>`)
+  const masterHits=DATA.filter(d=>normalizedSearchText(d).includes(t));
+  const constHits=CONST_DATA.filter(d=>normalizedSearchText(d).includes(t));
+  const allHits=[
+    ...masterHits.map(d=>`<div class="search-hit"><div class="search-hit-code"><b>${hl(d.hsn,t)}</b> ${flagBadge(d.flag)}</div><div class="search-hit-desc">${hl(d.desc,t)}</div><div class="search-hit-note">${hl(d.note||d.gstbasis||'',t)}</div></div>`),
+    ...constHits.map(d=>`<div class="search-hit"><div class="search-hit-code"><b>${hl(d.hsn,t)}</b> ${flagBadge(d.flag.split(' ')[0])}</div><div class="search-hit-desc">${hl(d.desc,t)}</div><div class="search-hit-note">${hl(d.use||d.note||'',t)}</div></div>`)
   ];
+  const hits=allHits.slice(0,5);
   if(!hits.length){box.classList.remove('show');box.innerHTML='';return;}
-  box.innerHTML=`<h4>Matching HSN/SAC details for "${term}"</h4><div class="search-info-grid">${hits.join('')}</div>`;
+  box.innerHTML=`<h4>Top ${hits.length} of ${allHits.length} matching HSN/SAC details for "${term}"</h4><div class="search-info-grid">${hits.join('')}</div>`;
   box.classList.add('show');
 }
 
@@ -123,6 +124,18 @@ function resetAll(){
   renderTable();
 }
 
+function focusMasterSearch(){
+  const controls=document.querySelector('#tab-master .controls');
+  const search=document.getElementById('hsnSrch');
+  if(controls){
+    controls.classList.remove('attention-replay');
+    void controls.offsetWidth;
+    controls.classList.add('attention-replay');
+    controls.scrollIntoView({behavior:'smooth',block:'center'});
+  }
+  if(search)setTimeout(()=>search.focus(),350);
+}
+
 function toggleMasterDetail(id,button){
   const detail=document.getElementById(id);
   if(!detail)return;
@@ -161,8 +174,16 @@ function renderTable(){
   tb.innerHTML='';
   document.getElementById('noData').style.display=rows.length?'none':'block';
   renderSearchInfo(hq || q);
+  const visibleRows=rows.slice(0,5);
+  const hasActiveFilter=Boolean(q||hq||ff||cf||fnd||eu||scope||codeStatus||rc);
+  const listingNotice=document.getElementById('listingNotice');
+  if(listingNotice){
+    listingNotice.innerHTML=rows.length
+      ? `<span><strong>Showing ${visibleRows.length} of ${rows.length} ${hasActiveFilter?'matching ':''}references.</strong> Search the full knowledge base for the required HSN/SAC, description, ITC flag or category.</span><button type="button" onclick="focusMasterSearch()"><span aria-hidden="true">&#9757;</span> Use Search &amp; Filter to check more</button>`
+      : '<strong>No matching reference.</strong> Change or reset the Search &amp; Filter criteria.';
+  }
 
-  rows.forEach((d,index)=>{
+  visibleRows.forEach((d,index)=>{
     const tr=document.createElement('tr');
     tr.className='master-row';
     if(d.rc)tr.style.background='#fffde7';
@@ -272,7 +293,14 @@ function showTopAlert(){
   document.getElementById('topAlert').classList.remove('is-hidden');
   document.getElementById('alertReopen').classList.remove('show');
 }
-window.addEventListener('load',()=>setTimeout(hideTopAlert,10000));
+function hideLaunchDisclaimer(){
+  const notice=document.getElementById('launchDisclaimer');
+  if(notice)notice.classList.add('is-hidden');
+}
+window.addEventListener('load',()=>{
+  setTimeout(hideTopAlert,10000);
+  setTimeout(hideLaunchDisclaimer,10000);
+});
 
 
 

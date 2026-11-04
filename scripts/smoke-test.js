@@ -65,10 +65,22 @@ async function run() {
   assert.match(index, /assets\/js\/data\.js/);
   assert.match(index, /assets\/js\/app\.js/);
   assert.match(index, /class="master-table"/);
+  assert.match(index, /class="itc-caution"/);
+  assert.match(index, /Based on Railway Board instructions and official GST sources/);
+  assert.match(index, /id="launchDisclaimer"/);
+  assert.match(index, /Detailed ITC disclaimer/);
+  assert.match(index, /Use for required listing/);
+  assert.match(index, /id="listingNotice"/);
+  assert.match(index, /class="header-disclaimer-bar"/);
   assert.match(index, /57th GST Council - Proposal Watch/);
   const app = fs.readFileSync(path.join(__dirname, '..', 'assets', 'js', 'app.js'), 'utf8');
   assert.match(app, /function toggleMasterDetail/);
   assert.match(app, /master-detail-row/);
+  assert.match(app, /rows\.slice\(0,5\)/);
+  assert.match(app, /function focusMasterSearch/);
+  assert.match(app, /function hideLaunchDisclaimer/);
+  assert.match(app, /setTimeout\(hideLaunchDisclaimer,10000\)/);
+  assert.match(app, /const hits=allHits\.slice\(0,5\)/);
 
   const server = createServer();
   await new Promise((resolve) => server.listen(0, '127.0.0.1', resolve));
