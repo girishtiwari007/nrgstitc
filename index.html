@@ -46,7 +46,7 @@
   <div class="ta-row">
     <span class="ta-icon">1</span>
     <span class="ta-text"><strong>Demand 11 / SMH-09 Staff Welfare:</strong>
-    Default treatment is <strong>T3 (No ITC)</strong>. T4/C2 only with statutory obligation or operational nexus justification.</span>
+    Default treatment is <strong>T3</strong>. A documented statutory or operational exception is normally C2 for mixed Railway output; T4 requires exclusive taxable use.</span>
   </div>
   <div class="ta-row">
     <span class="ta-icon">2</span>
@@ -76,7 +76,6 @@
 
 <nav class="tabs">
   <button class="tab active" onclick="switchTab('master',this)">Master ITC Table</button>
-  <button class="tab" onclick="switchTab('consultant',this)">GST Consultant Review</button>
   <button class="tab" onclick="switchTab('mainrules',this)">Main ITC Rule Summary</button>
   <button class="tab" onclick="switchTab('procfaq',this)">Procurement FAQ</button>
   <button class="tab" onclick="switchTab('const',this)">Construction &amp; 9954</button>
@@ -184,43 +183,6 @@
   <div id="listingNotice" class="listing-notice" aria-live="polite"></div>
 </div>
 
-<!-- GST CONSULTANT REVIEW TAB -->
-<div id="tab-consultant" class="pane">
-  <div class="consultant-review-head">
-    <div>
-      <span class="review-kicker">Reviewed Annexure A</span>
-      <h2>Flagging Remarks by GST Consultant/NR</h2>
-      <p>HSN/SAC, category, Railway ITC flag and GST law basis are aligned with the reviewed workbook. Consultant-reviewed revisions are displayed as the current portal position.</p>
-    </div>
-    <div class="review-summary" aria-label="Review summary">
-      <strong>240</strong><span>Reviewed records</span>
-      <strong>25</strong><span>Flag revisions</span>
-    </div>
-  </div>
-  <div class="consultant-controls">
-    <input class="si si-wide" type="search" id="consultantSearch" placeholder="Search description, HSN/SAC or consultant remark" oninput="renderConsultantReview()">
-    <select class="si" id="consultantFlag" onchange="renderConsultantReview()">
-      <option value="">All reviewed flags</option>
-      <option value="T1">T1</option><option value="T2">T2</option><option value="T3">T3</option>
-      <option value="T4">T4</option><option value="C2">C2</option><option value="EX">EX</option>
-    </select>
-    <select class="si" id="consultantCategory" onchange="renderConsultantReview()"><option value="">All categories</option></select>
-    <select class="si" id="consultantStatus" onchange="renderConsultantReview()">
-      <option value="">All review status</option>
-      <option value="revised">Revised flags</option>
-      <option value="confirmed">Confirmed flags</option>
-    </select>
-    <button class="rst" type="button" onclick="resetConsultantReview()">Reset</button>
-  </div>
-  <div class="consultant-table-wrap tbl-wrap">
-    <table class="consultant-table">
-      <thead><tr><th>Sr</th><th>Service / Goods Description</th><th>HSN / SAC</th><th>Category</th><th>Railway ITC Flag</th><th>GST Rate</th><th>Flagging Remarks by GST Consultant/NR</th></tr></thead>
-      <tbody id="consultantBody"></tbody>
-    </table>
-  </div>
-  <div id="consultantNotice" class="listing-notice" aria-live="polite"></div>
-</div>
-
 <!-- MAIN ITC RULE SUMMARY TAB -->
 <div id="tab-mainrules" class="pane">
   <div class="alert">
@@ -234,9 +196,9 @@
       <p><strong>Primary source:</strong> RBA 13/2026, GST Circular 3/2026, Demand 11 staff welfare ITC framework.</p>
       <ul>
         <li>Default position for Demand 11 / SMH-09 staff welfare and amenities is <strong>T3 - No ITC</strong>.</li>
-        <li>T4/C2 is an exception, not the starting point.</li>
+        <li>A qualifying statutory or operational exception is normally <strong>C2</strong> for mixed Railway output; T4 requires documented exclusive taxable use.</li>
         <li>Exception must be supported by either statutory obligation or direct operational nexus.</li>
-        <li>Bill passing should keep a clear IPAS justification/audit trail wherever T4/C2 is used.</li>
+        <li>Bill passing should keep a clear IPAS justification/audit trail wherever C2/T4 is used.</li>
       </ul>
       <a class="source-link" href="https://indianrailways.gov.in/railwayboard/uploads/directorate/accounts/downloads/compendium_2026/RBA%20No_%2013-2026%20GST%20Circular%20No_%203-2026.pdf" target="_blank" rel="noopener">Official PDF: RBA 13/2026 — GST Circular 3/2026</a>
     </div>
@@ -261,7 +223,7 @@
       <ul>
         <li>Goods for repairing wagons, coaches and locomotives are <strong>T3 - No ITC</strong>.</li>
         <li>Goods for construction of Plant &amp; Machinery such as tracks, signalling, telecom equipment, sleepers, machines and cranes are <strong>T3</strong>.</li>
-        <li>GTA is <strong>C2</strong> where ITC is otherwise available; use <strong>T3</strong> where ITC is restricted under Section 17(5) or rate condition.</li>
+        <li>GTA is <strong>C2</strong> for common Railway use; a supplier-side rate condition does not make the Railway's recipient credit T3.</li>
       </ul>
       <a class="source-link" href="https://indianrailways.gov.in/railwayboard/uploads/directorate/accounts/downloads/compendium_2024/RBA%20No_%2019-2024%20(2).pdf" target="_blank" rel="noopener">Official PDF: RBA 19/2024 — GST Circular 04/2024</a>
     </div>
@@ -364,7 +326,7 @@
 <!-- ══ TAB 2: CONSTRUCTION ══ -->
 <div id="tab-const" class="pane">
   <div class="alert">
-    <strong>⚠️ Key Ambiguity (MB Division letter 15/09/2025 + RBA 19/2024):</strong> HSN/SAC 9954 covers both <strong>immovable property</strong> (T3 — blocked) and <strong>Plant &amp; Machinery works contracts</strong> (T4 — eligible). Finance Act 2025 Sec 124 retrospectively changes "plant or machinery" to "plant and machinery" from 01.07.2017 — nullifying Safari Retreats SC ruling for building-as-plant argument. The single deciding test: <em>Is the asset Plant &amp; Machinery (P&amp;M), or is it an immovable structure?</em>
+    <strong>⚠️ Construction review control:</strong> HSN/SAC 9954 covers immovable construction, revenue repair and Plant &amp; Machinery works contracts. New or capitalised immovable construction is T3. Revenue repair not capitalised is normally C2 for operational premises, while residential/colony use is T1. P&amp;M works contracts are normally C2 for common Railway output and T4 only with documented exclusive taxable use.
   </div>
   <div class="igrid">
     <div class="icard"><h3>🚫 T3 — Blocked u/s 17(5)(c)/(d)</h3>
@@ -376,26 +338,24 @@
         <li><strong>995421</strong> — ROB, FOB, LHS, flyovers (immovable civil structure)</li>
         <li><strong>995422</strong> — Water/sewer/pipeline infrastructure</li>
         <li><strong>995429</strong> — Boundary walls, culverts, misc civil works</li>
-        <li><strong>9954</strong> — AMC of buildings (capitalised repair) [Finance Act 2025]</li>
-        <li><strong>9954</strong> — Revenue repair of buildings (works contract on immovable)</li>
+        <li><strong>9954</strong> — Building repair or renovation only to the extent capitalised [Finance Act 2025]</li>
       </ul>
       <p style="font-size:11px;color:var(--muted);margin-top:8px">Legal: Sec 17(5)(c) — WC for immovable property. Sec 17(5)(d) — goods/services for immovable property on own account. Finance Act 2025 Sec 124 clarifies retrospectively from 01.07.2017.</p>
     </div>
-    <div class="icard"><h3>✅ T4 — P&amp;M Exception to Sec 17(5)</h3>
+    <div class="icard"><h3>✅ C2 / T4 — P&amp;M Exception</h3>
       <ul>
-        <li><strong>9954 (P&amp;M WC)</strong> — Works contract for Plant &amp; Machinery: signalling, workshop equipment, traction, OHE</li>
-        <li><strong>995466</strong> — Lift installation at stations, FOBs, subways</li>
-        <li><strong>995466</strong> — Lift and escalator installation</li>
+        <li><strong>9954 (P&amp;M WC)</strong> — C2 for common signalling, workshop equipment, traction and OHE; T4 only if exclusive taxable use is documented</li>
+        <li><strong>995466</strong> — Station lift and escalator installation: C2 for common passenger use</li>
         <li><strong>9954</strong> — Kavach / IBS / ASC / signalling equipment installation</li>
         <li><strong>9987</strong> — AMC of P&amp;M (workshop equipment, loco depot)</li>
-        <li><strong>9954 (OHE new)</strong> — New OHE/traction installation (treated as P&amp;M)</li>
+        <li><strong>9954 (OHE new)</strong> — New OHE/traction installation: C2 for common Railway output</li>
       </ul>
       <p style="font-size:11px;color:var(--muted);margin-top:8px">Legal: Exception in Sec 17(5)(c) — "works contract services when supplied for construction of an immovable property (other than plant and machinery)". P&amp;M exception confirmed by Finance Act 2025.</p>
     </div>
     <div class="icard"><h3>⚡ Ambiguous — Examine Each Bill</h3>
       <ul>
-        <li><strong>995421</strong> (ROB/FOB with embedded S&T) — civil portion T3; equipment P&amp;M portion T4</li>
-        <li><strong>995423</strong> — HT lines/OFC cables: T3 if permanently fixed to land; T4 if P&amp;M per CBIC 219/2024</li>
+        <li><strong>995421</strong> (ROB/FOB with embedded S&T) — civil portion T3; eligible P&amp;M service portion C2 for common output</li>
+        <li><strong>995423</strong> — Permanent power/HT line construction: T3; OFC ducts/manholes qualifying as P&amp;M: C2 under CBIC 219/2024</li>
         <li><strong>9954 (P.Way service)</strong> — Service component C2; goods component T3</li>
         <li><strong>9954 (OHE repair)</strong> — Service component C2; goods component T3</li>
         <li><strong>9954 (S&amp;T repair)</strong> — Service component C2; goods component T3</li>
@@ -413,21 +373,21 @@
 <!-- ══ TAB 3: DEPOSIT WORKS ══ -->
 <div id="tab-deposit" class="pane">
   <div class="alert">
-    <strong>📌 Capital vs Revenue &amp; Deposit Works:</strong> ITC flag at IPAS <strong>must match the fund allocation</strong>. Capital works (Plan Heads) creating new assets → evaluate if P&amp;M (T4) or immovable structure (T3). Revenue works (Demand 3–13, Working Expenses) → maintenance/repair: services → C2, materials → T3. Deposit works (third-party funded via deposit account) → same ITC rules apply based on <em>nature of asset created</em>.
+    <strong>📌 Capital vs Revenue &amp; Deposit Works:</strong> ITC flag at IPAS <strong>must match the transaction and end-use</strong>. Capital P&amp;M installation services are normally C2 for common Railway output and T4 only if exclusively taxable; immovable construction is T3. Revenue repair services are normally C2 when not capitalised, while residential use is T1. Separately supplied goods require the reviewed Railway goods test.
   </div>
   <div class="igrid">
     <div class="icard"><h3>🏗️ Capital Fund Works (Plan Heads 1100–6300)</h3>
       <ul>
         <li>New line / doubling / gauge conversion (civil) → <strong>T3</strong></li>
         <li>New station building / FOB / ROB (structure) → <strong>T3</strong></li>
-        <li>New signalling / Kavach installation → <strong>T4</strong> (P&amp;M)</li>
-        <li>New OHE / traction electrification → <strong>T4</strong> (P&amp;M)</li>
-        <li>Workshop P&amp;M / lathe / CNC installation → <strong>T4</strong> (P&amp;M)</li>
-        <li>Lifts &amp; escalators at stations → <strong>T4</strong> (P&amp;M)</li>
-        <li>New rolling stock procurement (AC/freight) → <strong>T4</strong></li>
+        <li>New signalling / Kavach installation → <strong>C2</strong> for common output; T4 only if exclusively taxable</li>
+        <li>New OHE / traction electrification → <strong>C2</strong> for common output</li>
+        <li>Workshop P&amp;M / lathe / CNC installation service → <strong>C2</strong> for common output</li>
+        <li>Lifts &amp; escalators at stations → <strong>C2</strong> for common passenger use</li>
+        <li>New rolling stock procured as goods by a Zonal Railway → <strong>T3</strong> under the reviewed Railway instruction</li>
         <li>Staff quarters / colonies (capital) → <strong>T3</strong></li>
         <li>DRF replacement of immovable structure → <strong>T3</strong></li>
-        <li>DRF replacement of P&amp;M / rolling stock → <strong>T4</strong></li>
+        <li>DRF replacement of rolling stock supplied as goods → <strong>T3</strong> under the reviewed Railway instruction</li>
       </ul>
     </div>
     <div class="icard"><h3>🔧 Revenue Working Expenses (Demands 3–13)</h3>
@@ -440,7 +400,7 @@
         <li>Workshop repair goods (stock items) → <strong>T3</strong></li>
         <li>AC coach maintenance (dedicated) → <strong>T4</strong></li>
         <li>Station cleaning / security / OBHS (common) → <strong>C2</strong></li>
-        <li>Building maintenance / repair (any) → <strong>T3</strong></li>
+        <li>Building maintenance / repair charged to revenue → <strong>C2</strong> for operational premises; T1 for residential colonies; T3 only to the extent capitalised</li>
         <li>Non-AC operations (direct exclusive inputs) → <strong>T2</strong></li>
         <li>Staff welfare / medical / school → <strong>T1</strong></li>
       </ul>
@@ -448,20 +408,20 @@
     <div class="icard"><h3>💰 Deposit Works (Third-Party Funded)</h3>
       <ul>
         <li>ROB / RUB deposit (State Govt) → <strong>T3</strong><br><small style="color:var(--muted)">Asset = immovable bridge. Railways executes as agency. T3 at IR IPAS stage.</small></li>
-        <li>Electrification deposit (State / SPV) → <strong>T4</strong><br><small style="color:var(--muted)">OHE/traction = P&amp;M. T4 eligible if used for taxable output.</small></li>
-        <li>Signalling deposit (Kavach/IBS) → <strong>T4</strong><br><small style="color:var(--muted)">P&amp;M equipment. Full ITC.</small></li>
+        <li>Electrification deposit (State / SPV) → <strong>C2</strong><br><small style="color:var(--muted)">P&amp;M block does not apply; common Railway output requires Rule 42/43 apportionment.</small></li>
+        <li>Signalling deposit (Kavach/IBS) → <strong>C2</strong><br><small style="color:var(--muted)">T4 applies only with documented exclusive taxable use.</small></li>
         <li>RVNL / DFCCIL / IRCON works → <strong>EX</strong><br><small style="color:var(--muted)">CBIC 228/2024: exempt from GST w.e.f. 15.07.2024. Regularised 01.07.2017. No GST on inward supply → no ITC question.</small></li>
         <li>Ministry of Defence deposit — immovable → <strong>T3</strong></li>
-        <li>Ministry of Defence deposit — P&amp;M/equipment → <strong>T4</strong></li>
+        <li>Ministry of Defence deposit — P&amp;M/equipment → <strong>C2</strong> for common use; T4 only if exclusively taxable</li>
       </ul>
     </div>
     <div class="icard"><h3>⚖️ Capitalised vs Revenue Repair</h3>
       <ul>
         <li><strong>Capitalised repair</strong> (repair that increases asset life / creates new capacity, capitalised in books) → treated as <strong>construction</strong> → <strong>T3</strong><br><small style="color:var(--muted)">Finance Act 2025 Sec 124: "construction includes renovation to the extent capitalised"</small></li>
-        <li><strong>Revenue repair</strong> (routine, not capitalised) → works contract on immovable → <strong>T3</strong> (service); goods → <strong>T3</strong></li>
+        <li><strong>Revenue repair</strong> (routine, not capitalised) → <strong>C2</strong> for operational stations/offices; <strong>T1</strong> for residential colonies; goods require separate review</li>
         <li><strong>Revenue repair of P&amp;M</strong> (service portion) → <strong>C2</strong></li>
         <li><strong>Revenue repair of P&amp;M</strong> (goods/materials) → <strong>T3</strong> (RBA 19/2024)</li>
-        <li><strong>New P&amp;M under capital</strong> → <strong>T4</strong> (exclusively taxable) or <strong>C2</strong> (mixed AC+NonAC)</li>
+        <li><strong>New P&amp;M installation service</strong> → <strong>C2</strong> by default; <strong>T4</strong> only with documented exclusive taxable use</li>
       </ul>
     </div>
   </div>
@@ -471,21 +431,20 @@
     <tbody>
       <tr><td>New line / doubling / GC (civil portion)</td><td>Capital (PH 1100)</td><td>Immovable — track/civil</td><td><span class="badge badge-T3">T3</span></td><td class="ipas">T3</td><td>Sec 17(5)(c)/(d); RBA 19/2024 Sl.7 — track goods T3</td></tr>
       <tr><td>New station building / FOB / ROB structure</td><td>Capital (PH 1300)</td><td>Immovable — building</td><td><span class="badge badge-T3">T3</span></td><td class="ipas">T3</td><td>Sec 17(5)(c)/(d); Finance Act 2025 Sec 124</td></tr>
-      <tr><td>New signalling / Kavach installation (P&amp;M)</td><td>Capital (PH 3100)</td><td>P&amp;M — S&T equipment</td><td><span class="badge badge-T4">T4</span></td><td class="ipas">T4</td><td>Sec 17(5)(c) P&amp;M exception; RBA 27/2018</td></tr>
-      <tr><td>New OHE / traction electrification</td><td>Capital (PH 3500)</td><td>P&amp;M — traction/OHE</td><td><span class="badge badge-T4">T4</span></td><td class="ipas">T4</td><td>OHE = P&amp;M per RBA 27/2018</td></tr>
-      <tr><td>Workshop machinery (new, CNC/lathe etc.)</td><td>Capital (PH 5100)</td><td>P&amp;M — machinery</td><td><span class="badge badge-T4">T4</span></td><td class="ipas">T4</td><td>Sec 17(5)(c) P&amp;M exception</td></tr>
-      <tr><td>Lift / escalator at station</td><td>Capital</td><td>P&amp;M — equipment</td><td><span class="badge badge-T4">T4</span></td><td class="ipas">T4</td><td>SAC 995466 — lift and escalator installation</td></tr>
-      <tr><td>New rolling stock (AC coaches / freight)</td><td>Capital / DRF</td><td>P&amp;M — rolling stock</td><td><span class="badge badge-T4">T4</span></td><td class="ipas">T4</td><td>P&amp;M exception; exclusively taxable supply</td></tr>
-      <tr><td>New rolling stock (mixed AC + NonAC fleet)</td><td>Capital / DRF</td><td>P&amp;M — rolling stock</td><td><span class="badge badge-C2">C2</span></td><td class="ipas">C2</td><td>Common credit — mixed output (CGST Rule 42)</td></tr>
+      <tr><td>New signalling / Kavach installation service</td><td>Capital (PH 3100)</td><td>P&amp;M — S&amp;T equipment</td><td><span class="badge badge-C2">C2</span></td><td class="ipas">C2</td><td>P&amp;M exception; common output requires Rule 42/43</td></tr>
+      <tr><td>New OHE / traction electrification service</td><td>Capital (PH 3500)</td><td>P&amp;M — traction/OHE</td><td><span class="badge badge-C2">C2</span></td><td class="ipas">C2</td><td>P&amp;M exception; common Railway output</td></tr>
+      <tr><td>Workshop machinery installation service</td><td>Capital (PH 5100)</td><td>P&amp;M — machinery</td><td><span class="badge badge-C2">C2</span></td><td class="ipas">C2</td><td>T4 only for documented exclusive taxable use</td></tr>
+      <tr><td>Lift / escalator installation at station</td><td>Capital</td><td>P&amp;M — equipment</td><td><span class="badge badge-C2">C2</span></td><td class="ipas">C2</td><td>Common passenger use — Rule 42/43</td></tr>
+      <tr><td>New or replacement rolling stock supplied as goods</td><td>Capital / DRF</td><td>Rolling stock goods</td><td><span class="badge badge-T3">T3</span></td><td class="ipas">T3</td><td>Reviewed Zonal Railway goods instruction; confirm Railway Board basis</td></tr>
       <tr><td>Staff quarters / railway colony construction</td><td>Capital</td><td>Immovable — residential</td><td><span class="badge badge-T3">T3</span></td><td class="ipas">T3</td><td>Sec 17(5)(c)/(d)</td></tr>
       <tr><td>P.Way maintenance (service/labour component)</td><td>Revenue (D-5)</td><td>Service — track P&amp;M</td><td><span class="badge badge-C2">C2</span></td><td class="ipas">C2</td><td>RBA 27/2018 Sl.8 — mixed use (freight + pass.)</td></tr>
       <tr><td>P.Way maintenance (goods / materials)</td><td>Revenue (D-5)</td><td>Goods — track</td><td><span class="badge badge-T3">T3</span></td><td class="ipas">T3</td><td>RBA 19/2024 Sl.7 — goods for P&amp;M construction T3</td></tr>
       <tr><td>OHE / S&T repair (service component)</td><td>Revenue (D-7)</td><td>Service — P&amp;M repair</td><td><span class="badge badge-C2">C2</span></td><td class="ipas">C2</td><td>RBA 27/2018 Sl.9 / 10</td></tr>
       <tr><td>OHE / S&T repair (goods / materials)</td><td>Revenue (D-7)</td><td>Goods — P&amp;M repair</td><td><span class="badge badge-T3">T3</span></td><td class="ipas">T3</td><td>RBA 19/2024 Sl.3 &amp; 7</td></tr>
-      <tr><td>Building AMC (revenue, not capitalised)</td><td>Revenue (D-6)</td><td>Service — immovable WC</td><td><span class="badge badge-T3">T3</span></td><td class="ipas">T3</td><td>Sec 17(5)(c) — WC for immovable = T3 always</td></tr>
+      <tr><td>Building AMC (revenue, not capitalised)</td><td>Revenue (D-6)</td><td>Operational repair service</td><td><span class="badge badge-C2">C2</span></td><td class="ipas">C2</td><td>Repair is blocked only to the extent capitalised; T1 for residential colonies</td></tr>
       <tr><td>Capitalised renovation of building</td><td>Capital</td><td>Immovable (capitalised)</td><td><span class="badge badge-T3">T3</span></td><td class="ipas">T3</td><td>Finance Act 2025 Sec 124 — capitalised repair = construction</td></tr>
       <tr><td>ROB deposit work (State funded)</td><td>Deposit — Capital</td><td>Immovable — bridge</td><td><span class="badge badge-T3">T3</span></td><td class="ipas">T3</td><td>Asset = immovable. T3 at IR IPAS</td></tr>
-      <tr><td>Electrification deposit work</td><td>Deposit — Capital</td><td>P&amp;M — OHE/traction</td><td><span class="badge badge-T4">T4</span></td><td class="ipas">T4</td><td>OHE = P&amp;M. T4 eligible</td></tr>
+      <tr><td>Electrification deposit work</td><td>Deposit — Capital</td><td>P&amp;M — OHE/traction</td><td><span class="badge badge-C2">C2</span></td><td class="ipas">C2</td><td>Common Railway output — Rule 42/43</td></tr>
       <tr><td>RVNL / DFCCIL / IRCON works (SPV)</td><td>Off-balance / Deposit</td><td>Infrastructure (SPV)</td><td><span class="badge badge-EX">EX</span></td><td class="ipas">Exempt</td><td>CBIC 228/2024 — exempt from GST w.e.f. 15.07.2024</td></tr>
     </tbody>
   </table></div>
@@ -531,7 +490,7 @@
     </div></div>
     <div class="dt-step"><div class="dt-num">4</div><div class="dt-body">
       <h4>Is it used EXCLUSIVELY for taxable supply (AC coaches / freight operations)?</h4>
-      <p>100% identifiable use for AC coach maintenance, AC linen, OBHS-AC, on-board catering for AC, new AC rolling stock, P&amp;M works contract for workshop, software AMC for taxable operations, new OHE/signalling for taxable freight/AC output.</p>
+      <p>100% identifiable use for AC coach maintenance, AC linen, OBHS-AC, on-board catering for AC, P&amp;M installation services or software AMC used only for taxable operations. Zonal Railway purchases of rolling-stock or other goods remain subject to the reviewed Railway goods instruction.</p>
       <div class="outcomes"><span class="badge badge-T4">→ T4 (Full ITC)</span><span style="color:var(--muted);font-size:12px">→ NOT exclusively taxable: proceed to Step 5</span></div>
     </div></div>
     <div class="dt-step"><div class="dt-num">5</div><div class="dt-body">
@@ -546,15 +505,15 @@
     <table class="info-table"><thead><tr><th>Scenario</th><th>Correct Flag</th><th>Common Wrong Flag</th><th>Rule / Basis</th></tr></thead><tbody>
       <tr><td>GTA at 5% or 18% - Railway ITC not restricted u/s 17(5)</td><td><span class="badge badge-C2">C2</span></td><td>T3 based only on rate</td><td>RBA 19/2024 Sl.9 - C2 irrespective of forward/reverse charge</td></tr>
       <tr><td>GTA at 5% or 18% - Railway ITC specifically restricted u/s 17(5)</td><td><span class="badge badge-T3">T3</span></td><td>C2</td><td>RBA 19/2024 Sl.9 - T3 only where the recipient's ITC is restricted</td></tr>
-      <tr><td>Works contract — immovable property (any)</td><td><span class="badge badge-T3">T3</span></td><td>C2</td><td>Sec 17(5)(c) — always T3 regardless of revenue/capital</td></tr>
-      <tr><td>Works contract — Plant &amp; Machinery in capital fund</td><td><span class="badge badge-T4">T4</span></td><td>T3</td><td>Sec 17(5)(c) P&amp;M exception — T4 if exclusively for taxable supply</td></tr>
+      <tr><td>New or capitalised immovable construction</td><td><span class="badge badge-T3">T3</span></td><td>C2</td><td>Sec 17(5)(c)/(d); routine revenue repair is assessed separately</td></tr>
+      <tr><td>Works contract — Plant &amp; Machinery in capital fund</td><td><span class="badge badge-C2">C2</span></td><td>T3 or automatic T4</td><td>P&amp;M exception removes the block; Rule 42/43 applies unless exclusively taxable</td></tr>
       <tr><td>P.Way maintenance service (labour)</td><td><span class="badge badge-C2">C2</span></td><td>T3</td><td>RBA 27/2018 Sl.8 — service portion C2</td></tr>
       <tr><td>Goods / materials for P.Way (rails, sleepers, ballast)</td><td><span class="badge badge-T3">T3</span></td><td>C2</td><td>RBA 19/2024 Sl.7 — goods for track = T3</td></tr>
       <tr><td>Workshop repair goods (stock items, materials)</td><td><span class="badge badge-T3">T3</span></td><td>C2 or T4</td><td>RBA 19/2024 Sl.3 — goods for repair = T3</td></tr>
       <tr><td>AC coach dedicated maintenance</td><td><span class="badge badge-T4">T4</span></td><td>C2</td><td>Exclusively taxable supply — full ITC</td></tr>
       <tr><td>OBHS / cleaning for mixed trains (AC + NonAC)</td><td><span class="badge badge-C2">C2</span></td><td>T4</td><td>Mixed use — must apportion Rule 42</td></tr>
       <tr><td>Life / health insurance of employees</td><td><span class="badge badge-T3">T3</span></td><td>C2</td><td>Sec 17(5)(b)(iii) — always blocked</td></tr>
-      <tr><td>Building AMC (not capitalised)</td><td><span class="badge badge-T3">T3</span></td><td>C2</td><td>Works contract on immovable = T3 always</td></tr>
+      <tr><td>Building AMC (not capitalised)</td><td><span class="badge badge-C2">C2</span></td><td>T3</td><td>Operational revenue repair: C2; T1 for residential colonies; T3 only to extent capitalised</td></tr>
       <tr><td>Software AMC for taxable ops</td><td><span class="badge badge-T4">T4</span></td><td>T3</td><td>Not immovable, not blocked — full ITC</td></tr>
       <tr><td>OFC ducts / manholes for telecom</td><td><span class="badge badge-C2">C2</span></td><td>T3</td><td>CBIC Circular 219/13/2024 — OFC ducts = P&amp;M, ITC eligible</td></tr>
       <tr><td>SPV/RVNL services to IR</td><td><span class="badge badge-EX">EX</span></td><td>T3 or C2</td><td>CBIC 228/2024 — exempt supply, no GST charged</td></tr>
@@ -575,19 +534,19 @@
   <div class="tbl-wrap"><table class="info-table">
     <thead><tr><th>HSN/SAC</th><th>Description</th><th>Old Rate</th><th>Current Rate Tag</th><th>ITC Flag</th><th>Railway Bill-Passing Note</th></tr></thead>
     <tbody>
-      <tr style="background:#fff8e1"><td>9954</td><td>Works contract — predominantly earth work (&gt;75%) to Govt</td><td>12% with ITC</td><td><strong>18% with ITC</strong></td><td><span class="badge badge-T3">T3</span></td><td>ITC flag T3 unchanged (immovable). Rate on invoice changes. Check transitional bills.</td></tr>
-      <tr style="background:#fff8e1"><td>9965</td><td>GTA - transport of goods</td><td>5% without supplier ITC or 12% with ITC</td><td><strong>5%</strong> without supplier ITC or <strong>18%</strong> with full supplier ITC</td><td><span class="badge badge-C2">C2</span></td><td>Consultant-reviewed: GTA is not blocked by Section 17(5). Use C2 for common use; T4 only for documented exclusive taxable freight use. The supplier's rate condition does not restrict Railway recipient ITC.</td></tr>
-      <tr style="background:#fff8e1"><td>9965</td><td>Multimodal transport of goods within India</td><td>12% with ITC</td><td><strong>5% with restricted supplier ITC</strong> if no air leg; <strong>18% with full supplier ITC</strong> if any air leg</td><td><span class="badge badge-C2">C2</span></td><td>Consultant-reviewed: C2 for common Railway use. T4 applies only to documented exclusive taxable freight use; the supplier's rate condition does not decide recipient eligibility.</td></tr>
-      <tr style="background:#fff8e1"><td>9966</td><td>Renting passenger motor vehicle with operator and fuel included</td><td>5% limited ITC or 12% with ITC</td><td><strong>5%</strong> with same-line input-service ITC or <strong>18%</strong> with full ITC</td><td><span class="badge badge-T3">T3</span></td><td>Railway rent-a-cab/staff vehicle credit remains blocked under Section 17(5)(b), subject to statutory exceptions. The GST 2.0 rate change does not itself create eligibility.</td></tr>
-      <tr style="background:#fff8e1"><td>9966</td><td>Renting goods carriage with operator and fuel included</td><td>12% with ITC</td><td><strong>5%</strong> with same-line input-service ITC or <strong>18%</strong> with full ITC</td><td><span class="badge badge-C2">C2</span></td><td>Consultant-reviewed: goods carriage hire is not blocked by Section 17(5). Use C2 for common Railway use; T4 only for documented exclusive taxable freight use.</td></tr>
-      <tr style="background:#fff8e1"><td>9964</td><td>Air transport — other than economy class</td><td>12% with ITC</td><td><strong>18% with ITC</strong></td><td><span class="badge badge-C2">C2</span></td><td>Economy 5% unchanged. Business class now 18%. ITC flag C2 unchanged.</td></tr>
-      <tr style="background:#eaf3de"><td>9971</td><td>Individual life insurance (term, ULIP, endowment)</td><td>18%</td><td><strong>EXEMPT</strong></td><td><span class="badge badge-EX">EX</span></td><td>Individual life insurance now EXEMPT. Group employee policies — verify separately. If still taxable → T3 per Sec 17(5)(b)(iii).</td></tr>
-      <tr style="background:#eaf3de"><td>9971</td><td>Individual health insurance (incl. family floater, senior citizen)</td><td>18%</td><td><strong>EXEMPT</strong></td><td><span class="badge badge-EX">EX</span></td><td>Individual health insurance now EXEMPT. Group mediclaim — check notification applicability.</td></tr>
-      <tr style="background:#fff8e1"><td>9963</td><td>Hotel accommodation ≤ ₹7,500/unit/day</td><td>12% with ITC</td><td><strong>5% without supplier ITC</strong></td><td><span class="badge badge-C2">C2</span></td><td>Consultant-reviewed: official-duty hotel stay is not blocked by Section 17(5). Use C2 for common use; use T1 where the stay is personal or welfare-related.</td></tr>
-      <tr style="background:#fff8e1"><td>4406</td><td>Railway/tramway sleepers of wood</td><td>12%</td><td><strong>5%</strong></td><td><span class="badge badge-T3">T3</span></td><td>Lower rate but T3 flag unchanged (goods for P&M construction per RBA 19/2024 Sl.7).</td></tr>
-      <tr style="background:#fff8e1"><td>2523</td><td>Portland cement / hydraulic cements</td><td>28%</td><td><strong>18%</strong></td><td><span class="badge badge-T3">T3</span></td><td>Lower rate for civil construction. T3 flag unchanged (goods for immovable property).</td></tr>
-      <tr style="background:#fff8e1"><td>8415</td><td>Air conditioning machines (AC units)</td><td>28%</td><td><strong>18%</strong></td><td><span class="badge badge-T3">T3</span></td><td>Consultant-reviewed goods rule: T3 for a Zonal Railway under the cited Railway procurement instruction; confirm applicability with Railway Board/GST Cell.</td></tr>
-      <tr style="background:#fff8e1"><td>8507</td><td>Electric accumulators / batteries</td><td>Lithium-ion 18%; others 28%</td><td><strong>18%</strong> for all batteries under heading 8507</td><td><span class="badge badge-T3">T3</span></td><td>Consultant-reviewed goods rule: T3 for a Zonal Railway under the cited Railway procurement instruction; confirm applicability with Railway Board/GST Cell.</td></tr>
+      <tr data-review-sr="224" data-flag-cell="4" data-note-cell="5" style="background:#fff8e1"><td>9954</td><td>Works contract — predominantly earth work (&gt;75%) to Govt</td><td>12% with ITC</td><td><strong>18% with ITC</strong></td><td><span class="badge badge-T3">T3</span></td><td>ITC flag T3 unchanged (immovable). Rate on invoice changes. Check transitional bills.</td></tr>
+      <tr data-review-sr="225" data-flag-cell="4" data-note-cell="5" style="background:#fff8e1"><td>9965</td><td>GTA - transport of goods</td><td>5% without supplier ITC or 12% with ITC</td><td><strong>5%</strong> without supplier ITC or <strong>18%</strong> with full supplier ITC</td><td><span class="badge badge-C2">C2</span></td><td>Consultant-reviewed: GTA is not blocked by Section 17(5). Use C2 for common use; T4 only for documented exclusive taxable freight use. The supplier's rate condition does not restrict Railway recipient ITC.</td></tr>
+      <tr data-review-sr="226" data-flag-cell="4" data-note-cell="5" style="background:#fff8e1"><td>9965</td><td>Multimodal transport of goods within India</td><td>12% with ITC</td><td><strong>5% with restricted supplier ITC</strong> if no air leg; <strong>18% with full supplier ITC</strong> if any air leg</td><td><span class="badge badge-C2">C2</span></td><td>Consultant-reviewed: C2 for common Railway use. T4 applies only to documented exclusive taxable freight use; the supplier's rate condition does not decide recipient eligibility.</td></tr>
+      <tr data-review-sr="227" data-flag-cell="4" data-note-cell="5" style="background:#fff8e1"><td>9966</td><td>Renting passenger motor vehicle with operator and fuel included</td><td>5% limited ITC or 12% with ITC</td><td><strong>5%</strong> with same-line input-service ITC or <strong>18%</strong> with full ITC</td><td><span class="badge badge-T3">T3</span></td><td>Railway rent-a-cab/staff vehicle credit remains blocked under Section 17(5)(b), subject to statutory exceptions. The GST 2.0 rate change does not itself create eligibility.</td></tr>
+      <tr data-review-sr="228" data-flag-cell="4" data-note-cell="5" style="background:#fff8e1"><td>9966</td><td>Renting goods carriage with operator and fuel included</td><td>12% with ITC</td><td><strong>5%</strong> with same-line input-service ITC or <strong>18%</strong> with full ITC</td><td><span class="badge badge-C2">C2</span></td><td>Consultant-reviewed: goods carriage hire is not blocked by Section 17(5). Use C2 for common Railway use; T4 only for documented exclusive taxable freight use.</td></tr>
+      <tr data-review-sr="229" data-flag-cell="4" data-note-cell="5" style="background:#fff8e1"><td>9964</td><td>Air transport — other than economy class</td><td>12% with ITC</td><td><strong>18% with ITC</strong></td><td><span class="badge badge-C2">C2</span></td><td>Economy 5% unchanged. Business class now 18%. ITC flag C2 unchanged.</td></tr>
+      <tr data-review-sr="230" data-flag-cell="4" data-note-cell="5" style="background:#eaf3de"><td>9971</td><td>Individual life insurance (term, ULIP, endowment)</td><td>18%</td><td><strong>EXEMPT</strong></td><td><span class="badge badge-EX">EX</span></td><td>Individual life insurance now EXEMPT. Group employee policies — verify separately. If still taxable → T3 per Sec 17(5)(b)(iii).</td></tr>
+      <tr data-review-sr="231" data-flag-cell="4" data-note-cell="5" style="background:#eaf3de"><td>9971</td><td>Individual health insurance (incl. family floater, senior citizen)</td><td>18%</td><td><strong>EXEMPT</strong></td><td><span class="badge badge-EX">EX</span></td><td>Individual health insurance now EXEMPT. Group mediclaim — check notification applicability.</td></tr>
+      <tr data-review-sr="232" data-flag-cell="4" data-note-cell="5" style="background:#fff8e1"><td>9963</td><td>Hotel accommodation ≤ ₹7,500/unit/day</td><td>12% with ITC</td><td><strong>5% without supplier ITC</strong></td><td><span class="badge badge-C2">C2</span></td><td>Consultant-reviewed: official-duty hotel stay is not blocked by Section 17(5). Use C2 for common use; use T1 where the stay is personal or welfare-related.</td></tr>
+      <tr data-review-sr="233" data-flag-cell="4" data-note-cell="5" style="background:#fff8e1"><td>4406</td><td>Railway/tramway sleepers of wood</td><td>12%</td><td><strong>5%</strong></td><td><span class="badge badge-T3">T3</span></td><td>Lower rate but T3 flag unchanged (goods for P&M construction per RBA 19/2024 Sl.7).</td></tr>
+      <tr data-review-sr="234" data-flag-cell="4" data-note-cell="5" style="background:#fff8e1"><td>2523</td><td>Portland cement / hydraulic cements</td><td>28%</td><td><strong>18%</strong></td><td><span class="badge badge-T3">T3</span></td><td>Lower rate for civil construction. T3 flag unchanged (goods for immovable property).</td></tr>
+      <tr data-review-sr="235" data-flag-cell="4" data-note-cell="5" style="background:#fff8e1"><td>8415</td><td>Air conditioning machines (AC units)</td><td>28%</td><td><strong>18%</strong></td><td><span class="badge badge-T3">T3</span></td><td>Consultant-reviewed goods rule: T3 for a Zonal Railway under the cited Railway procurement instruction; confirm applicability with Railway Board/GST Cell.</td></tr>
+      <tr data-review-sr="236" data-flag-cell="4" data-note-cell="5" style="background:#fff8e1"><td>8507</td><td>Electric accumulators / batteries</td><td>Lithium-ion 18%; others 28%</td><td><strong>18%</strong> for all batteries under heading 8507</td><td><span class="badge badge-T3">T3</span></td><td>Consultant-reviewed goods rule: T3 for a Zonal Railway under the cited Railway procurement instruction; confirm applicability with Railway Board/GST Cell.</td></tr>
     </tbody>
   </table></div>
   <div style="margin-top:16px;background:var(--card);border:1px solid var(--border);border-radius:8px;padding:14px 16px">
@@ -596,10 +555,10 @@
     <div class="tbl-wrap"><table class="info-table">
       <thead><tr><th>SAC</th><th>Scope</th><th>Current GST 2.0 Position</th><th>Typical Railway Flag</th><th>Bill-Passing Check</th></tr></thead>
       <tbody>
-        <tr><td><strong>9965</strong></td><td>Goods transport, including GTA and multimodal transport</td><td>GTA: 5% without supplier ITC or 18% with full supplier ITC. Multimodal: 5% restricted supplier ITC without air leg; 18% with air leg.</td><td><span class="badge badge-C2">C2</span></td><td>Consultant-reviewed common-use flag. Confirm consignment note, GTA status, RCM/FCM, rate option and end-use; T4 requires documented exclusive taxable freight use.</td></tr>
-        <tr><td><strong>9966</strong></td><td>Rental of transport vehicles with operator</td><td>Passenger/fuel included: 5% limited same-line ITC or 18%. Goods carriage/fuel included: 5% limited same-line ITC or 18%. Without operator generally falls under 9973 at the like-goods rate.</td><td>Passenger cab: <span class="badge badge-T3">T3</span>. Goods carriage: <span class="badge badge-C2">C2</span></td><td>Separate passenger cab from goods carriage. Verify operator, fuel inclusion, recipient status and whether Section 17(5) applies.</td></tr>
-        <tr><td><strong>9967</strong></td><td>Supporting transport services - cargo handling, warehousing, forwarding, terminal support</td><td>Generally 18% with ITC. Does not include a composite GTA supply classified under 9965.</td><td><span class="badge badge-C2">C2</span></td><td>Consultant-reviewed common-use flag. Check whether the service is independent or merely ancillary to a GTA consignment-note service.</td></tr>
-        <tr><td><strong>9968</strong></td><td>Postal, courier and local delivery services</td><td>Generally 18% with ITC; local delivery through ECO also 18% under the applicable liability mechanism. Specific exempt postal services must be checked separately.</td><td><span class="badge badge-C2">C2</span></td><td>Consultant-reviewed common-use flag. Verify courier versus exempt ordinary postal service and the operational end-use; ordinary exempt postal service remains EX.</td></tr>
+        <tr data-review-sr="237" data-flag-cell="3" data-note-cell="4"><td><strong>9965</strong></td><td>Goods transport, including GTA and multimodal transport</td><td>GTA: 5% without supplier ITC or 18% with full supplier ITC. Multimodal: 5% restricted supplier ITC without air leg; 18% with air leg.</td><td><span class="badge badge-C2">C2</span></td><td>Consultant-reviewed common-use flag. Confirm consignment note, GTA status, RCM/FCM, rate option and end-use; T4 requires documented exclusive taxable freight use.</td></tr>
+        <tr data-review-sr="238" data-flag-cell="3" data-note-cell="4"><td><strong>9966</strong></td><td>Rental of transport vehicles with operator</td><td>Passenger/fuel included: 5% limited same-line ITC or 18%. Goods carriage/fuel included: 5% limited same-line ITC or 18%. Without operator generally falls under 9973 at the like-goods rate.</td><td>Passenger cab: <span class="badge badge-T3">T3</span>. Goods carriage: <span class="badge badge-C2">C2</span></td><td>Separate passenger cab from goods carriage. Verify operator, fuel inclusion, recipient status and whether Section 17(5) applies.</td></tr>
+        <tr data-review-sr="239" data-flag-cell="3" data-note-cell="4"><td><strong>9967</strong></td><td>Supporting transport services - cargo handling, warehousing, forwarding, terminal support</td><td>Generally 18% with ITC. Does not include a composite GTA supply classified under 9965.</td><td><span class="badge badge-C2">C2</span></td><td>Consultant-reviewed common-use flag. Check whether the service is independent or merely ancillary to a GTA consignment-note service.</td></tr>
+        <tr data-review-sr="240" data-flag-cell="3" data-note-cell="4"><td><strong>9968</strong></td><td>Postal, courier and local delivery services</td><td>Generally 18% with ITC; local delivery through ECO also 18% under the applicable liability mechanism. Specific exempt postal services must be checked separately.</td><td><span class="badge badge-C2">C2</span></td><td>Consultant-reviewed common-use flag. Verify courier versus exempt ordinary postal service and the operational end-use; ordinary exempt postal service remains EX.</td></tr>
       </tbody>
     </table></div>
     <a class="source-link" href="https://indianrailways.gov.in/railwayboard/uploads/directorate/accounts/downloads/compendium_2025/RBA%2027-2025_%20GST%20C_No_06_2025%20(1).pdf" target="_blank" rel="noopener">Official PDF: RBA 27/2025 - GST Circular 06/2025</a>
