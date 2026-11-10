@@ -350,9 +350,11 @@ tbody td{padding:7px 8px;line-height:1.35}
 .consultant-table th:nth-child(1){width:4%}.consultant-table th:nth-child(2){width:20%}.consultant-table th:nth-child(3){width:12%}.consultant-table th:nth-child(4){width:10%}.consultant-table th:nth-child(5){width:10%}.consultant-table th:nth-child(6){width:12%}.consultant-table th:nth-child(7){width:32%}
 .consultant-table tr:nth-child(even){background:#f7fafc}.consultant-table tr.review-revised{background:#fff8dd}
 .consultant-remark{color:#26394a}.review-status{display:inline-block;margin-left:6px;padding:1px 4px;border-radius:3px;background:#b85800;color:#fff;font-size:8px;font-weight:800;text-transform:uppercase}
-.previous-flag{display:block;margin-top:4px;color:#8a4b00;font-size:9px}.consultant-detail{border-left:3px solid #2b6c94}.consultant-detail.is-revised{background:#fff8dd;border-left-color:#b85800}.consultant-detail small{display:block;margin-top:5px;color:#8a4b00;font-weight:700}
+.consultant-detail{border-left:3px solid #2b6c94}.consultant-detail.is-revised{background:#fff8dd;border-left-color:#b85800}
 .construction-review{display:block;margin-top:6px;padding-top:5px;border-top:1px solid #d5dee5;color:#29485f}.construction-review.is-revised{color:#8a4b00}
-.legacy-note{opacity:.78}.legacy-note b{color:#7a4c12}
+.explanation-heading{font-size:9px!important;line-height:1.15;text-align:center!important}.explanation-heading small{display:block;margin-top:2px;font-size:8px;color:#d9e9f5;font-weight:600}
+.itc-search-highlight{background:#dff4e4!important;box-shadow:inset 0 0 0 2px #26833f;transition:background-color .2s ease,box-shadow .2s ease}
+.itc-search-highlight .badge{border-color:#1c6d32!important;box-shadow:0 0 0 2px rgba(38,131,63,.14);font-weight:800}
 @media print{.controls,.tabs{display:none!important}.pane{display:block!important}table{font-size:9px}}
 @media (max-width:980px){
   .top-alert{grid-template-columns:1fr;padding:9px 14px}

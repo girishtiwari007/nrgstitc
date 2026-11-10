@@ -10,6 +10,14 @@ const {
 
 const CONSULTANT_REVIEW = window.RAILWAY_GST_CONSULTANT_REVIEW || [];
 const reviewKey = value => String(value || '').toLowerCase().replace(/[—–]/g,'-').replace(/\s+/g,' ').trim();
+const currentConsultantRemark = remark => String(remark||'')
+  .replace(/\s*\[Revised from[^\]]*\]/gi,'')
+  .replace(/\s*Aligned with\s+Sr\.[^(]*\(portal row showed[^)]*\)\.?/gi,'')
+  .replace(/\s+/g,' ')
+  .trim();
+const consultantBasis = remark => String(remark||'')
+  .replace(/^(?:T1|T2|T3|T4|C2|EX)(?:\s*\([^)]*\))?(?:\s*\/\s*(?:T1|T2|T3|T4|C2|EX)(?:\s*\([^)]*\))?)*(?:\s*\[[^\]]*\])?\s*-\s*/i,'')
+  .trim();
 const consultantByDescription = new Map(CONSULTANT_REVIEW.map(item=>[reviewKey(item.desc),item]));
 const DATA = BASE_DATA.map(item=>{
   const review=consultantByDescription.get(reviewKey(item.desc));
@@ -21,14 +29,15 @@ const DATA = BASE_DATA.map(item=>{
     portalFlag:review.portalFlag||item.flag,
     flag:review.reviewedFlag||item.flag,
     ipas:review.reviewedFlag||item.ipas,
-    consultantRemark:review.consultantRemark,
+    gstbasis:review.revised?consultantBasis(currentConsultantRemark(review.consultantRemark)):item.gstbasis,
+    consultantRemark:currentConsultantRemark(review.consultantRemark),
     consultantReviewed:true,
     consultantRevised:Boolean(review.revised)
   };
 });
 const CONST_DATA = BASE_CONST_DATA.map(item=>{
   const review=consultantByDescription.get(reviewKey(item.desc));
-  return review?{...item,portalFlag:item.flag,flag:review.reviewedFlag||item.flag,consultantRemark:review.consultantRemark,consultantRevised:Boolean(review.revised)}:item;
+  return review?{...item,portalFlag:item.flag,flag:review.reviewedFlag||item.flag,consultantRemark:currentConsultantRemark(review.consultantRemark),consultantRevised:Boolean(review.revised)}:item;
 });
 
 // ══ MASTER DATA ══
@@ -202,6 +211,7 @@ function renderTable(){
   document.getElementById('noData').style.display=rows.length?'none':'block';
   renderSearchInfo(hq || q);
   const visibleRows=rows.slice(0,5);
+  const searchActive=Boolean(q||hq);
   const hasActiveFilter=Boolean(q||hq||ff||cf||fnd||eu||scope||codeStatus||rc);
   const listingNotice=document.getElementById('listingNotice');
   if(listingNotice){
@@ -222,7 +232,7 @@ function renderTable(){
       <td class="td-desc">${descDisp}</td>
       <td class="td-hsn">${hsnDisp}<small class="code-status-compact">${d.codeStatus}</small></td>
       <td class="td-cat">${d.cat}</td>
-      <td>${flagBadge(d.flag)}</td>
+      <td class="${searchActive?'itc-search-highlight':''}">${flagBadge(d.flag)}</td>
       <td class="td-gst">${d.gst}</td>
       <td class="td-detail"><button class="detail-btn" type="button" aria-expanded="false" aria-controls="${detailId}" onclick="toggleMasterDetail('${detailId}',this)">View</button></td>`;
     tb.appendChild(tr);
@@ -242,8 +252,8 @@ function renderTable(){
         <div><b>Supply type</b><span>${d.supplyType}</span></div>
         <div><b>Code verification</b><span>${codeStatusPill(d.codeStatus)}</span></div>
         <div><b>Notification</b><span>${d.notif||'Confirm applicable notification'}</span></div>
-        <div class="detail-wide ${d.consultantRevised?'legacy-note':''}"><b>${d.consultantRevised?'Earlier portal note (superseded by consultant review)':'Compliance note'}</b><span>${d.note}</span></div>
-        ${d.consultantRemark?`<div class="detail-wide consultant-detail ${d.consultantRevised?'is-revised':''}"><b>GST Consultant/NR flagging remark</b><span>${d.consultantRemark}</span>${d.consultantRevised?`<small>Previous portal flag: ${d.portalFlag}</small>`:''}</div>`:''}
+        ${d.consultantRevised?'':`<div class="detail-wide"><b>Compliance note</b><span>${d.note}</span></div>`}
+        ${d.consultantRemark?`<div class="detail-wide consultant-detail ${d.consultantRevised?'is-revised':''}"><b>GST Consultant/NR flagging remark</b><span>${d.consultantRemark}</span></div>`:''}
         <div class="detail-wide"><b>Source / circular reference</b><span>${d.ref}<br><a class="detail-source-link" href="${d.sourceUrl}" target="_blank" rel="noopener">Open mapped official source</a></span></div>
       </div>
     </td>`;
@@ -285,9 +295,9 @@ function renderConsultantReview(){
     <td class="td-desc">${item.desc}${item.revised?'<span class="review-status">Revised</span>':''}</td>
     <td class="td-hsn">${item.hsn}</td>
     <td class="td-cat">${item.category}</td>
-    <td>${flagBadge(item.reviewedFlag)}${item.revised?`<small class="previous-flag">Previous: ${item.portalFlag}</small>`:''}</td>
+    <td class="${query?'itc-search-highlight':''}">${flagBadge(item.reviewedFlag)}</td>
     <td class="td-gst">${item.gst}</td>
-    <td class="consultant-remark">${item.consultantRemark}</td>
+    <td class="consultant-remark">${currentConsultantRemark(item.consultantRemark)}</td>
   </tr>`).join('');
   const notice=document.getElementById('consultantNotice');
   notice.innerHTML=matches.length
