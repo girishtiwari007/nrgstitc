@@ -76,6 +76,7 @@
 
 <nav class="tabs">
   <button class="tab active" onclick="switchTab('master',this)">Master ITC Table</button>
+  <button class="tab" onclick="switchTab('consultant',this)">GST Consultant Review</button>
   <button class="tab" onclick="switchTab('mainrules',this)">Main ITC Rule Summary</button>
   <button class="tab" onclick="switchTab('procfaq',this)">Procurement FAQ</button>
   <button class="tab" onclick="switchTab('const',this)">Construction &amp; 9954</button>
@@ -181,6 +182,43 @@
     <div id="noData" class="nodata" style="display:none">No records match selected filters.</div>
   </div>
   <div id="listingNotice" class="listing-notice" aria-live="polite"></div>
+</div>
+
+<!-- GST CONSULTANT REVIEW TAB -->
+<div id="tab-consultant" class="pane">
+  <div class="consultant-review-head">
+    <div>
+      <span class="review-kicker">Reviewed Annexure A</span>
+      <h2>Flagging Remarks by GST Consultant/NR</h2>
+      <p>HSN/SAC, category and Railway ITC flag are aligned with the reviewed workbook. The consultant-reviewed flag is shown as the current portal flag; revised records retain their earlier flag for comparison.</p>
+    </div>
+    <div class="review-summary" aria-label="Review summary">
+      <strong>240</strong><span>Reviewed records</span>
+      <strong>25</strong><span>Flag revisions</span>
+    </div>
+  </div>
+  <div class="consultant-controls">
+    <input class="si si-wide" type="search" id="consultantSearch" placeholder="Search description, HSN/SAC or consultant remark" oninput="renderConsultantReview()">
+    <select class="si" id="consultantFlag" onchange="renderConsultantReview()">
+      <option value="">All reviewed flags</option>
+      <option value="T1">T1</option><option value="T2">T2</option><option value="T3">T3</option>
+      <option value="T4">T4</option><option value="C2">C2</option><option value="EX">EX</option>
+    </select>
+    <select class="si" id="consultantCategory" onchange="renderConsultantReview()"><option value="">All categories</option></select>
+    <select class="si" id="consultantStatus" onchange="renderConsultantReview()">
+      <option value="">All review status</option>
+      <option value="revised">Revised flags</option>
+      <option value="confirmed">Confirmed flags</option>
+    </select>
+    <button class="rst" type="button" onclick="resetConsultantReview()">Reset</button>
+  </div>
+  <div class="consultant-table-wrap tbl-wrap">
+    <table class="consultant-table">
+      <thead><tr><th>Sr</th><th>Service / Goods Description</th><th>HSN / SAC</th><th>Category</th><th>Railway ITC Flag</th><th>GST Rate</th><th>Flagging Remarks by GST Consultant/NR</th></tr></thead>
+      <tbody id="consultantBody"></tbody>
+    </table>
+  </div>
+  <div id="consultantNotice" class="listing-notice" aria-live="polite"></div>
 </div>
 
 <!-- MAIN ITC RULE SUMMARY TAB -->
@@ -530,7 +568,7 @@
     <strong>🆕 RBA 27/2025 (GST Circular 06/2025) — GST 2.0 Rate Rationalisation w.e.f. 22.09.2025</strong><br>
     Verified on <strong>23-Sep-2026</strong>. 56th GST Council (03.09.2025) rationalized rates. Effective 22.09.2025 per CBIC Rate Notifications dated 17.09.2025.
     CBIC Notification 01/2026-Central Tax (Rate) dated 30.04.2026 further aligned Notification 9/2025 with Finance Act 2026 tariff changes from 01.05.2026; no separate railway ITC flag change is indicated here. Latest smoke recheck also corrects multimodal transport and battery rate tags below.
-    <strong>ITC flags do NOT change — only GST rates on invoices change.</strong>
+    GST rate changes do not by themselves determine recipient ITC. <strong>The consultant-reviewed flags below supersede the earlier portal tags where marked.</strong>
     Use CGST Sec 14 time-of-supply rules for transitional bills.
   </div>
   <h3 style="margin-bottom:11px;color:var(--navy);font-size:14px">Railway-Relevant GST Rate Changes (w.e.f. 22.09.2025)</h3>
@@ -538,18 +576,18 @@
     <thead><tr><th>HSN/SAC</th><th>Description</th><th>Old Rate</th><th>Current Rate Tag</th><th>ITC Flag</th><th>Railway Bill-Passing Note</th></tr></thead>
     <tbody>
       <tr style="background:#fff8e1"><td>9954</td><td>Works contract — predominantly earth work (&gt;75%) to Govt</td><td>12% with ITC</td><td><strong>18% with ITC</strong></td><td><span class="badge badge-T3">T3</span></td><td>ITC flag T3 unchanged (immovable). Rate on invoice changes. Check transitional bills.</td></tr>
-      <tr style="background:#fff8e1"><td>9965</td><td>GTA - transport of goods</td><td>5% without supplier ITC or 12% with ITC</td><td><strong>5%</strong> without supplier ITC or <strong>18%</strong> with full supplier ITC</td><td><span class="badge badge-C2">C2</span>/<span class="badge badge-T3">T3</span></td><td>RBA 19/2024 Sl.9: flag C2 irrespective of forward/reverse charge; use T3 only where Railway ITC is restricted under Section 17(5). Do not treat the supplier's 5% ITC condition as an automatic Railway block.</td></tr>
-      <tr style="background:#fff8e1"><td>9965</td><td>Multimodal transport of goods within India</td><td>12% with ITC</td><td><strong>5% with restricted supplier ITC</strong> if no air leg; <strong>18% with full supplier ITC</strong> if any air leg</td><td><span class="badge badge-C2">C2</span>/<span class="badge badge-T4">T4</span>/<span class="badge badge-T3">T3</span></td><td>For Railways, decide ITC from end-use and Section 17(5): normally C2 for common use, T4 if exclusively taxable, and T3 only when legally blocked. The rate condition primarily governs the supplier's credit.</td></tr>
+      <tr style="background:#fff8e1"><td>9965</td><td>GTA - transport of goods</td><td>5% without supplier ITC or 12% with ITC</td><td><strong>5%</strong> without supplier ITC or <strong>18%</strong> with full supplier ITC</td><td><span class="badge badge-C2">C2</span></td><td>Consultant-reviewed: GTA is not blocked by Section 17(5). Use C2 for common use; T4 only for documented exclusive taxable freight use. The supplier's rate condition does not restrict Railway recipient ITC.</td></tr>
+      <tr style="background:#fff8e1"><td>9965</td><td>Multimodal transport of goods within India</td><td>12% with ITC</td><td><strong>5% with restricted supplier ITC</strong> if no air leg; <strong>18% with full supplier ITC</strong> if any air leg</td><td><span class="badge badge-C2">C2</span></td><td>Consultant-reviewed: C2 for common Railway use. T4 applies only to documented exclusive taxable freight use; the supplier's rate condition does not decide recipient eligibility.</td></tr>
       <tr style="background:#fff8e1"><td>9966</td><td>Renting passenger motor vehicle with operator and fuel included</td><td>5% limited ITC or 12% with ITC</td><td><strong>5%</strong> with same-line input-service ITC or <strong>18%</strong> with full ITC</td><td><span class="badge badge-T3">T3</span></td><td>Railway rent-a-cab/staff vehicle credit remains blocked under Section 17(5)(b), subject to statutory exceptions. The GST 2.0 rate change does not itself create eligibility.</td></tr>
-      <tr style="background:#fff8e1"><td>9966</td><td>Renting goods carriage with operator and fuel included</td><td>12% with ITC</td><td><strong>5%</strong> with same-line input-service ITC or <strong>18%</strong> with full ITC</td><td><span class="badge badge-C2">C2</span>/<span class="badge badge-T4">T4</span>/<span class="badge badge-T3">T3</span></td><td>Not automatically blocked as rent-a-cab. Use C2 for common Railway use, T4 for exclusive taxable freight use, and T3 only where a specific restriction applies. Hiring a vehicle to a GTA is exempt only when the recipient is actually a GTA.</td></tr>
+      <tr style="background:#fff8e1"><td>9966</td><td>Renting goods carriage with operator and fuel included</td><td>12% with ITC</td><td><strong>5%</strong> with same-line input-service ITC or <strong>18%</strong> with full ITC</td><td><span class="badge badge-C2">C2</span></td><td>Consultant-reviewed: goods carriage hire is not blocked by Section 17(5). Use C2 for common Railway use; T4 only for documented exclusive taxable freight use.</td></tr>
       <tr style="background:#fff8e1"><td>9964</td><td>Air transport — other than economy class</td><td>12% with ITC</td><td><strong>18% with ITC</strong></td><td><span class="badge badge-C2">C2</span></td><td>Economy 5% unchanged. Business class now 18%. ITC flag C2 unchanged.</td></tr>
       <tr style="background:#eaf3de"><td>9971</td><td>Individual life insurance (term, ULIP, endowment)</td><td>18%</td><td><strong>EXEMPT</strong></td><td><span class="badge badge-EX">EX</span></td><td>Individual life insurance now EXEMPT. Group employee policies — verify separately. If still taxable → T3 per Sec 17(5)(b)(iii).</td></tr>
       <tr style="background:#eaf3de"><td>9971</td><td>Individual health insurance (incl. family floater, senior citizen)</td><td>18%</td><td><strong>EXEMPT</strong></td><td><span class="badge badge-EX">EX</span></td><td>Individual health insurance now EXEMPT. Group mediclaim — check notification applicability.</td></tr>
-      <tr style="background:#fff8e1"><td>9963</td><td>Hotel accommodation ≤ ₹7,500/unit/day</td><td>12% with ITC</td><td><strong>5% without ITC</strong></td><td><span class="badge badge-T3">T3</span></td><td>Running room/rest house at ≤₹7,500 — ITC no longer available at new 5% rate.</td></tr>
+      <tr style="background:#fff8e1"><td>9963</td><td>Hotel accommodation ≤ ₹7,500/unit/day</td><td>12% with ITC</td><td><strong>5% without supplier ITC</strong></td><td><span class="badge badge-C2">C2</span></td><td>Consultant-reviewed: official-duty hotel stay is not blocked by Section 17(5). Use C2 for common use; use T1 where the stay is personal or welfare-related.</td></tr>
       <tr style="background:#fff8e1"><td>4406</td><td>Railway/tramway sleepers of wood</td><td>12%</td><td><strong>5%</strong></td><td><span class="badge badge-T3">T3</span></td><td>Lower rate but T3 flag unchanged (goods for P&M construction per RBA 19/2024 Sl.7).</td></tr>
       <tr style="background:#fff8e1"><td>2523</td><td>Portland cement / hydraulic cements</td><td>28%</td><td><strong>18%</strong></td><td><span class="badge badge-T3">T3</span></td><td>Lower rate for civil construction. T3 flag unchanged (goods for immovable property).</td></tr>
-      <tr style="background:#fff8e1"><td>8415</td><td>Air conditioning machines (AC units)</td><td>28%</td><td><strong>18%</strong></td><td><span class="badge badge-T4">T4</span>/<span class="badge badge-C2">C2</span></td><td>AC machines for AC coaches → T4. Station AC → C2. Lower GST from 22.09.2025.</td></tr>
-      <tr style="background:#fff8e1"><td>8507</td><td>Electric accumulators / batteries</td><td>Lithium-ion 18%; others 28%</td><td><strong>18%</strong> for all batteries under heading 8507</td><td><span class="badge badge-C2">C2</span>/<span class="badge badge-T4">T4</span>/<span class="badge badge-T3">T3</span></td><td>Corrected after recheck: batteries are not 5%. Use ITC flag per end-use; goods for blocked immovable/P&amp;M construction may remain T3 under RBA 19/2024 logic.</td></tr>
+      <tr style="background:#fff8e1"><td>8415</td><td>Air conditioning machines (AC units)</td><td>28%</td><td><strong>18%</strong></td><td><span class="badge badge-T3">T3</span></td><td>Consultant-reviewed goods rule: T3 for a Zonal Railway under the cited Railway procurement instruction; confirm applicability with Railway Board/GST Cell.</td></tr>
+      <tr style="background:#fff8e1"><td>8507</td><td>Electric accumulators / batteries</td><td>Lithium-ion 18%; others 28%</td><td><strong>18%</strong> for all batteries under heading 8507</td><td><span class="badge badge-T3">T3</span></td><td>Consultant-reviewed goods rule: T3 for a Zonal Railway under the cited Railway procurement instruction; confirm applicability with Railway Board/GST Cell.</td></tr>
     </tbody>
   </table></div>
   <div style="margin-top:16px;background:var(--card);border:1px solid var(--border);border-radius:8px;padding:14px 16px">
@@ -558,10 +596,10 @@
     <div class="tbl-wrap"><table class="info-table">
       <thead><tr><th>SAC</th><th>Scope</th><th>Current GST 2.0 Position</th><th>Typical Railway Flag</th><th>Bill-Passing Check</th></tr></thead>
       <tbody>
-        <tr><td><strong>9965</strong></td><td>Goods transport, including GTA and multimodal transport</td><td>GTA: 5% without supplier ITC or 18% with full supplier ITC. Multimodal: 5% restricted supplier ITC without air leg; 18% with air leg.</td><td><span class="badge badge-C2">C2</span> normally; <span class="badge badge-T3">T3</span> only if blocked</td><td>Confirm consignment note, GTA status, RCM/FCM, rate option and end-use. Ancillary loading/warehousing bundled with GTA remains part of 9965.</td></tr>
-        <tr><td><strong>9966</strong></td><td>Rental of transport vehicles with operator</td><td>Passenger/fuel included: 5% limited same-line ITC or 18%. Goods carriage/fuel included: 5% limited same-line ITC or 18%. Without operator generally falls under 9973 at the like-goods rate.</td><td>Passenger cab: <span class="badge badge-T3">T3</span>. Goods carriage: <span class="badge badge-C2">C2</span>/<span class="badge badge-T4">T4</span></td><td>Separate passenger cab from goods carriage. Verify operator, fuel inclusion, recipient status and whether Section 17(5) applies.</td></tr>
-        <tr><td><strong>9967</strong></td><td>Supporting transport services - cargo handling, warehousing, forwarding, terminal support</td><td>Generally 18% with ITC. Does not include a composite GTA supply classified under 9965.</td><td><span class="badge badge-C2">C2</span> common; <span class="badge badge-T4">T4</span>/<span class="badge badge-T2">T2</span> by exclusive end-use</td><td>Check whether the service is independent or merely ancillary to a GTA consignment-note service.</td></tr>
-        <tr><td><strong>9968</strong></td><td>Postal, courier and local delivery services</td><td>Generally 18% with ITC; local delivery through ECO also 18% under the applicable liability mechanism. Specific exempt postal services must be checked separately.</td><td><span class="badge badge-C2">C2</span> common; <span class="badge badge-T4">T4</span>/<span class="badge badge-T2">T2</span> by exclusive end-use</td><td>Verify courier versus exempt ordinary postal service, ECO involvement and the operational end-use.</td></tr>
+        <tr><td><strong>9965</strong></td><td>Goods transport, including GTA and multimodal transport</td><td>GTA: 5% without supplier ITC or 18% with full supplier ITC. Multimodal: 5% restricted supplier ITC without air leg; 18% with air leg.</td><td><span class="badge badge-C2">C2</span></td><td>Consultant-reviewed common-use flag. Confirm consignment note, GTA status, RCM/FCM, rate option and end-use; T4 requires documented exclusive taxable freight use.</td></tr>
+        <tr><td><strong>9966</strong></td><td>Rental of transport vehicles with operator</td><td>Passenger/fuel included: 5% limited same-line ITC or 18%. Goods carriage/fuel included: 5% limited same-line ITC or 18%. Without operator generally falls under 9973 at the like-goods rate.</td><td>Passenger cab: <span class="badge badge-T3">T3</span>. Goods carriage: <span class="badge badge-C2">C2</span></td><td>Separate passenger cab from goods carriage. Verify operator, fuel inclusion, recipient status and whether Section 17(5) applies.</td></tr>
+        <tr><td><strong>9967</strong></td><td>Supporting transport services - cargo handling, warehousing, forwarding, terminal support</td><td>Generally 18% with ITC. Does not include a composite GTA supply classified under 9965.</td><td><span class="badge badge-C2">C2</span></td><td>Consultant-reviewed common-use flag. Check whether the service is independent or merely ancillary to a GTA consignment-note service.</td></tr>
+        <tr><td><strong>9968</strong></td><td>Postal, courier and local delivery services</td><td>Generally 18% with ITC; local delivery through ECO also 18% under the applicable liability mechanism. Specific exempt postal services must be checked separately.</td><td><span class="badge badge-C2">C2</span></td><td>Consultant-reviewed common-use flag. Verify courier versus exempt ordinary postal service and the operational end-use; ordinary exempt postal service remains EX.</td></tr>
       </tbody>
     </table></div>
     <a class="source-link" href="https://indianrailways.gov.in/railwayboard/uploads/directorate/accounts/downloads/compendium_2025/RBA%2027-2025_%20GST%20C_No_06_2025%20(1).pdf" target="_blank" rel="noopener">Official PDF: RBA 27/2025 - GST Circular 06/2025</a>
@@ -607,6 +645,7 @@
 </div>
 
 <script src="assets/js/data.js"></script>
+<script src="assets/js/consultant-review.js"></script>
 <script src="assets/js/app.js"></script>
 </body>
 </html>

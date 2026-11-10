@@ -1,12 +1,35 @@
 'use strict';
 
 const {
-  master: DATA,
+  master: BASE_DATA,
   procurementFaq: PROCUREMENT_FAQ,
   circulars: CIRCULARS,
-  construction: CONST_DATA,
+  construction: BASE_CONST_DATA,
   circularDetails: CIRC_MODAL_DATA
 } = window.RAILWAY_GST_DATA;
+
+const CONSULTANT_REVIEW = window.RAILWAY_GST_CONSULTANT_REVIEW || [];
+const reviewKey = value => String(value || '').toLowerCase().replace(/[—–]/g,'-').replace(/\s+/g,' ').trim();
+const consultantByDescription = new Map(CONSULTANT_REVIEW.map(item=>[reviewKey(item.desc),item]));
+const DATA = BASE_DATA.map(item=>{
+  const review=consultantByDescription.get(reviewKey(item.desc));
+  if(!review)return item;
+  return {
+    ...item,
+    hsn:review.hsn||item.hsn,
+    cat:review.category||item.cat,
+    portalFlag:review.portalFlag||item.flag,
+    flag:review.reviewedFlag||item.flag,
+    ipas:review.reviewedFlag||item.ipas,
+    consultantRemark:review.consultantRemark,
+    consultantReviewed:true,
+    consultantRevised:Boolean(review.revised)
+  };
+});
+const CONST_DATA = BASE_CONST_DATA.map(item=>{
+  const review=consultantByDescription.get(reviewKey(item.desc));
+  return review?{...item,portalFlag:item.flag,flag:review.reviewedFlag||item.flag,consultantRemark:review.consultantRemark,consultantRevised:Boolean(review.revised)}:item;
+});
 
 // ══ MASTER DATA ══
 // flag: single definitive Railway ITC flag
@@ -27,12 +50,16 @@ const catSel=document.getElementById('catSel');
 cats.forEach(c=>{const o=document.createElement('option');o.value=c;o.textContent=c;catSel.appendChild(o);});
 
 // ── HSN LIST ──
-const ALL_HSN=[...new Set(DATA.map(d=>d.hsn).filter(h=>h&&h!=='—').concat(CONST_DATA.map(d=>d.hsn.split(' ')[0])))].sort();
+const ALL_HSN=[...new Set(DATA.map(d=>d.hsn).filter(h=>h&&h!=='—').concat(CONST_DATA.map(d=>d.hsn.split(' ')[0]),CONSULTANT_REVIEW.map(d=>d.hsn).filter(Boolean)))].sort();
 const MASTER_TAB_BUTTON = document.querySelector('.tab[onclick*="master"]');
 
 // ── HELPERS ──
+function flagCodes(value){return [...new Set((String(value||'').match(/\b(?:T1|T2|T3|T4|C2|EX)\b/g)||[]))];}
 function badgeClass(f){return f==='EX'?'badge-EX':'badge-'+f;}
-function flagBadge(f){return `<span class="badge ${badgeClass(f)}">${f}</span>`;}
+function flagBadge(f){
+  const codes=flagCodes(f);
+  return codes.length?codes.map(code=>`<span class="badge ${badgeClass(code)}">${code}</span>`).join(' '):`<span class="badge">${f}</span>`;
+}
 function fundBadge(f){
   if(f==='C') return '<span class="fund-C">C</span>';
   if(f==='R') return '<span class="fund-R">R</span>';
@@ -48,7 +75,7 @@ function hl(txt,term){
   return String(txt).replace(new RegExp('('+e+')','gi'),'<mark>$1</mark>');
 }
 function normalizedSearchText(d){
-  return `${d.sr||''} ${d.hsn||''} ${d.desc||''} ${d.sub||''} ${d.use||''} ${d.cat||''} ${d.flag||''} ${d.note||''} ${d.ref||''} ${d.basis||''} ${d.gstbasis||''} ${d.notif||''} ${(d.scope||[]).join(' ')} ${d.supplyType||''} ${d.codeStatus||''}`.toLowerCase();
+  return `${d.sr||''} ${d.hsn||''} ${d.desc||''} ${d.sub||''} ${d.use||''} ${d.cat||''} ${d.flag||''} ${d.note||''} ${d.ref||''} ${d.basis||''} ${d.gstbasis||''} ${d.notif||''} ${d.consultantRemark||''} ${(d.scope||[]).join(' ')} ${d.supplyType||''} ${d.codeStatus||''}`.toLowerCase();
 }
 function isCodeLike(v){return /[0-9]/.test(v);}
 function codeStatusClass(status){
@@ -166,7 +193,7 @@ function renderTable(){
     const _rc=(document.getElementById('rcSel')||{value:''}).value;
     if(_rc==='1' && !d.rc) return false;
     if(hq){const h=(d.hsn||'').toLowerCase();if(!h.startsWith(hq)&&!h.includes(hq))return false;}
-    if(q && !`${d.sr} ${d.desc} ${d.sub} ${d.hsn} ${d.cat} ${d.flag} ${d.note} ${d.ref} ${d.gstbasis} ${d.notif||''} ${(d.scope||[]).join(' ')} ${d.supplyType} ${d.codeStatus}`.toLowerCase().includes(q)) return false;
+    if(q && !`${d.sr} ${d.desc} ${d.sub} ${d.hsn} ${d.cat} ${d.flag} ${d.note} ${d.ref} ${d.gstbasis} ${d.notif||''} ${d.consultantRemark||''} ${(d.scope||[]).join(' ')} ${d.supplyType} ${d.codeStatus}`.toLowerCase().includes(q)) return false;
     return true;
   });
 
@@ -215,7 +242,8 @@ function renderTable(){
         <div><b>Supply type</b><span>${d.supplyType}</span></div>
         <div><b>Code verification</b><span>${codeStatusPill(d.codeStatus)}</span></div>
         <div><b>Notification</b><span>${d.notif||'Confirm applicable notification'}</span></div>
-        <div class="detail-wide"><b>Compliance note</b><span>${d.note}</span></div>
+        <div class="detail-wide ${d.consultantRevised?'legacy-note':''}"><b>${d.consultantRevised?'Earlier portal note (superseded by consultant review)':'Compliance note'}</b><span>${d.note}</span></div>
+        ${d.consultantRemark?`<div class="detail-wide consultant-detail ${d.consultantRevised?'is-revised':''}"><b>GST Consultant/NR flagging remark</b><span>${d.consultantRemark}</span>${d.consultantRevised?`<small>Previous portal flag: ${d.portalFlag}</small>`:''}</div>`:''}
         <div class="detail-wide"><b>Source / circular reference</b><span>${d.ref}<br><a class="detail-source-link" href="${d.sourceUrl}" target="_blank" rel="noopener">Open mapped official source</a></span></div>
       </div>
     </td>`;
@@ -223,6 +251,53 @@ function renderTable(){
   });
 
   
+}
+
+// ── GST CONSULTANT REVIEW ──
+const consultantCategory=document.getElementById('consultantCategory');
+[...new Set(CONSULTANT_REVIEW.map(item=>item.category).filter(Boolean))].sort().forEach(category=>{
+  const option=document.createElement('option');
+  option.value=category;
+  option.textContent=category;
+  consultantCategory.appendChild(option);
+});
+
+function consultantSearchText(item){
+  return `${item.sr} ${item.desc} ${item.hsn} ${item.category} ${item.reviewedFlag} ${item.gst} ${item.remarks} ${item.consultantRemark}`.toLowerCase();
+}
+
+function renderConsultantReview(){
+  const query=(document.getElementById('consultantSearch').value||'').trim().toLowerCase();
+  const flag=document.getElementById('consultantFlag').value;
+  const category=document.getElementById('consultantCategory').value;
+  const status=document.getElementById('consultantStatus').value;
+  const matches=CONSULTANT_REVIEW.filter(item=>{
+    if(query&&!consultantSearchText(item).includes(query))return false;
+    if(flag&&!flagCodes(item.reviewedFlag).includes(flag))return false;
+    if(category&&item.category!==category)return false;
+    if(status==='revised'&&!item.revised)return false;
+    if(status==='confirmed'&&item.revised)return false;
+    return true;
+  });
+  const visible=matches.slice(0,5);
+  document.getElementById('consultantBody').innerHTML=visible.map(item=>`<tr class="${item.revised?'review-revised':''}">
+    <td class="td-sr">${item.sr}</td>
+    <td class="td-desc">${item.desc}${item.revised?'<span class="review-status">Revised</span>':''}</td>
+    <td class="td-hsn">${item.hsn}</td>
+    <td class="td-cat">${item.category}</td>
+    <td>${flagBadge(item.reviewedFlag)}${item.revised?`<small class="previous-flag">Previous: ${item.portalFlag}</small>`:''}</td>
+    <td class="td-gst">${item.gst}</td>
+    <td class="consultant-remark">${item.consultantRemark}</td>
+  </tr>`).join('');
+  const notice=document.getElementById('consultantNotice');
+  notice.innerHTML=matches.length
+    ? `<span><strong>Showing ${visible.length} of ${matches.length} reviewed references.</strong> Use search and filters to locate the required HSN/SAC or consultant remark.</span>`
+    : '<strong>No reviewed reference matches the selected criteria.</strong>';
+}
+
+function resetConsultantReview(){
+  ['consultantSearch','consultantFlag','consultantCategory','consultantStatus'].forEach(id=>document.getElementById(id).value='');
+  renderConsultantReview();
 }
 
 // ── CONSTRUCTION TABLE ──
@@ -239,7 +314,7 @@ CONST_DATA.forEach(d=>{
     <td style="font-size:10px;color:var(--navy3)">${d.basis}</td>
     <td>${fundBadge(d.fund)}</td>
     <td style="font-size:12px;font-weight:600;max-width:100px">${d.itc}</td>
-    <td style="font-size:11px;color:var(--muted);max-width:180px">${d.note}</td>`;
+    <td style="font-size:11px;color:var(--muted);max-width:180px">${d.note}${d.consultantRemark?`<span class="construction-review ${d.consultantRevised?'is-revised':''}"><b>Consultant/NR:</b> ${d.consultantRemark}</span>`:''}</td>`;
   cb.appendChild(tr);
 });
 
@@ -323,4 +398,5 @@ document.addEventListener('keydown', function(e){
 });
 
 renderProcurementFaq();
+renderConsultantReview();
 renderTable();
