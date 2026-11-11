@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Railway GST ITC Flagging Reference — NR Moradabad Division</title>
-<link rel="stylesheet" href="assets/css/portal.css?v=20261111-1">
+<link rel="stylesheet" href="assets/css/portal.css?v=20261111-2">
 </head>
 <body>
 
@@ -77,12 +77,12 @@
   <button class="tab active" onclick="switchTab('master',this)">Master ITC Table</button>
   <button class="tab" onclick="switchTab('mainrules',this)">Main ITC Rule Summary</button>
   <button class="tab" onclick="switchTab('procfaq',this)">Procurement FAQ</button>
-  <button class="tab" onclick="switchTab('query',this)">Contact / Query</button>
   <button class="tab" onclick="switchTab('const',this)">Construction &amp; 9954</button>
   <button class="tab" onclick="switchTab('deposit',this)">Deposit &amp; Capital/Revenue</button>
   <button class="tab" onclick="switchTab('decision',this)">Decision Guide</button>
   <button class="tab" onclick="switchTab('gst2',this)">GST 2.0 Rate Changes</button>
   <button class="tab" onclick="switchTab('circulars',this)">Circulars &amp; Sources</button>
+  <button class="tab" onclick="switchTab('query',this)">Contact / Query</button>
   <div class="tab-search">
     <input id="globalHsnSearch" placeholder="Search HSN/SAC from any tab" onkeydown="if(event.key==='Enter')runGlobalHsnSearch()">
     <button onclick="runGlobalHsnSearch()">Search</button>
@@ -523,29 +523,9 @@
 
 <!-- CONTACT / QUERY TAB -->
 <div id="tab-query" class="pane">
-  <div class="query-head">
-    <div>
-      <span class="query-kicker">Railway GST clarification desk</span>
-      <h2>Submit an ITC or HSN/SAC Query</h2>
-      <p>Use the official Google Form for a flagging justification, transaction clarification, or a missing HSN/SAC reference. Your supporting document helps the reviewer assess the actual bill facts and end-use.</p>
-    </div>
-    <a class="query-primary" href="https://docs.google.com/forms/d/e/1FAIpQLSfDa7ZUTfKq11ugldHEyMecekmdRTIOsJ74oK_QvZlM-i-6LQ/viewform?usp=header" target="_blank" rel="noopener">Open Google Query Form <span aria-hidden="true">&#8599;</span></a>
-  </div>
-
-  <div class="query-workflow" aria-label="Query submission workflow">
-    <div><strong>1. Describe</strong><span>Enter your name, division, email, query type, HSN/SAC and the precise clarification required.</span></div>
-    <div><strong>2. Attach</strong><span>Upload one relevant PDF such as the invoice, LOA or agreement. Maximum permitted size: 5 MB.</span></div>
-    <div><strong>3. Track</strong><span>A request number is emailed after submission. Keep it for follow-up and reference.</span></div>
-    <div><strong>4. Receive</strong><span>The clarification is emailed when the reviewer records an answer in the linked response Sheet.</span></div>
-  </div>
-
-  <div class="query-notice" role="note">
-    <strong>Before submitting:</strong> redact bank details, personal identifiers and unrelated confidential content. Google sign-in is required for file upload. The response is advisory and must be checked against current Railway Board and GST instructions before bill passing.
-  </div>
-
-  <div class="query-actions">
-    <a href="https://docs.google.com/forms/d/e/1FAIpQLSfDa7ZUTfKq11ugldHEyMecekmdRTIOsJ74oK_QvZlM-i-6LQ/viewform?usp=header" target="_blank" rel="noopener">Submit a new query</a>
-    <span>Query administrator: <a href="mailto:cpgramsingh@gmail.com">cpgramsingh@gmail.com</a></span>
+  <div class="query-compact">
+    <a class="query-primary" href="https://docs.google.com/forms/d/e/1FAIpQLSfDa7ZUTfKq11ugldHEyMecekmdRTIOsJ74oK_QvZlM-i-6LQ/viewform?usp=header" target="_blank" rel="noopener">Click here to open the Query Form <span aria-hidden="true">&#8599;</span></a>
+    <p><strong>Disclaimer:</strong> Submit only information required for GST/ITC review and redact unrelated personal, banking or confidential details. Any clarification is advisory and must be verified against the transaction facts, current Railway Board instructions and GST law before bill passing or final ITC determination.</p>
   </div>
 </div>
 
